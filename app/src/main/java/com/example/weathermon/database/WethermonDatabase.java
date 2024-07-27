@@ -8,7 +8,7 @@ import android.content.Context;
 import com.example.weathermon.dao.UserDao;
 import com.example.weathermon.dao.WeatherMonDao;
 
-@Database(entities = {User.class, Location.class, Admin.class}, version = 1)
+@Database(entities = {User.class, Location.class}, version = 1)
 public abstract class WethermonDatabase extends RoomDatabase {
 
     private static volatile WethermonDatabase INSTANCE;
