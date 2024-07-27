@@ -16,7 +16,7 @@ public class Location {
     private double temperature;
 
     // Constructor, getters, and setters
-    public Weathermon(String location, String condition, double temperature) {
+    public Location(String location, String condition, double temperature) {
         this.location = location;
         this.condition = condition;
         this.temperature = temperature;
