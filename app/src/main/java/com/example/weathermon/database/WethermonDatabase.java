@@ -7,23 +7,21 @@ import android.content.Context;
 
 import com.example.weathermon.dao.UserDao;
 import com.example.weathermon.dao.WeatherMonDao;
-import com.example.weathermon.dao.AdminDao;
 
-@Database(entities = {User.class, WeatherMon.class, Admin.class}, version = 1)
-public abstract class AppDatabase extends RoomDatabase {
+@Database(entities = {User.class, Location.class, Admin.class}, version = 1)
+public abstract class WethermonDatabase extends RoomDatabase {
 
-    private static volatile AppDatabase INSTANCE;
+    private static volatile WethermonDatabase INSTANCE;
 
     public abstract UserDao userDao();
     public abstract WeatherMonDao weatherMonDao();
-    public abstract AdminDao adminDao();
 
-    public static AppDatabase getInstance(Context context) {
+    public static WethermonDatabase getInstance(Context context) {
         if (INSTANCE == null) {
-            synchronized (AppDatabase.class) {
+            synchronized (WethermonDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, "app_database")
+                                    WethermonDatabase.class, "app_database")
                             .fallbackToDestructiveMigration()
                             .build();
                 }
