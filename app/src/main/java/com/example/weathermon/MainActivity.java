@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     private static final String MAIN_ACTIVITY_USER_ID = "com.example.weathermon.MAIN_ACTIVITY_USER_ID";
-    int loggedInUserId = -1;
+    private int loggedInUserId = -1;
+
+    //private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,11 +21,12 @@ public class MainActivity extends AppCompatActivity {
 
         loginUser();
 
+        invalidateOptionsMenu();
+
         if(loggedInUserId == -1){
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
             startActivity(intent);
         }
-
 
         setContentView(R.layout.activity_main);
 

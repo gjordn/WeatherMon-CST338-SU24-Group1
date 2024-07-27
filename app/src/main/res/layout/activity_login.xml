@@ -13,7 +13,7 @@
         android:layout_height="150dip"
         android:layout_margin="16dip"
         android:gravity="center"
-        android:text="Welcome to WeatherMon. \n Please Log in"
+        android:text="WeatherMon! \n Please Log in"
         android:textSize="42sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
