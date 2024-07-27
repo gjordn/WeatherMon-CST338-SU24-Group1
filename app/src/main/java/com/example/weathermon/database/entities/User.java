@@ -9,7 +9,7 @@ public class User {
     private int id;
     private String username;
     private String password;
-    private int userPermision;
+    private int userPermisionLevel;
 
     private static final int USER_PERMISION_NORMAL=1;
     private static final int USER_PERMISION_ADMIN =2;
@@ -19,13 +19,13 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.userPermision=USER_PERMISION_NORMAL;
+        this.userPermisionLevel =USER_PERMISION_NORMAL;
     }
 
     public User(String username, String password, int userPermision) {
         this.username = username;
         this.password = password;
-        this.userPermision=userPermision;
+        this.userPermisionLevel =userPermision;
     }
 
 
@@ -53,12 +53,12 @@ public class User {
         this.password = password;
     }
 
-    public int getUserPermision() {
-        return userPermision;
+    public int getUserPermisionLevel() {
+        return userPermisionLevel;
     }
 
-    public void setUserPermision(int userPermision) {
-        this.userPermision = userPermision;
+    public void setUserPermisionLevel(int userPermisionLevel) {
+        this.userPermisionLevel = userPermisionLevel;
     }
 }
 
