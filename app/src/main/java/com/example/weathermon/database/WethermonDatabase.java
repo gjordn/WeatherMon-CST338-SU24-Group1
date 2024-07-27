@@ -6,7 +6,9 @@ import androidx.room.RoomDatabase;
 import android.content.Context;
 
 import com.example.weathermon.dao.UserDao;
-import com.example.weathermon.dao.WeatherMonDao;
+import com.example.weathermon.database.DAO.WeatherMonDao;
+import com.example.weathermon.database.entities.Location;
+import com.example.weathermon.database.entities.User;
 
 @Database(entities = {User.class, Location.class}, version = 1)
 public abstract class WethermonDatabase extends RoomDatabase {

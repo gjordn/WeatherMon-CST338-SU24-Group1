@@ -1,4 +1,4 @@
-package com.example.weathermon.database;
+package com.example.weathermon.database.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

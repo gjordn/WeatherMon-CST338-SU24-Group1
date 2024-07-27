@@ -1,4 +1,4 @@
-package com.example.weathermon.dao;
+package com.example.weathermon.database.DAO;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
