@@ -4,7 +4,9 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.ColumnInfo;
 
-@Entity(tableName = "location")
+import com.example.weathermon.database.WeathermonDatabase;
+
+@Entity(tableName = WeathermonDatabase.LOCATION_TABLE)
 public class Location {
     @PrimaryKey(autoGenerate = true)
     private int id;

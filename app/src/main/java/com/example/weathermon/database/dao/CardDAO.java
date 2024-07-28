@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.example.weathermon.database.WeathermonDatabase;
 import com.example.weathermon.database.entities.Card;
 
 import java.util.List;

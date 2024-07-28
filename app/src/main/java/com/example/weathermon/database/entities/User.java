@@ -3,7 +3,9 @@ package com.example.weathermon.database.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "users")
+import com.example.weathermon.database.WeathermonDatabase;
+
+@Entity(tableName = WeathermonDatabase.USER_TABLE)
 public class User {
     @PrimaryKey(autoGenerate = true)
     private int id;
