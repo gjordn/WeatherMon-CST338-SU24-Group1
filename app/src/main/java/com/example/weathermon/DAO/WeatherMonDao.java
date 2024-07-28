@@ -12,7 +12,6 @@ import java.util.List;
 
 @Dao
 public interface WeatherMonDao {
-
     @Insert
     void insert(WeatherMon weatherMon);
 
@@ -28,4 +27,3 @@ public interface WeatherMonDao {
     @Query("SELECT * FROM weathermon")
     List<WeatherMon> getAllWeatherMons();
 }
-
