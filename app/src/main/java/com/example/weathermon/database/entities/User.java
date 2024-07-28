@@ -9,25 +9,14 @@ public class User {
     private int id;
     private String username;
     private String password;
-    private int userPermisionLevel;
-
-    private static final int USER_PERMISION_NORMAL=1;
-    private static final int USER_PERMISION_ADMIN =2;
-
+    private boolean isAdmin;
 
     // Constructor, getters, and setters
-    public User(String username, String password) {
+    public User(String username, String password, boolean isAdmin) {
         this.username = username;
         this.password = password;
-        this.userPermisionLevel =USER_PERMISION_NORMAL;
+        this.isAdmin = isAdmin;
     }
-
-    public User(String username, String password, int userPermision) {
-        this.username = username;
-        this.password = password;
-        this.userPermisionLevel =userPermision;
-    }
-
 
     public int getId() {
         return id;
@@ -53,12 +42,11 @@ public class User {
         this.password = password;
     }
 
-    public int getUserPermisionLevel() {
-        return userPermisionLevel;
+    public boolean isAdmin() {
+        return isAdmin;
     }
 
-    public void setUserPermisionLevel(int userPermisionLevel) {
-        this.userPermisionLevel = userPermisionLevel;
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }
-

@@ -5,8 +5,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import android.content.Context;
 
-import com.example.weathermon.dao.UserDao;
-import com.example.weathermon.database.DAO.WeatherMonDao;
+import com.example.weathermon.database.dao.UserDao;
+import com.example.weathermon.database.dao.LocationDAO;
 import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.User;
 
@@ -16,7 +16,7 @@ public abstract class WethermonDatabase extends RoomDatabase {
     private static volatile WethermonDatabase INSTANCE;
 
     public abstract UserDao userDao();
-    public abstract WeatherMonDao weatherMonDao();
+    public abstract LocationDAO locationDao();
 
     public static WethermonDatabase getInstance(Context context) {
         if (INSTANCE == null) {
