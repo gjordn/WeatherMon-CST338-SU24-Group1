@@ -1,32 +1,53 @@
-package com.example.Weathermon.dao;
+package com.example.weathermon.database;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-import com.example.weathermon.database.User;
+@Entity(tableName = "users")
+public class User {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    private String username;
+    private String password;
+    private boolean isAdmin;
 
-import java.util.List;
+    // Constructor, getters, and setters
+    public User(String username, String password, boolean isAdmin) {
+        this.username = username;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
 
-@Dao
-public interface UserDao {
-    @Insert
-    void insert(User user);
+    public int getId() {
+        return id;
+    }
 
-    @Update
-    void update(User user);
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    @Delete
-    void delete(User user);
+    public String getUsername() {
+        return username;
+    }
 
-    @Query("SELECT * FROM users WHERE id = :id")
-    User getUserById(int id);
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    @Query("SELECT * FROM users")
-    List<User> getAllUsers();
+    public String getPassword() {
+        return password;
+    }
 
-    @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
-    User getUserByUsername(String username);
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 }
+
