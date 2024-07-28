@@ -5,16 +5,16 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import android.content.Context;
 
-import com.example.weathermon.dao.UserDao;
+
 import com.example.weathermon.dao.WeatherMonDao;
 import com.example.weathermon.dao.AdminDao;
 
-@Database(entities = {User.class, WeatherMon.class, Admin.class}, version = 1)
+@Database(entities = {User.class, WeatherMonDao.class, Admin.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;
 
-    public abstract UserDao userDao();
+    public abstract com.example.weathermon.database.UserDao userDao();
     public abstract WeatherMonDao weatherMonDao();
     public abstract AdminDao adminDao();
 

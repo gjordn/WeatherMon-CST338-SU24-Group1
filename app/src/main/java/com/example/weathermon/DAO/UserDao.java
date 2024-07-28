@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "users")
-public class User {
+public class UserDao {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String username;
@@ -12,7 +12,7 @@ public class User {
     private boolean isAdmin;
 
     // Constructor, getters, and setters
-    public User(String username, String password, boolean isAdmin) {
+    public UserDao(String username, String password, boolean isAdmin) {
         this.username = username;
         this.password = password;
         this.isAdmin = isAdmin;
