@@ -5,13 +5,14 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import android.content.Context;
 
+import com.example.weathermon.database.dao.CardDAO;
 import com.example.weathermon.database.dao.UserDao;
 import com.example.weathermon.database.dao.LocationDAO;
 import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.User;
 
-@Database(entities = {User.class, Location.class, Card.class}, version = 1)
+@Database(entities = {User.class, Location.class, Card.class}, version = 1, exportSchema = false)
 public abstract class WeathermonDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "GymLogdatabase";
     //Table Names
@@ -25,7 +26,7 @@ public abstract class WeathermonDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();
     public abstract LocationDAO locationDao();
-    public abstract Card card();
+    public abstract CardDAO card();
 
     public static WeathermonDatabase getInstance(Context context) {
         if (INSTANCE == null) {
