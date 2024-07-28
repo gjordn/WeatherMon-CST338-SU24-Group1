@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.weathermon.database.WeathermonDatabase;
 import com.example.weathermon.database.entities.User;
 
 import java.util.List;
@@ -21,12 +22,12 @@ public interface UserDao {
     @Delete
     void delete(User user);
 
-    @Query("SELECT * FROM users WHERE id = :id")
+    @Query("SELECT * FROM " + WeathermonDatabase.USER_TABLE + " WHERE id = :id")
     User getUserById(int id);
 
-    @Query("SELECT * FROM users")
+    @Query("SELECT * FROM " + WeathermonDatabase.USER_TABLE)
     List<User> getAllUsers();
 
-    @Query("SELECT * FROM users WHERE isAdmin = 1")
+    @Query("SELECT * FROM " + WeathermonDatabase.USER_TABLE + " WHERE isAdmin = 1")
     List<User> getAllAdmins();
 }
