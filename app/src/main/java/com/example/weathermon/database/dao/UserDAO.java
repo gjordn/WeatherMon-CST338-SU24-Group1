@@ -1,8 +1,10 @@
 package com.example.weathermon.database.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -12,9 +14,9 @@ import com.example.weathermon.database.entities.User;
 import java.util.List;
 
 @Dao
-public interface UserDao {
-    @Insert
-    void insert(User user);
+public interface UserDAO {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(User... user);
 
     @Update
     void update(User user);
@@ -22,8 +24,11 @@ public interface UserDao {
     @Delete
     void delete(User user);
 
+    @Query("DELETE FROM "+ WeathermonDatabase.USER_TABLE)
+    void deleteALL();
+
     @Query("SELECT * FROM " + WeathermonDatabase.USER_TABLE + " WHERE id = :id")
-    User getUserById(int id);
+    LiveData<User> getUserById(int id);
 
     @Query("SELECT * FROM " + WeathermonDatabase.USER_TABLE)
     List<User> getAllUsers();
