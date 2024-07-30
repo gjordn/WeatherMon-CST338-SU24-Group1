@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //threw in 0 for now for valid id
-                Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), 0);
+                Intent intent = UserCardMantenanceActivity.userCardMaintenanceIntentFactory(getApplicationContext(), 1);
                 startActivity(intent);
             }
         });
