@@ -2,6 +2,7 @@ package com.example.weathermon;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
@@ -20,13 +21,39 @@ public class MainActivity extends AppCompatActivity {
 
     private User user;
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        int userId = getUserIdFromPrefs();
+        if (userId == -1) {
+            Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
+            startActivity(intent);
+            finish();
+            return;
+        }
+
+        loggedInUserId = userId;
+        repository = WeathermonRepository.getRepository(getApplication());
+
+        LiveData<User> userObserver = repository.getUserByUserID(loggedInUserId);
+        userObserver.observe(this, user -> {
+            if (user != null) {
+                this.user = user;
+            }
+        });
+
+        invalidateOptionsMenu();
+    }
+    /*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         repository = WeathermonRepository.getRepository(getApplication());
         loginUser();
 
-        //todo: Remove below lines, just here to force usage of database to insure tables are created
         LiveData<User> userObserver = repository.getUserByUserID(1);
         userObserver.observe(this, user -> {
             //Find user, if found, set shared preferences to userID and reset menu options
@@ -46,9 +73,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     private void loginUser() {
         //TODO create login method.
         loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, -1);
+    }
+    */
+    private int getUserIdFromPrefs() {
+        SharedPreferences sharedPreferences = getSharedPreferences("WeatherMonPrefs", MODE_PRIVATE);
+        return sharedPreferences.getInt("userId", -1);
     }
 
     //Main Activity Factory
