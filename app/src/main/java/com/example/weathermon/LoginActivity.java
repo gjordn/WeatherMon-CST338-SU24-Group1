@@ -81,8 +81,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 }
 
-
-
 /*
 package com.example.weathermon;
 
