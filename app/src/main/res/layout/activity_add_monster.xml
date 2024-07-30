@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddMonsterActivity">
+
+    <EditText
+        android:id="@+id/monster_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Monster Name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMargin="16dp"/>
+
+    <EditText
+        android:id="@+id/base_hp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Base HP"
+        app:layout_constraintTop_toBottomOf="@id/monster_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMargin="16dp"/>
+
+    <EditText
+        android:id="@+id/base_attack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Base Attack"
+        app:layout_constraintTop_toBottomOf="@id/base_hp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMargin="16dp"/>
+
+    <EditText
+        android:id="@+id/base_defense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Base Defense"
+        app:layout_constraintTop_toBottomOf="@id/base_attack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMargin="16dp"/>
+
+    <EditText
+        android:id="@+id/ability1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Ability 1"
+        app:layout_constraintTop_toBottomOf="@id/base_defense"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMargin="16dp"/>
+
+    <EditText
+        android:id="@+id/ability2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Ability 2"
+        app:layout_constraintTop_toBottomOf="@id/ability1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMargin="16dp"/>
+
+    <EditText
+        android:id="@+id/ability3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Ability 3"
+        app:layout_constraintTop_toBottomOf="@id/ability2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMargin="16dp"/>
+
+    <EditText
+        android:id="@+id/weather_innate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Weather Innate"
+        app:layout_constraintTop_toBottomOf="@id/ability3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMargin="16dp"/>
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Save Monster"
+        app:layout_constraintTop_toBottomOf="@id/weather_innate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMargin="16dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

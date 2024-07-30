@@ -5,16 +5,16 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.myapp.database.dao.AbilityDAO;
-import com.example.myapp.database.dao.CardDAO;
-import com.example.myapp.database.dao.LocationDAO;
-import com.example.myapp.database.dao.UserDao;
-import com.example.myapp.database.dao.MonsterDAO; // Ensure this import exists
-import com.example.myapp.database.entities.Ability;
-import com.example.myapp.database.entities.Card;
-import com.example.myapp.database.entities.Location;
-import com.example.myapp.database.entities.User;
-import com.example.myapp.database.entities.Monster; // Ensure this import exists
+import com.example.weathermon.database.dao.AbilityDAO;
+import com.example.weathermon.database.dao.CardDAO;
+import com.example.weathermon.database.dao.LocationDAO;
+import com.example.weathermon.database.dao.UserDao;
+import com.example.weathermon.database.dao.MonsterDAO;
+import com.example.weathermon.database.entities.Ability;
+import com.example.weathermon.database.entities.Card;
+import com.example.weathermon.database.entities.Location;
+import com.example.weathermon.database.entities.User;
+import com.example.weathermon.database.entities.Monster;
 
 @Database(entities = {User.class, Ability.class, Card.class, Location.class, Monster.class}, version = 1, exportSchema = false)
 public abstract class WeathermonDatabase extends RoomDatabase {
