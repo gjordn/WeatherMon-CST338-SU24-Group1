@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Sets login in userId.
         loggedInUserId = userId;
+
         repository = WeathermonRepository.getRepository(getApplication());
         //Handles null repository case.
         if(repository == null){
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
                 //Sets user data.
                 this.user = user;
                 Log.d(TAG, "User data loaded: " + user.getUsername());
+            } else {
+                Log.e(TAG, "User not found in database");
             }
         });
         //Refreshes options menu.
