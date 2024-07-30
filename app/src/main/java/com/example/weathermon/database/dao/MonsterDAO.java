@@ -1,5 +1,4 @@
-// MonsterDAO.java
-package com.example.myapp;
+package com.example.weathermon.database.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -15,9 +14,10 @@ public interface MonsterDAO {
     @Update
     void update(Monster monster);
 
-    @Query("SELECT * FROM monster WHERE id = :id")
+    @Query("SELECT * FROM monster WHERE monster_id = :id")
     Monster getMonsterById(int id);
 
     @Query("SELECT * FROM monster")
     List<Monster> getAllMonsters();
 }
+
