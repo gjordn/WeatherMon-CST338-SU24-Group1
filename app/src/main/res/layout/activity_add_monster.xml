@@ -11,88 +11,88 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Monster Name"
+        android:layout_margin="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintMargin="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
         android:id="@+id/base_hp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Base HP"
+        android:layout_margin="16dp"
         app:layout_constraintTop_toBottomOf="@id/monster_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintMargin="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
         android:id="@+id/base_attack"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Base Attack"
+        android:layout_margin="16dp"
         app:layout_constraintTop_toBottomOf="@id/base_hp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintMargin="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
         android:id="@+id/base_defense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Base Defense"
+        android:layout_margin="16dp"
         app:layout_constraintTop_toBottomOf="@id/base_attack"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintMargin="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
         android:id="@+id/ability1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Ability 1"
+        android:layout_margin="16dp"
         app:layout_constraintTop_toBottomOf="@id/base_defense"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintMargin="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
         android:id="@+id/ability2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Ability 2"
+        android:layout_margin="16dp"
         app:layout_constraintTop_toBottomOf="@id/ability1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintMargin="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
         android:id="@+id/ability3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Ability 3"
+        android:layout_margin="16dp"
         app:layout_constraintTop_toBottomOf="@id/ability2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintMargin="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
         android:id="@+id/weather_innate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Weather Innate"
+        android:layout_margin="16dp"
         app:layout_constraintTop_toBottomOf="@id/ability3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintMargin="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
         android:id="@+id/save_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Save Monster"
+        android:layout_margin="16dp"
         app:layout_constraintTop_toBottomOf="@id/weather_innate"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintMargin="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

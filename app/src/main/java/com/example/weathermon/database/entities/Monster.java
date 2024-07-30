@@ -2,30 +2,60 @@ package com.example.weathermon.database.entities;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = {
-        @ForeignKey(entity = Ability.class, parentColumns = "ability_id", childColumns = "ability1"),
-        @ForeignKey(entity = Ability.class, parentColumns = "ability_id", childColumns = "ability2"),
-        @ForeignKey(entity = Ability.class, parentColumns = "ability_id", childColumns = "ability3")
-})
+import com.example.weathermon.database.WeathermonDatabase;
+
+@Entity(
+    tableName = WeathermonDatabase.MONSTER_TABLE,
+    foreignKeys = {
+        @ForeignKey(entity = Ability.class, parentColumns = "abilityID", childColumns = "ability1"),
+        @ForeignKey(entity = Ability.class, parentColumns = "abilityID", childColumns = "ability2"),
+        @ForeignKey(entity = Ability.class, parentColumns = "abilityID", childColumns = "ability3")
+    },
+    indices = {
+        @Index(value = "ability1"),
+        @Index(value = "ability2"),
+        @Index(value = "ability3")
+    }
+)
 public class Monster {
     @PrimaryKey(autoGenerate = true)
-    public int monster_id;
+    private int monster_id;
 
-    public String monster_name;
-    public int ability1;
-    public int ability2;
-    public int ability3;
-    public int baseHP;
-    public int baseAttack;
-    public int baseDefense;
-    public int weatherInnate;
+    private String monster_name;
+    private int ability1;
+    private int ability2;
+    private int ability3;
+    private int baseHP;
+    private int baseAttack;
+    private int baseDefense;
+    private int weatherInnate;
+
+    public Monster(String monster_name, int ability1, int ability2, int ability3, int baseHP, int baseAttack, int baseDefense, int weatherInnate) {
+        this.monster_name = monster_name;
+        this.ability1 = ability1;
+        this.ability2 = ability2;
+        this.ability3 = ability3;
+        this.baseHP = baseHP;
+        this.baseAttack = baseAttack;
+        this.baseDefense = baseDefense;
+        this.weatherInnate = weatherInnate;
+    }
+
+    public Monster() {
+
+    }
 
     // Getters and setters
 
     public int getMonster_id() {
         return monster_id;
+    }
+
+    public void setMonster_id(int monster_id) {
+        this.monster_id = monster_id;
     }
 
     public String getMonster_name() {
@@ -91,10 +121,6 @@ public class Monster {
     public void setWeatherInnate(int weatherInnate) {
         this.weatherInnate = weatherInnate;
     }
-
-    public void setMonster_id(int monster_id) {
-        this.monster_id = monster_id;
-
-    }
 }
+
 

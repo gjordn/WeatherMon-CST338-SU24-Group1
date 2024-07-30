@@ -28,10 +28,10 @@ public class MonsterAdapter extends RecyclerView.Adapter<MonsterAdapter.MonsterV
     @Override
     public void onBindViewHolder(@NonNull MonsterViewHolder holder, int position) {
         Monster monster = monsterList.get(position);
-        holder.nameTextView.setText(monster.monster_name);
-        holder.hpTextView.setText("HP: " + monster.baseHP);
-        holder.attackTextView.setText("Attack: " + monster.baseAttack);
-        holder.defenseTextView.setText("Defense: " + monster.baseDefense);
+        holder.nameTextView.setText(monster.getMonster_name());
+        holder.hpTextView.setText("HP: " + monster.getBaseHP());
+        holder.attackTextView.setText("Attack: " + monster.getBaseAttack());
+        holder.defenseTextView.setText("Defense: " + monster.getBaseDefense());
     }
 
     @Override

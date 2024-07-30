@@ -1,6 +1,7 @@
 package com.example.weathermon.database;
 
 import android.content.Context;
+
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -25,7 +26,7 @@ public abstract class WeathermonDatabase extends RoomDatabase {
     public static final String LOCATION_TABLE = "LocationTable";
     public static final String CARD_TABLE = "CardTable";
     public static final String ABILITY_TABLE = "AbilityTable";
-    public static final String MONSTER_TABLE = "MonsterTable"; // Add this line
+    public static final String MONSTER_TABLE = "MonsterTable";
 
     private static volatile WeathermonDatabase INSTANCE;
 

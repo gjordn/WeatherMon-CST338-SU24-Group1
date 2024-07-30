@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.example.weathermon.database.WeathermonDatabase;
 import com.example.weathermon.database.entities.Monster;
@@ -36,14 +38,14 @@ public class AddMonsterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Monster monster = new Monster();
-                monster.monster_name = nameEditText.getText().toString();
-                monster.baseHP = Integer.parseInt(hpEditText.getText().toString());
-                monster.baseAttack = Integer.parseInt(attackEditText.getText().toString());
-                monster.baseDefense = Integer.parseInt(defenseEditText.getText().toString());
-                monster.ability1 = Integer.parseInt(ability1EditText.getText().toString());
-                monster.ability2 = Integer.parseInt(ability2EditText.getText().toString());
-                monster.ability3 = Integer.parseInt(ability3EditText.getText().toString());
-                monster.weatherInnate = Integer.parseInt(weatherInnateEditText.getText().toString());
+                monster.setMonster_name(nameEditText.getText().toString());
+                monster.setBaseHP(Integer.parseInt(hpEditText.getText().toString()));
+                monster.setBaseAttack(Integer.parseInt(attackEditText.getText().toString()));
+                monster.setBaseDefense(Integer.parseInt(defenseEditText.getText().toString()));
+                monster.setAbility1(Integer.parseInt(ability1EditText.getText().toString()));
+                monster.setAbility2(Integer.parseInt(ability2EditText.getText().toString()));
+                monster.setAbility3(Integer.parseInt(ability3EditText.getText().toString()));
+                monster.setWeatherInnate(Integer.parseInt(weatherInnateEditText.getText().toString()));
 
                 new Thread(new Runnable() {
                     @Override
