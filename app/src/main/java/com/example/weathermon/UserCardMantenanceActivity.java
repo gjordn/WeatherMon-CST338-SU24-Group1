@@ -25,15 +25,15 @@ public class UserCardMantenanceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = UserCardMantenanceActivity.inflate(getLayoutInflater());
+        binding = ActivityUserCardMantenanceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
     }
 
-static Intent userCardMaintenanceIntentFactory(Context context, int userID){
-    Intent intent = new Intent(context, MainActivity.class);
-    intent.putExtra(WEATHERMON_LOGGED_IN_USER_ID, userID);
-    return intent;
-}
+    static Intent userCardMaintenanceIntentFactory(Context context, int userID){
+        Intent intent = new Intent(context, UserCardMantenanceActivity.class);
+        intent.putExtra(WEATHERMON_LOGGED_IN_USER_ID, userID);
+        return intent;
+    }
 
 }
