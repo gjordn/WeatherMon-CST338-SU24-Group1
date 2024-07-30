@@ -26,7 +26,7 @@ public class CardMaintenanceAdapter extends ListAdapter<Card, CardMaintenanceVie
     }
 
 
-    public static class GymLogDiff extends DiffUtil.ItemCallback<Card>{
+    public static class CardMaintenanceDiff extends DiffUtil.ItemCallback<Card>{
         @Override
         public boolean areItemsTheSame(@NonNull Card oldItem, @NonNull Card newItem) {
             return oldItem == newItem;

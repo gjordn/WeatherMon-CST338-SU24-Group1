@@ -13,16 +13,13 @@ import java.util.List;
 public class CardMaintenanceViewModel extends AndroidViewModel {
     private final WeathermonRepository repository;
 
-    private final LiveData<List<Card>> allCardsByID;
-
-    public CardMaintenanceViewModel(Application application, int UserID){
+    public CardMaintenanceViewModel(Application application){
         super(application);
         repository = WeathermonRepository.getRepository(application);
-        allCardsByID = repository.getCardsByUserID(UserID);
     }
 
-    public LiveData<List<Card>> getAllCardsByID() {
-        return allCardsByID;
+    public LiveData<List<Card>> getAllCardsByID(int userID) {
+        return repository.getCardsByUserID(userID);
     }
 
     public void insert(Card card){
