@@ -5,6 +5,8 @@ import androidx.room.PrimaryKey;
 
 import com.example.weathermon.database.WeathermonDatabase;
 
+import java.util.Objects;
+
 @Entity(tableName = WeathermonDatabase.USER_TABLE)
 public class User {
     @PrimaryKey(autoGenerate = true)
@@ -20,6 +22,19 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && isAdmin == user.isAdmin && Objects.equals(username, user.username) && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, isAdmin);
+    }
+
     public int getId() {
         return id;
     }
@@ -27,7 +42,6 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
-
     public String getUsername() {
         return username;
     }

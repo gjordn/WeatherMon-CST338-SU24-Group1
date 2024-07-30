@@ -22,7 +22,6 @@ public class WeathermonRepository {
     private final LocationDAO locationDAO;
     private final CardDAO cardDAO;
 
-
     private static WeathermonRepository repository;
 
     private WeathermonRepository(Application application){
@@ -48,8 +47,12 @@ public class WeathermonRepository {
                 }
         );
         try{
-            return future.get();
+            //Makes sure repository is assigned.
+            repository = future.get();
+            return repository;
         }catch (InterruptedException | ExecutionException e){
+            //Prints the stack trace to log the error.
+            e.printStackTrace();
         }
         return null;
     }
@@ -60,6 +63,14 @@ public class WeathermonRepository {
         {
             userDAO.insert(user);
         });
+    }
+
+    public User getUserByUsernameAndPassword(String username, String password) {
+        return userDAO.getUserByUsernameAndPassword(username, password);
+    }
+
+    public User getUserByUsername(String username) {
+        return userDAO.getUserByUsername(username);
     }
 
     public LiveData<User> getUserByUserID(int userID) {
