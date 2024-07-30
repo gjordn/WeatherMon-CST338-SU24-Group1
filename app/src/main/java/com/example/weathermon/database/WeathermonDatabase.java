@@ -7,13 +7,11 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import android.content.Context;
-import android.util.Log;
-
 
 import com.example.weathermon.database.dao.AbilityDAO;
 import com.example.weathermon.database.dao.CardDAO;
 import com.example.weathermon.database.dao.LocationDAO;
-import com.example.weathermon.database.dao.UserDao;
+import com.example.weathermon.database.dao.UserDAO;
 import com.example.weathermon.database.dao.MonsterDAO;
 import com.example.weathermon.database.entities.Ability;
 import com.example.weathermon.database.entities.Card;
