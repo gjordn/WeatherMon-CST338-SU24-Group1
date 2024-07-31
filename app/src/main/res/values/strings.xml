@@ -3,5 +3,6 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login!</string>
+    <string name="weathermon_please_log_in">WeatherMon! \n Please Log in</string>
     <string name="card_here">Card here</string>
 </resources>

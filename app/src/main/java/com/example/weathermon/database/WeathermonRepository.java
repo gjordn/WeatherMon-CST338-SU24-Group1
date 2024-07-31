@@ -3,7 +3,6 @@ package com.example.weathermon.database;
 import android.app.Application;
 import android.util.Log;
 
-
 import androidx.lifecycle.LiveData;
 
 import com.example.weathermon.database.dao.AbilityDAO;
@@ -24,7 +23,6 @@ public class WeathermonRepository {
     private final LocationDAO locationDAO;
     private final CardDAO cardDAO;
 
-
     private static WeathermonRepository repository;
 
     private WeathermonRepository(Application application){
@@ -40,7 +38,6 @@ public class WeathermonRepository {
             return repository;
         }
 
-
         Future<WeathermonRepository> future = WeathermonDatabase.databaseWriterExecutor.submit(
                 new Callable<WeathermonRepository>() {
                     @Override
@@ -49,19 +46,27 @@ public class WeathermonRepository {
                     }
                 }
         );
-        try{
-            return future.get();
-        }catch (InterruptedException | ExecutionException e){
+        try {
+            repository = future.get();
+            return repository;
+        } catch (InterruptedException | ExecutionException e) {
+            Log.e("WeathermonRepository", "Error initializing repository", e);
         }
         return null;
     }
 
-
     public void insertUser (User... user){
-        WeathermonDatabase.databaseWriterExecutor.execute(()->
-        {
+        WeathermonDatabase.databaseWriterExecutor.execute(() -> {
             userDAO.insert(user);
         });
+    }
+
+    public User getUserByUsernameAndPassword(String username, String password) {
+        return userDAO.getUserByUsernameAndPassword(username, password);
+    }
+
+    public LiveData<User> getUserByUsername(String username) {
+        return userDAO.getUserByUsername(username);
     }
 
     public LiveData<User> getUserByUserID(int userID) {
