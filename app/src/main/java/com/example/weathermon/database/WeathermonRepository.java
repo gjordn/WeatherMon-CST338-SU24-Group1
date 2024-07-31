@@ -63,7 +63,7 @@ public class WeathermonRepository {
         return userDAO.getUserByUsernameAndPassword(username, password);
     }
 
-    public User getUserByUsername(String username) {
+    public LiveData<User> getUserByUsername(String username) {
         return userDAO.getUserByUsername(username);
     }
 

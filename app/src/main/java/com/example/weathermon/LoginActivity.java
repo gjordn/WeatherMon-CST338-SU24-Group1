@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import com.example.weathermon.database.WeathermonRepository;
 import com.example.weathermon.database.entities.User;
@@ -33,11 +34,23 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = binding.userNameLoginEditText.getText().toString();
                 String password = binding.passwordLoginEditText.getText().toString();
-
+                validateCredentials(username, password);
                 // Validate credentials
-                if (validateCredentials(username, password)) {
-                    int userId = getUserIdByUsername(username);
-                    Log.d(TAG, "Fetched User ID: " + userId);  // Debugging log
+
+            }
+        });
+    }
+
+    /**
+     * Method to validate user credentials.
+     */
+    private boolean validateCredentials(String username, String password) {
+        LiveData<User> userObserver = repository.getUserByUsername(username);
+        userObserver.observe(this , user -> {
+            if (user!=null){
+                int userId = user.getId();
+                Log.d(TAG, "Fetched User ID: " + userId);  // Debugging log
+                if (password.equals(user.getUsername())){
                     saveUserCredentials(userId);
                     Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), userId);
                     startActivity(intent);
@@ -47,23 +60,17 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        return true;
     }
 
-    /**
-     * Method to validate user credentials.
-     */
-    private boolean validateCredentials(String username, String password) {
-        User user = repository.getUserByUsernameAndPassword(username, password);
-        return user != null;
-    }
 
     /**
      * Method that gets user ID by username.
      */
-    private int getUserIdByUsername(String username) {
-        User user = repository.getUserByUsername(username);
-        return user != null ? user.getId() : -1;
-    }
+//    private int getUserIdByUsername(String username) {
+//        User user = repository.getUserByUsername(username);
+//        return user != null ? user.getId() : -1;
+//    }
 
     /**
      * Method that saves user credentials in SharedPreferences.

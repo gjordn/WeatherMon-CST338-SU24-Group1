@@ -40,5 +40,5 @@ public interface UserDAO {
     User getUserByUsernameAndPassword(String username, String password);
 
     @Query("SELECT * FROM " + WeathermonDatabase.USER_TABLE + " WHERE username = :username")
-    User getUserByUsername(String username);
+    LiveData<User> getUserByUsername(String username);
 }
