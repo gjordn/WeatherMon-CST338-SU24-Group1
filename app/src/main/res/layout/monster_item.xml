@@ -16,8 +16,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/monster_info"
-        android:src="@drawable/ic_monster_placeholder" />
+        app:layout_constraintEnd_toStartOf="@id/monster_info"/>
+        <!--android:src="@drawable/ic_monster_placeholder"
+        Commented out so project will compile.-->
+
 
     <!-- Monster Info -->
     <LinearLayout

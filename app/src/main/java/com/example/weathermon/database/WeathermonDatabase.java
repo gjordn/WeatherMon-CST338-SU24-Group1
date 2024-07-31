@@ -62,8 +62,8 @@ public abstract class WeathermonDatabase extends RoomDatabase {
                                     WeathermonDatabase.class,
                                     WEATHERMON_DATABASE_NAME)
                                     .fallbackToDestructiveMigration()
-//                                    .createFromAsset(WEATHERMON_DEFAULT_DATABASE)
-                                    .addCallback(addDefaultValues)
+                                    .createFromAsset(WEATHERMON_DEFAULT_DATABASE)
+//                                    .addCallback(addDefaultValues)
                                     .build();
                 }
             }
