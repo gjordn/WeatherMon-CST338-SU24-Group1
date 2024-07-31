@@ -1,8 +1,10 @@
 package com.example.weathermon.database.entities;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.example.weathermon.database.WeathermonDatabase;
@@ -12,8 +14,14 @@ import java.util.Objects;
 @Entity(
         tableName = WeathermonDatabase.CARD_TABLE,
         foreignKeys = {
-                @ForeignKey(entity = Monster.class, parentColumns = "monster_id", childColumns = "monsterID")
-        }
+        @ForeignKey(
+                entity = Monster.class,
+                parentColumns = {"monster_id"},
+                childColumns = {"monsterID"},
+                onDelete = ForeignKey.CASCADE,
+                onUpdate = ForeignKey.CASCADE
+        )
+    }, indices = {@Index(value = {"monsterID"})}
 )
 
 public class Card {
@@ -24,6 +32,7 @@ public class Card {
 
     @PrimaryKey(autoGenerate = true)
     private int cardID;
+    private String cardCustomName;
     private int monsterID;
     private int monsterXP;
     private int userID;
@@ -34,6 +43,7 @@ public class Card {
         this.userID = userID;
         monsterXP = MONSTER_STARTING_XP;
         monsterLevel = MONSTER_STARTING_LEVEL;
+        cardCustomName = "";
     }
 
     /**
@@ -85,6 +95,14 @@ public class Card {
         this.monsterLevel = monsterLevel;
     }
 
+    public String getCardCustomName() {
+        return cardCustomName;
+    }
+
+    public void setCardCustomName(String cardCustomName) {
+        this.cardCustomName = cardCustomName;
+    }
+
     /**
      * Generated equals and hash
      */
@@ -112,7 +130,8 @@ public class Card {
     @Override
     public String toString() {
 
-        return  "Implement a string\n\n";
+        return  "Name: " + monsterID + "\n" +
+                "Level: " + monsterLevel + "\n";
     }
 
 
