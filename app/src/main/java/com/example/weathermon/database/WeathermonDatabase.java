@@ -29,7 +29,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTimeTypeConverter.class)
-@Database(entities = {User.class, Ability.class, Card.class, Location.class, Monster.class}, version = 2, exportSchema = false)
+@Database(entities = {User.class, Ability.class, Card.class, Location.class, Monster.class}, version = 1, exportSchema = false)
 public abstract class WeathermonDatabase extends RoomDatabase {
     private static final String WEATHERMON_DATABASE_NAME = "WeathermonDatabase";
 
@@ -62,8 +62,8 @@ public abstract class WeathermonDatabase extends RoomDatabase {
                                     WeathermonDatabase.class,
                                     WEATHERMON_DATABASE_NAME)
                                     .fallbackToDestructiveMigration()
-//                                    .createFromAsset(WEATHERMON_DEFAULT_DATABASE)
-                                    .addCallback(addDefaultValues)
+                                    .createFromAsset(WEATHERMON_DEFAULT_DATABASE)
+//                                    .addCallback(addDefaultValues)
                                     .build();
                 }
             }
