@@ -1,12 +1,14 @@
 package com.example.weathermon.database;
 
 import androidx.annotation.NonNull;
+import androidx.room.Dao;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.weathermon.database.dao.AbilityDAO;
 import com.example.weathermon.database.dao.CardDAO;
@@ -19,6 +21,8 @@ import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.database.entities.Monster;
 
+import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -33,6 +37,7 @@ public abstract class WeathermonDatabase extends RoomDatabase {
     public static final String ABILITY_TABLE = "AbilityTable";
     public static final String MONSTER_TABLE = "MonsterTable";
 
+    private static final String WEATHERMON_DEFAULT_DATABASE = "database/WeathermonDefaultDatabase.db";
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriterExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
@@ -54,17 +59,20 @@ public abstract class WeathermonDatabase extends RoomDatabase {
                                     WeathermonDatabase.class,
                                     WEATHERMON_DATABASE_NAME)
                                     .fallbackToDestructiveMigration()
-                                    .addCallback(addDefaultValues)
+                                    .createFromAsset(WEATHERMON_DEFAULT_DATABASE)
                                     .build();
                 }
             }
         }
         return INSTANCE;
     }
+
     private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
+
+
 
             databaseWriterExecutor.execute(()-> {
             UserDAO dao = INSTANCE.userDAO();
