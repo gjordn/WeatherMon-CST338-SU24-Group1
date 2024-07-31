@@ -1,12 +1,15 @@
 package com.example.weathermon.database;
 
 import androidx.annotation.NonNull;
+import androidx.room.Dao;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.weathermon.database.dao.AbilityDAO;
 import com.example.weathermon.database.dao.CardDAO;
@@ -18,11 +21,15 @@ import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.database.entities.Monster;
+import com.example.weathermon.database.typeconverters.LocalDateTimeTypeConverter;
 
+import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class, Ability.class, Card.class, Location.class, Monster.class}, version = 1, exportSchema = false)
+@TypeConverters(LocalDateTimeTypeConverter.class)
+@Database(entities = {User.class, Ability.class, Card.class, Location.class, Monster.class}, version = 2, exportSchema = false)
 public abstract class WeathermonDatabase extends RoomDatabase {
     private static final String WEATHERMON_DATABASE_NAME = "WeathermonDatabase";
 
@@ -33,6 +40,7 @@ public abstract class WeathermonDatabase extends RoomDatabase {
     public static final String ABILITY_TABLE = "AbilityTable";
     public static final String MONSTER_TABLE = "MonsterTable";
 
+    private static final String WEATHERMON_DEFAULT_DATABASE = "database/WeathermonDefaultDatabase.db";
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriterExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
@@ -54,6 +62,7 @@ public abstract class WeathermonDatabase extends RoomDatabase {
                                     WeathermonDatabase.class,
                                     WEATHERMON_DATABASE_NAME)
                                     .fallbackToDestructiveMigration()
+//                                    .createFromAsset(WEATHERMON_DEFAULT_DATABASE)
                                     .addCallback(addDefaultValues)
                                     .build();
                 }
@@ -61,10 +70,13 @@ public abstract class WeathermonDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
     private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
+
+
 
             databaseWriterExecutor.execute(()-> {
             UserDAO dao = INSTANCE.userDAO();

@@ -10,8 +10,10 @@ import com.example.weathermon.database.dao.AbilityDAO;
 import com.example.weathermon.database.dao.CardDAO;
 import com.example.weathermon.database.dao.LocationDAO;
 import com.example.weathermon.database.dao.UserDAO;
+import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.User;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -66,4 +68,11 @@ public class WeathermonRepository {
         return userDAO.getUserById(userID);
     }
 
+    public LiveData<List<Card>> getCardsByUserID(int userID){
+        return cardDAO.getCardsByUserID(userID);
+    }
+
+    public void insertCard(Card card) {
+        cardDAO.insert(card);
+    }
 }
