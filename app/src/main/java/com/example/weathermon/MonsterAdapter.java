@@ -3,12 +3,11 @@ package com.example.weathermon;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.weathermon.database.entities.Monster;
-
 import java.util.List;
 
 public class MonsterAdapter extends RecyclerView.Adapter<MonsterAdapter.MonsterViewHolder> {
@@ -29,9 +28,9 @@ public class MonsterAdapter extends RecyclerView.Adapter<MonsterAdapter.MonsterV
     public void onBindViewHolder(@NonNull MonsterViewHolder holder, int position) {
         Monster monster = monsterList.get(position);
         holder.nameTextView.setText(monster.getMonster_name());
-        holder.hpTextView.setText("HP: " + monster.getBaseHP());
-        holder.attackTextView.setText("Attack: " + monster.getBaseAttack());
-        holder.defenseTextView.setText("Defense: " + monster.getBaseDefense());
+        holder.statsTextView.setText("HP: " + monster.getBaseHP() + ", ATK: " + monster.getBaseAttack() + ", DEF: " + monster.getBaseDefense());
+        // Set the monster image if available
+        // holder.monsterImageView.setImageResource(R.drawable.monster_image); // example
     }
 
     @Override
@@ -40,14 +39,15 @@ public class MonsterAdapter extends RecyclerView.Adapter<MonsterAdapter.MonsterV
     }
 
     static class MonsterViewHolder extends RecyclerView.ViewHolder {
-        TextView nameTextView, hpTextView, attackTextView, defenseTextView;
+        TextView nameTextView, statsTextView;
+        ImageView monsterImageView;
 
         public MonsterViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.monster_name);
-            hpTextView = itemView.findViewById(R.id.monster_hp);
-            attackTextView = itemView.findViewById(R.id.monster_attack);
-            defenseTextView = itemView.findViewById(R.id.monster_defense);
+            statsTextView = itemView.findViewById(R.id.monster_stats);
+            monsterImageView = itemView.findViewById(R.id.monster_image);
         }
     }
 }
+
