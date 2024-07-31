@@ -8,6 +8,8 @@ import androidx.room.ColumnInfo;
 
 import com.example.weathermon.database.WeathermonDatabase;
 
+import java.time.LocalDateTime;
+
 @Entity(tableName = WeathermonDatabase.LOCATION_TABLE)
 public class Location {
     @PrimaryKey(autoGenerate = true)
@@ -21,7 +23,7 @@ public class Location {
     private int humidity;
     private int temperature;
     private boolean realLocation;
-    private String localTime;
+    private LocalDateTime localTime;
 
     // Constructor, getters, and setters
 
@@ -96,11 +98,11 @@ public class Location {
         this.realLocation = realLocation;
     }
 
-    public String getLocalTime() {
+    public LocalDateTime getLocalTime() {
         return localTime;
     }
 
-    public void setLocalTime(String localTime) {
+    public void setLocalTime(LocalDateTime localTime) {
         this.localTime = localTime;
     }
 }
