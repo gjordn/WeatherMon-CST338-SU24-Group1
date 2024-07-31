@@ -6,13 +6,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
 import com.example.weathermon.database.WeathermonRepository;
 import com.example.weathermon.database.entities.User;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,91 +20,52 @@ public class MainActivity extends AppCompatActivity {
     private WeathermonRepository repository;
     private User user;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         int userId = getUserIdFromPrefs();
+        Log.d(TAG, "Retrieved User ID from prefs: " + userId);  // Debugging log
         if (userId == -1) {
-            Log.d(TAG, "User ID from prefs: " + userId);
+            Log.d(TAG, "User ID from prefs: " + userId);  // Additional log for debugging
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
             startActivity(intent);
             finish();
             return;
         }
 
-        //Sets login in userId.
         loggedInUserId = userId;
-
         repository = WeathermonRepository.getRepository(getApplication());
-        //Handles null repository case.
-        if(repository == null){
+
+        if (repository == null) {
             Log.e(TAG, "Repository initialization failed");
             finish();
             return;
         }
 
-        //Observes user data.
         LiveData<User> userObserver = repository.getUserByUserID(loggedInUserId);
         userObserver.observe(this, user -> {
             if (user != null) {
-                //Sets user data.
                 this.user = user;
                 Log.d(TAG, "User data loaded: " + user.getUsername());
-            } else {
-                Log.e(TAG, "User not found in database");
             }
         });
-        //Refreshes options menu.
+
         invalidateOptionsMenu();
     }
 
     private int getUserIdFromPrefs() {
         SharedPreferences sharedPreferences = getSharedPreferences("WeatherMonPrefs", MODE_PRIVATE);
-        return sharedPreferences.getInt("userId", -1);
+        int userId = sharedPreferences.getInt("userId", -1);
+        Log.d(TAG, "Retrieved User ID from prefs: " + userId);  // Debugging log
+        return userId;
     }
 
-    //Main Activity Factory
-    static Intent mainActivityIntentFactory(Context context, int userId){
+    // Main Activity Factory
+    static Intent mainActivityIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(MAIN_ACTIVITY_USER_ID, userId);
         return intent;
     }
-
-    /*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        repository = WeathermonRepository.getRepository(getApplication());
-        loginUser();
-
-        LiveData<User> userObserver = repository.getUserByUserID(1);
-        userObserver.observe(this, user -> {
-            //Find user, if found, set shared preferences to userID and reset menu options
-            if (user != null){
-                this.user = user;
-            }
-        });
-
-        invalidateOptionsMenu();
-
-        if(loggedInUserId == -1){
-            Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
-            startActivity(intent);
-        }
-
-        setContentView(R.layout.activity_main);
-
-    }
-
-
-
-    private void loginUser() {
-        //TODO create login method.
-        loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, -1);
-    }
-    */
-
 }
