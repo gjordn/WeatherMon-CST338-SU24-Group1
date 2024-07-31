@@ -23,7 +23,7 @@ public interface LocationDAO {
     @Delete
     void delete(Location location);
 
-    @Query("SELECT * FROM " + WeathermonDatabase.LOCATION_TABLE + " WHERE id = :id")
+    @Query("SELECT * FROM " + WeathermonDatabase.LOCATION_TABLE + " WHERE arenaID = :id")
     Location getWeatherMonById(int id);
 
     @Query("SELECT * FROM " + WeathermonDatabase.LOCATION_TABLE)
