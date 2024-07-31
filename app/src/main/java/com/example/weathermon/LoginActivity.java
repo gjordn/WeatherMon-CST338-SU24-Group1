@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,7 +15,7 @@ import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
-
+    private static final String TAG = "LoginActivity";
     private ActivityLoginBinding binding;
     private WeathermonRepository repository;
 
@@ -46,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     //Displays error message if credentials are invalid.
                     Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Invalid username or password entered."); // Log statement using TAG
                 }
             }
         });
