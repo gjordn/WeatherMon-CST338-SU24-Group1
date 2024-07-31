@@ -1,21 +1,38 @@
 package com.example.weathermon.database.entities;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.example.weathermon.database.WeathermonDatabase;
 
 import java.util.Objects;
 
-@Entity(tableName = WeathermonDatabase.CARD_TABLE)
+@Entity(
+        tableName = WeathermonDatabase.CARD_TABLE,
+        foreignKeys = {
+        @ForeignKey(
+                entity = Monster.class,
+                parentColumns = {"monster_id"},
+                childColumns = {"monsterID"},
+                onDelete = ForeignKey.CASCADE,
+                onUpdate = ForeignKey.CASCADE
+        )
+    }, indices = {@Index(value = {"monsterID"})}
+)
+
 public class Card {
     private static final int MONSTER_STARTING_XP = 0;
-    private static final int MONSTER_STARTTING_LEVEL = 1;
-    private static final double MONSTER_LEVEL_EXPONETIAL = 2;
+    private static final int MONSTER_STARTING_LEVEL = 1;
+    private static final double MONSTER_LEVEL_EXPONENTIAL = 2;
     private static final double BASE_PER_LEVEL = 5;
 
     @PrimaryKey(autoGenerate = true)
     private int cardID;
+    private String cardCustomName;
     private int monsterID;
     private int monsterXP;
     private int userID;
@@ -25,7 +42,8 @@ public class Card {
         this.monsterID = monsterID;
         this.userID = userID;
         monsterXP = MONSTER_STARTING_XP;
-        monsterLevel = MONSTER_STARTTING_LEVEL;
+        monsterLevel = MONSTER_STARTING_LEVEL;
+        cardCustomName = "";
     }
 
     /**
@@ -77,6 +95,14 @@ public class Card {
         this.monsterLevel = monsterLevel;
     }
 
+    public String getCardCustomName() {
+        return cardCustomName;
+    }
+
+    public void setCardCustomName(String cardCustomName) {
+        this.cardCustomName = cardCustomName;
+    }
+
     /**
      * Generated equals and hash
      */
@@ -97,8 +123,17 @@ public class Card {
      * Checks XP amount and adjust monster level as needed
      */
     private void updateLevel(){
-        monsterLevel = MONSTER_STARTTING_LEVEL + (int) (monsterXP/(Math.pow(MONSTER_LEVEL_EXPONETIAL, monsterLevel)*BASE_PER_LEVEL));
+        monsterLevel = MONSTER_STARTING_LEVEL + (int) (monsterXP/(Math.pow(MONSTER_LEVEL_EXPONENTIAL, monsterLevel)*BASE_PER_LEVEL));
     }
+
+    @NonNull
+    @Override
+    public String toString() {
+
+        return  "Name: " + monsterID + "\n" +
+                "Level: " + monsterLevel + "\n";
+    }
+
 
     /**
      * checks XP and Level and returns the XP earned towards the next level
