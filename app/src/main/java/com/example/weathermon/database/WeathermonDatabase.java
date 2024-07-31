@@ -28,6 +28,10 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * The Room database for the Weathermon application.
+ * This database contains tables for User, Ability, Card, Location, and Monster entities.
+ */
 @TypeConverters(LocalDateTimeTypeConverter.class)
 @Database(entities = {User.class, Ability.class, Card.class, Location.class, Monster.class}, version = 2, exportSchema = false)
 public abstract class WeathermonDatabase extends RoomDatabase {
@@ -44,17 +48,44 @@ public abstract class WeathermonDatabase extends RoomDatabase {
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriterExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-
+    /**
+     * Returns the Ability Data Access Object.
+     * @return AbilityDAO
+     */
     public abstract AbilityDAO abilityDAO();
+
+    /**
+     * Returns the Card Data Access Object.
+     * @return CardDAO
+     */
     public abstract CardDAO cardDAO();
+
+    /**
+     * Returns the Location Data Access Object.
+     * @return LocationDAO
+     */
     public abstract LocationDAO locationDao();
+
+    /**
+     * Returns the Monster Data Access Object.
+     * @return MonsterDAO
+     */
     public abstract MonsterDAO monsterDAO();
+
+    /**
+     * Returns the User Data Access Object.
+     * @return UserDAO
+     */
     public abstract UserDAO userDAO();
 
     private static volatile WeathermonDatabase INSTANCE;
 
+    /**
+     * Returns the singleton instance of the WeathermonDatabase.
+     * @param context The application context
+     * @return The singleton instance of the database
+     */
     public static WeathermonDatabase getDatabase(final Context context) {
-
         if (INSTANCE == null) {
             synchronized (WeathermonDatabase.class) {
                 if (INSTANCE == null) {
@@ -62,7 +93,7 @@ public abstract class WeathermonDatabase extends RoomDatabase {
                                     WeathermonDatabase.class,
                                     WEATHERMON_DATABASE_NAME)
                                     .fallbackToDestructiveMigration()
-//                                    .createFromAsset(WEATHERMON_DEFAULT_DATABASE)
+                                    //.createFromAsset(WEATHERMON_DEFAULT_DATABASE)
                                     .addCallback(addDefaultValues)
                                     .build();
                 }
@@ -76,18 +107,16 @@ public abstract class WeathermonDatabase extends RoomDatabase {
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
 
+            databaseWriterExecutor.execute(() -> {
+                UserDAO dao = INSTANCE.userDAO();
+                dao.deleteALL();
+                User admin = new User("admin2", "admin2", true);
+                dao.insert(admin);
 
-
-            databaseWriterExecutor.execute(()-> {
-            UserDAO dao = INSTANCE.userDAO();
-            dao.deleteALL();
-            User admin = new User("admin2", "admin2", true);
-            dao.insert(admin);
-
-            User testUser1 = new User("testuser1", "testuser1", false);
-            dao.insert(testUser1);
+                User testUser1 = new User("testuser1", "testuser1", false);
+                dao.insert(testUser1);
             });
         }
     };
-
 }
+
