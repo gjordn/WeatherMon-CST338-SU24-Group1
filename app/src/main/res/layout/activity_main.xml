@@ -11,11 +11,62 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/buttonMyPetWeathermon"
         android:background="@drawable/buttonMyPetWethermon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="20dp"
+        android:contentDescription="@string/my_pet_weathermon"
         />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonTrainWeathermon"
+        android:background="@drawable/buttonTrainWeathermon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonMyPetWeathermon"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/train_weathermon"
+        />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonCampaign"
+        android:background="@drawable/buttonCampaign"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTrainWeathermon"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/campaign"
+    />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonTheWeathermon"
+        android:background="@drawable/buttonTheWeathermon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCampaign"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/the_weathermon"
+    />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonAdministrator"
+        android:background="@drawable/buttonAdministration"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonTheWeathermon"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/administration"
+    />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
