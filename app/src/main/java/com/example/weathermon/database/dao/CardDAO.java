@@ -8,6 +8,7 @@ import androidx.room.Query;
 
 import com.example.weathermon.database.WeathermonDatabase;
 import com.example.weathermon.database.entities.Card;
+import com.example.weathermon.database.entities.CardWithMonster;
 
 import java.util.List;
 
@@ -21,4 +22,11 @@ public interface CardDAO {
 
     @Query("SELECT * FROM " + WeathermonDatabase.CARD_TABLE + " WHERE userID == :userID ORDER BY monsterXP DESC")
     LiveData<List<Card>> getCardsByUserID(int userID);
+
+    @Query("SELECT * FROM " + WeathermonDatabase.CARD_TABLE + " INNER JOIN " +
+            WeathermonDatabase.MONSTER_TABLE + " ON " +
+            WeathermonDatabase.CARD_TABLE + ".monsterID=" + WeathermonDatabase.MONSTER_TABLE +
+            ".monster_id WHERE userID == :userID ORDER BY monsterXP DESC")
+    LiveData<List<CardWithMonster>> getCardsWithMonsterByUserID(int userID);
+
 }

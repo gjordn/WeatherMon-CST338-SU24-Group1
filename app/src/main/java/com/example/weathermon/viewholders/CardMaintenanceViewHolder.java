@@ -12,6 +12,7 @@ import androidx.annotation.DrawableRes;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weathermon.R;
+import com.example.weathermon.database.entities.Monster;
 
 public class CardMaintenanceViewHolder extends RecyclerView.ViewHolder {
 
@@ -29,7 +30,7 @@ public class CardMaintenanceViewHolder extends RecyclerView.ViewHolder {
     public void bind (String name, String stats, @DrawableRes int logo){
         cardName.setText(name);
         cardStats.setText(stats);
-        cardLogo.setImageResource(logo);
+        cardLogo.setImageResource(R.drawable.darklogo);
     }
 
     static CardMaintenanceViewHolder create(ViewGroup parent){
