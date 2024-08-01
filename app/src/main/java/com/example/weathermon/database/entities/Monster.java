@@ -45,6 +45,15 @@ public class Monster {
                     weatherWind, R.drawable.windlogo,
                     weatherWater,R.drawable.waterlogo );
 
+    public static final Map<Integer , String> convertWeatherTypeToString =
+            Map.of(weatherNone, "None",
+                    weatherFire, "Fire",
+                    weatherIce, "Ice",
+                    weatherLight, "Light",
+                    weatherDark, "Shadow",
+                    weatherWind, "Wind",
+                    weatherWater, "Water");
+
     private String monster_name;
     private int ability1;
     private int ability2;

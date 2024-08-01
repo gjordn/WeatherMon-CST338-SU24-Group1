@@ -12,6 +12,8 @@ import androidx.annotation.DrawableRes;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weathermon.R;
+import com.example.weathermon.database.entities.Card;
+import com.example.weathermon.database.entities.CardWithMonster;
 import com.example.weathermon.database.entities.Monster;
 
 public class CardMaintenanceViewHolder extends RecyclerView.ViewHolder {
@@ -27,10 +29,19 @@ public class CardMaintenanceViewHolder extends RecyclerView.ViewHolder {
         cardLogo = cardMaintenenceView.findViewById(R.id.card_image);
     }
 
-    public void bind (String name, String stats, @DrawableRes int logo){
-        cardName.setText(name);
-        cardStats.setText(stats);
-        cardLogo.setImageResource(R.drawable.darklogo);
+    public void bind (CardWithMonster cardWithMonster){
+        if (cardWithMonster.getCardCustomName().isEmpty()){
+            cardName.setText("Monster: " + cardWithMonster.getMonster_name());
+        }else {
+            cardName.setText("Name: " + cardWithMonster.getCardCustomName() +
+                    "        Monster: " + cardWithMonster.getMonster_name());
+        }
+        cardStats.setText("XP: " + cardWithMonster.getMonsterXP() +
+                            "       Level: " + cardWithMonster.getMonsterLevel() +
+                "      Weather: " + Monster.convertWeatherTypeToString.get(cardWithMonster.getWeatherInnate())
+        );
+        cardLogo.setImageResource(Monster.convertWeatherTypeToDrawable.get(
+                cardWithMonster.getWeatherInnate()));
     }
 
     static CardMaintenanceViewHolder create(ViewGroup parent){

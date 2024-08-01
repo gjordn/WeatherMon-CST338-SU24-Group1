@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.ListAdapter;
 
 import com.example.weathermon.R;
 import com.example.weathermon.database.entities.Card;
+import com.example.weathermon.database.entities.CardWithMonster;
 
-public class CardMaintenanceAdapter extends ListAdapter<Card, CardMaintenanceViewHolder> {
-    public CardMaintenanceAdapter(@NonNull DiffUtil.ItemCallback<Card> diffCallBack){
+public class CardMaintenanceAdapter extends ListAdapter<CardWithMonster, CardMaintenanceViewHolder> {
+    public CardMaintenanceAdapter(@NonNull DiffUtil.ItemCallback<CardWithMonster> diffCallBack){
         super(diffCallBack);
     }
 
@@ -22,19 +23,19 @@ public class CardMaintenanceAdapter extends ListAdapter<Card, CardMaintenanceVie
 
     @Override
     public void onBindViewHolder(@NonNull CardMaintenanceViewHolder holder, int position) {
-        Card current = getItem(position);
-        holder.bind("TheName","MaybeStats", R.drawable.buttonadministration);
+        CardWithMonster current = getItem(position);
+        holder.bind(current);
     }
 
 
-    public static class CardMaintenanceDiff extends DiffUtil.ItemCallback<Card>{
+    public static class CardMaintenanceDiff extends DiffUtil.ItemCallback<CardWithMonster>{
         @Override
-        public boolean areItemsTheSame(@NonNull Card oldItem, @NonNull Card newItem) {
+        public boolean areItemsTheSame(@NonNull CardWithMonster oldItem, @NonNull CardWithMonster newItem) {
             return oldItem == newItem;
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull Card oldItem, @NonNull Card newItem) {
+        public boolean areContentsTheSame(@NonNull CardWithMonster oldItem, @NonNull CardWithMonster newItem) {
             return oldItem.equals(newItem);
         }
     }
