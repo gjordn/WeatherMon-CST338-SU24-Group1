@@ -45,7 +45,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/buttonBackToMain"
         android:layout_margin="16dp"
-        android:contentDescription="Get Weathermon"
+        android:contentDescription="@string/get_weathermon"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
