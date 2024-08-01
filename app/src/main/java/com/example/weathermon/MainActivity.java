@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
         final AlertDialog alertDialog = alertBuilder.create();
 
-        alertDialog.setTitle("Confirm Logout");
+        alertBuilder.setMessage("Confirm Logout");
 
         alertBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
             @Override
