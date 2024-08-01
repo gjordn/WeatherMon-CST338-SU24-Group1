@@ -170,5 +170,20 @@ public class CardWithMonster {
         return Objects.hash(cardID, cardCustomName, monsterID, monsterXP, userID, monsterLevel, monster_id, monster_name, ability1, ability2, ability3, baseHP, baseAttack, baseDefense, weatherInnate);
     }
 
+    public int getTotalDefense(){
+        return adjustedForLevel(baseDefense);
+    }
+    public int getTotalAttack(){
+        return adjustedForLevel(baseAttack);
+    }
+    public int getTotalHP(){
+        return adjustedForLevel(baseHP);
+    }
+    private int adjustedForLevel(int baseStat){
+        Double adjustedStat =(baseStat * (Math.pow(Monster.levelModifier,monsterLevel-1)));
+        return adjustedStat.intValue();
+    }
+
+
 
 }

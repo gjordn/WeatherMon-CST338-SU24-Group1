@@ -27,6 +27,7 @@ import java.util.Map;
 public class Monster {
     @PrimaryKey(autoGenerate = true)
     private int monster_id;
+    public static final Double levelModifier = 1.2; //Increase in power per level
     public static final int weatherNone = 1;
     public static final int weatherFire = 2;
     public static final int weatherIce = 3;

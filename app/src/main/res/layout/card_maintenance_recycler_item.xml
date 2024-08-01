@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:layout_margin="8dp"
+    android:background="#DDDDDD"
+    >
 
     <!-- Monster Image -->
     <ImageView
@@ -44,6 +46,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="HP: 100, ATK: 50, DEF: 30"
+            android:autoSizeTextType="uniform"/>
+        <TextView
+            android:id="@+id/cardlevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="level: 100, xp: 1"
             android:autoSizeTextType="uniform"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
