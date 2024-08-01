@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Card Name"
-            android:textSize="18sp"
+            android:autoSizeTextType="uniform"
             android:textStyle="bold" />
 
         <TextView
@@ -44,6 +44,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="HP: 100, ATK: 50, DEF: 30"
-            android:textSize="14sp" />
+            android:autoSizeTextType="uniform"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
