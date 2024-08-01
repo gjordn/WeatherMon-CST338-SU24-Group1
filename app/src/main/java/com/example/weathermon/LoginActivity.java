@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
             if (user!=null){
                 int userId = user.getId();
                 Log.d(TAG, "Fetched User ID: " + userId);  // Debugging log
-                if (password.equals(user.getUsername())){
+                if (password.equals(user.getPassword())){
                     saveUserCredentials(userId);
                     Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), userId);
                     startActivity(intent);

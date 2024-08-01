@@ -5,4 +5,9 @@
     <string name="login">Login!</string>
     <string name="weathermon_please_log_in">WeatherMon! \n Please Log in</string>
     <string name="card_here">Card here</string>
+    <string name="my_pet_weathermon">My pet weathermon</string>
+    <string name="train_weathermon">Train Weathermon</string>
+    <string name="campaign">Campaign</string>
+    <string name="the_weathermon">The Weathermon</string>
+    <string name="administration">Administration</string>
 </resources>
