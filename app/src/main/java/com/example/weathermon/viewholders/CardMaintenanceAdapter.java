@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
+import com.example.weathermon.R;
 import com.example.weathermon.database.entities.Card;
 
 public class CardMaintenanceAdapter extends ListAdapter<Card, CardMaintenanceViewHolder> {
@@ -22,7 +23,7 @@ public class CardMaintenanceAdapter extends ListAdapter<Card, CardMaintenanceVie
     @Override
     public void onBindViewHolder(@NonNull CardMaintenanceViewHolder holder, int position) {
         Card current = getItem(position);
-        holder.bind(current.toString());
+        holder.bind("TheName","MaybeStats", R.drawable.buttonadministration);
     }
 
 
