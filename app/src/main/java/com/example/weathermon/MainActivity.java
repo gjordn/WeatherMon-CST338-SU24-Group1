@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
         binding.buttonMyPetWeathermon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo: add code to go to cardMaintenanceActivity
+                Intent intent = UserCardMantenanceActivity.userCardMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
+                startActivity(intent);
             }
         });
 

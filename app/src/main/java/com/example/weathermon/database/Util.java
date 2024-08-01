@@ -1,6 +1,8 @@
 package com.example.weathermon.database;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
 public class Util {
@@ -10,5 +12,4 @@ public class Util {
     private void toastMaker(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
-
 }
