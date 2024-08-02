@@ -51,5 +51,8 @@ dependencies {
 
     // Optional - Test helpers for Room
     testImplementation libs.room.testing
+
+    // Retrofit API
+    implementation libs.retrofit
 }
 

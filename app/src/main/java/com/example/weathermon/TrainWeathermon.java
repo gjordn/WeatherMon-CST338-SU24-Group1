@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -44,6 +45,14 @@ public class TrainWeathermon extends AppCompatActivity {
         repository = WeathermonRepository.getRepository(getApplication());
 
         loginUser(savedInstanceState);
+
+        binding.buttonBackToMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), loggedInUserID);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loginUser(Bundle savedInstanceState) {
