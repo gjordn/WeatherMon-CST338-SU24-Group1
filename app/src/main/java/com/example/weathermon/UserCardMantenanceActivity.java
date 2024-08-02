@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -25,12 +26,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weathermon.database.WeathermonRepository;
+import com.example.weathermon.database.entities.Card;
+import com.example.weathermon.database.entities.CardWithMonster;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityUserCardMantenanceBinding;
 import com.example.weathermon.viewholders.CardMaintenanceAdapter;
 import com.example.weathermon.viewholders.CardMaintenanceViewModel;
+import com.example.weathermon.viewholders.CardSelectListener;
 
-public class UserCardMantenanceActivity extends AppCompatActivity {
+public class UserCardMantenanceActivity extends AppCompatActivity implements CardSelectListener {
     ActivityUserCardMantenanceBinding binding;
     private WeathermonRepository repository;
     private CardMaintenanceViewModel cardMaintenanceViewModel;
@@ -51,7 +55,7 @@ public class UserCardMantenanceActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = binding.cardMaintenanceDisplayRecyclerView;
 
-        final CardMaintenanceAdapter adapter = new CardMaintenanceAdapter(new CardMaintenanceAdapter.CardMaintenanceDiff());
+        final CardMaintenanceAdapter adapter = new CardMaintenanceAdapter(new CardMaintenanceAdapter.CardMaintenanceDiff(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -149,6 +153,39 @@ public class UserCardMantenanceActivity extends AppCompatActivity {
         Intent intent = new Intent(context, UserCardMantenanceActivity.class);
         intent.putExtra(WEATHERMON_LOGGED_IN_USER_ID, userID);
         return intent;
+    }
+
+    @Override
+    public void onItemClicked(CardWithMonster cardWithMonster) {
+        Toast.makeText(this, "Hurray: "+ cardWithMonster.getMonster_name(),Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemLongClicked(CardWithMonster cardWithMonster){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(UserCardMantenanceActivity.this);
+        final AlertDialog alertDialog = alertBuilder.create();
+
+        if (cardWithMonster.getCardCustomName().isEmpty()) {
+            alertBuilder.setMessage("Do your really want to release: " + cardWithMonster.getMonster_name());
+        } else {
+            alertBuilder.setMessage("Do your really want to release: " + cardWithMonster.getCardCustomName());
+        }
+
+        alertBuilder.setPositiveButton("Release back into the wild", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                Card card = new Card(4,1);
+                cardMaintenanceViewModel.insert(card);
+            }
+        });
+
+        alertBuilder.setNegativeButton("Keep your friend", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                alertDialog.dismiss();
+            }
+        });
+        alertBuilder.create().show();
     }
 
 }

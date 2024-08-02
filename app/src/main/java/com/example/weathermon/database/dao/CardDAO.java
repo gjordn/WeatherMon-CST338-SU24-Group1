@@ -23,6 +23,9 @@ public interface CardDAO {
     @Query("SELECT * FROM " + WeathermonDatabase.CARD_TABLE + " WHERE userID == :userID ORDER BY monsterXP DESC")
     LiveData<List<Card>> getCardsByUserID(int userID);
 
+    @Query("DELETE FROM " + WeathermonDatabase.CARD_TABLE + " WHERE cardID==:cardID")
+    void deleteCardByID(int cardID);
+
     @Query("SELECT * FROM " + WeathermonDatabase.CARD_TABLE + " INNER JOIN " +
             WeathermonDatabase.MONSTER_TABLE + " ON " +
             WeathermonDatabase.CARD_TABLE + ".monsterID=" + WeathermonDatabase.MONSTER_TABLE +

@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weathermon.R;
@@ -18,6 +19,7 @@ public class CardMaintenanceViewHolder extends RecyclerView.ViewHolder {
     private final TextView cardStats;
     private final TextView cardlevel;
     private final ImageView cardLogo;
+    public CardView cardView;
 
     private CardMaintenanceViewHolder(View cardMaintenenceView){
         super(cardMaintenenceView);
@@ -25,6 +27,7 @@ public class CardMaintenanceViewHolder extends RecyclerView.ViewHolder {
         cardStats = cardMaintenenceView.findViewById(R.id.cardstats);
         cardLogo = cardMaintenenceView.findViewById(R.id.card_image);
         cardlevel = cardMaintenenceView.findViewById(R.id.cardlevel);
+        cardView = cardMaintenenceView.findViewById(R.id.maincardcontainer);
     }
 
     public void bind (CardWithMonster cardWithMonster){
