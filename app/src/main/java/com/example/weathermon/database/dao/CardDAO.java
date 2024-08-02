@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.weathermon.database.WeathermonDatabase;
 import com.example.weathermon.database.entities.Card;
@@ -22,6 +23,13 @@ public interface CardDAO {
 
     @Query("SELECT * FROM " + WeathermonDatabase.CARD_TABLE + " WHERE userID == :userID ORDER BY monsterXP DESC")
     LiveData<List<Card>> getCardsByUserID(int userID);
+
+    @Query("DELETE FROM " + WeathermonDatabase.CARD_TABLE + " WHERE cardID==:cardID")
+    void deleteCardByID(int cardID);
+
+    @Update
+    void updateCards(Card... cards);
+
 
     @Query("SELECT * FROM " + WeathermonDatabase.CARD_TABLE + " INNER JOIN " +
             WeathermonDatabase.MONSTER_TABLE + " ON " +

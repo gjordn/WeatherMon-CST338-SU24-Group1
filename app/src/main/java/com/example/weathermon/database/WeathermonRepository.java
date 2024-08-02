@@ -82,7 +82,17 @@ public class WeathermonRepository {
         return cardDAO.getCardsWithMonsterByUserID(userID);
     }
 
+    public void deleteCardByID(int cardID){
+        WeathermonDatabase.databaseWriterExecutor.execute(()->
+                cardDAO.deleteCardByID(cardID));
+    }
+
     public void insertCard(Card card) {
         cardDAO.insert(card);
+    }
+
+    public void updateCards(Card... cards) {
+        WeathermonDatabase.databaseWriterExecutor.execute(()->
+                cardDAO.updateCards(cards));;
     }
 }

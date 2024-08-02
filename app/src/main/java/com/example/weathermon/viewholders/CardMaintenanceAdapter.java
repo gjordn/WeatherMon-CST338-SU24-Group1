@@ -1,5 +1,6 @@
 package com.example.weathermon.viewholders;
 
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,8 +12,11 @@ import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.CardWithMonster;
 
 public class CardMaintenanceAdapter extends ListAdapter<CardWithMonster, CardMaintenanceViewHolder> {
-    public CardMaintenanceAdapter(@NonNull DiffUtil.ItemCallback<CardWithMonster> diffCallBack){
+    private CardSelectListener cardSelectListener;
+
+    public CardMaintenanceAdapter(@NonNull DiffUtil.ItemCallback<CardWithMonster> diffCallBack, CardSelectListener listener){
         super(diffCallBack);
+        this.cardSelectListener = listener;
     }
 
     @NonNull
@@ -25,6 +29,21 @@ public class CardMaintenanceAdapter extends ListAdapter<CardWithMonster, CardMai
     public void onBindViewHolder(@NonNull CardMaintenanceViewHolder holder, int position) {
         CardWithMonster current = getItem(position);
         holder.bind(current);
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cardSelectListener.onItemClicked(current);
+            }
+        });
+
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                cardSelectListener.onItemLongClicked(current);
+                return false;
+            }
+        });
     }
 
 

@@ -26,4 +26,8 @@ public class CardMaintenanceViewModel extends AndroidViewModel {
     public void insert(Card card){
         repository.insertCard(card);
     }
+
+    public void deleteCardByID(int cardID) {
+        repository.deleteCardByID(cardID);
+    }
 }

@@ -11,10 +11,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -24,13 +28,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.weathermon.database.WeathermonDatabase;
 import com.example.weathermon.database.WeathermonRepository;
+import com.example.weathermon.database.entities.Card;
+import com.example.weathermon.database.entities.CardWithMonster;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityUserCardMantenanceBinding;
 import com.example.weathermon.viewholders.CardMaintenanceAdapter;
 import com.example.weathermon.viewholders.CardMaintenanceViewModel;
+import com.example.weathermon.viewholders.CardSelectListener;
 
-public class UserCardMantenanceActivity extends AppCompatActivity {
+public class UserCardMantenanceActivity extends AppCompatActivity implements CardSelectListener {
     ActivityUserCardMantenanceBinding binding;
     private WeathermonRepository repository;
     private CardMaintenanceViewModel cardMaintenanceViewModel;
@@ -51,13 +59,21 @@ public class UserCardMantenanceActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = binding.cardMaintenanceDisplayRecyclerView;
 
-        final CardMaintenanceAdapter adapter = new CardMaintenanceAdapter(new CardMaintenanceAdapter.CardMaintenanceDiff());
+        final CardMaintenanceAdapter adapter = new CardMaintenanceAdapter(new CardMaintenanceAdapter.CardMaintenanceDiff(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
         cardMaintenanceViewModel.getAllCardsByID(loggedInUserID).observe(this, cardList -> {
             adapter.submitList(cardList);
+        });
+
+        binding.buttonBackToMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), loggedInUserID);
+                startActivity(intent);
+            }
         });
 
     }
@@ -149,6 +165,71 @@ public class UserCardMantenanceActivity extends AppCompatActivity {
         Intent intent = new Intent(context, UserCardMantenanceActivity.class);
         intent.putExtra(WEATHERMON_LOGGED_IN_USER_ID, userID);
         return intent;
+    }
+
+    @Override
+    public void onItemClicked(CardWithMonster cardWithMonster) {
+
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(UserCardMantenanceActivity.this);
+        final EditText input = new EditText(UserCardMantenanceActivity.this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        alertBuilder.setView(input);
+
+        alertBuilder.setTitle("Your friend needs a new name!");
+
+        if (cardWithMonster.getCardCustomName().isEmpty()) {
+            alertBuilder.setMessage("What would you like to call " + cardWithMonster.getMonster_name());
+        } else {
+            alertBuilder.setMessage("What would you like to call " + cardWithMonster.getCardCustomName());
+        }
+
+        alertBuilder.setPositiveButton("Give freind new name", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                Card card = new Card(cardWithMonster.getMonster_id(), cardWithMonster.getUserID());
+                card.setCardID(cardWithMonster.getCardID());
+                card.setMonsterXP(cardWithMonster.getMonsterXP());
+                card.setCardCustomName(input.getText().toString());
+
+                repository.updateCards(card);
+            }
+        });
+
+        alertBuilder.setNegativeButton("Keep current name", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                dialogInterface.dismiss();
+            }
+        });
+        alertBuilder.create().show();
+    }
+
+    @Override
+    public void onItemLongClicked(CardWithMonster cardWithMonster){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(UserCardMantenanceActivity.this);
+
+        alertBuilder.setTitle("End Friendship");
+
+        if (cardWithMonster.getCardCustomName().isEmpty()) {
+            alertBuilder.setMessage("Do your really want to release: " + cardWithMonster.getMonster_name());
+        } else {
+            alertBuilder.setMessage("Do your really want to release: " + cardWithMonster.getCardCustomName());
+        }
+
+        alertBuilder.setPositiveButton("Release back into the wild", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                repository.deleteCardByID(cardWithMonster.getCardID());
+            }
+        });
+
+        alertBuilder.setNegativeButton("Keep your friend", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                dialogInterface.dismiss();
+            }
+        });
+        alertBuilder.create().show();
     }
 
 }
