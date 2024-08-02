@@ -52,7 +52,8 @@ dependencies {
     // Optional - Test helpers for Room
     testImplementation libs.room.testing
 
-    // Retrofit API
+    // Retrofit API and gson converter
     implementation libs.retrofit
+    implementation libs.gson
 }
 
