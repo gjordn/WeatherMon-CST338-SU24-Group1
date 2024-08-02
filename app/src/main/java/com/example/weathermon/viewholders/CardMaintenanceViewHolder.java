@@ -36,8 +36,8 @@ public class CardMaintenanceViewHolder extends RecyclerView.ViewHolder {
                     "        Monster: " + cardWithMonster.getMonster_name());
         }
         cardName.setText(line);
-        line=("XP: " + cardWithMonster.getMonsterXP() +
-                            "       Level: " + cardWithMonster.getMonsterLevel() +
+        line=("XP: " + cardWithMonster.getMonsterXP() + "/" + cardWithMonster.getXPToNextLevel() +
+                            "       Level: " + cardWithMonster.getLevelFromXP() +
                 "      Weather: " + Monster.convertWeatherTypeToString.get(cardWithMonster.getWeatherInnate())        );
         cardlevel.setText(line);
         int logo;

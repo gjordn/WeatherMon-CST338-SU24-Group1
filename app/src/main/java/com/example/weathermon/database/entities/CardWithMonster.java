@@ -157,6 +157,14 @@ public class CardWithMonster {
         this.weatherInnate = weatherInnate;
     }
 
+    public int getXPToNextLevel(){
+        return Card.getXPToNextLevel(this.getMonsterXP());
+    }
+
+    public int getLevelFromXP(){
+        return Card.getCurrentLevel(this.monsterXP);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -180,7 +188,7 @@ public class CardWithMonster {
         return adjustedForLevel(baseHP);
     }
     private int adjustedForLevel(int baseStat){
-        Double adjustedStat =(baseStat * (Math.pow(Monster.levelModifier,monsterLevel-1)));
+        Double adjustedStat =(baseStat * (Math.pow(Monster.levelModifier,getLevelFromXP()-1)));
         return adjustedStat.intValue();
     }
 
