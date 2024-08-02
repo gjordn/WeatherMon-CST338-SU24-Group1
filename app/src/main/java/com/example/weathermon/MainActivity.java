@@ -79,10 +79,10 @@ public class MainActivity extends AppCompatActivity {
             if (user != null) {
                 this.user = user;
                 Log.d(TAG, "User data loaded: " + user.getUsername());
+                invalidateOptionsMenu();
             }
         });
 
-        invalidateOptionsMenu();
     }
 
     @Override
