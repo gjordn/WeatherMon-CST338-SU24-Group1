@@ -10,4 +10,6 @@
     <string name="campaign">Campaign</string>
     <string name="the_weathermon">The Weathermon</string>
     <string name="administration">Administration</string>
+    <string name="back_to_main_page">Back to Main Page</string>
+    <string name="get_weathermon">Get Weathermon</string>
 </resources>

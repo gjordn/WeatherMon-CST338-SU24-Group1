@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.weathermon.database.WeathermonRepository;
 import com.example.weathermon.database.entities.Card;
+import com.example.weathermon.database.entities.CardWithMonster;
 
 import java.util.List;
 
@@ -18,8 +19,8 @@ public class CardMaintenanceViewModel extends AndroidViewModel {
         repository = WeathermonRepository.getRepository(application);
     }
 
-    public LiveData<List<Card>> getAllCardsByID(int userID) {
-        return repository.getCardsByUserID(userID);
+    public LiveData<List<CardWithMonster>> getAllCardsByID(int userID) {
+        return repository.getCardsWithMonsterByUserID(userID);
     }
 
     public void insert(Card card){
