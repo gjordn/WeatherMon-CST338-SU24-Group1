@@ -16,4 +16,6 @@
     <string name="create_user">Create User</string>
     <string name="back_to_main_page">Back to Main Page</string>
     <string name="get_weathermon">Get Weathermon</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
