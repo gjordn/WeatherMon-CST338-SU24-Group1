@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
         binding.buttonMyPetWeathermon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo: add code to go to cardMaintenanceActivity
+                Intent intent = UserCardMantenanceActivity.userCardMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
+                startActivity(intent);
             }
         });
 
@@ -78,10 +79,10 @@ public class MainActivity extends AppCompatActivity {
             if (user != null) {
                 this.user = user;
                 Log.d(TAG, "User data loaded: " + user.getUsername());
+                invalidateOptionsMenu();
             }
         });
 
-        invalidateOptionsMenu();
     }
 
     @Override
@@ -95,8 +96,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.logoutMenuItem);
         item.setVisible(true);
-        //TODO: get userName from userParameter
-        item.setTitle(user.getUsername());
+        if (user != null) {
+            item.setTitle(user.getUsername());
+        }
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem menuItem) {

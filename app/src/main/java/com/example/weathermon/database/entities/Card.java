@@ -1,5 +1,7 @@
 package com.example.weathermon.database.entities;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.room.Entity;
@@ -7,6 +9,7 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.example.weathermon.database.Util;
 import com.example.weathermon.database.WeathermonDatabase;
 
 import java.util.Objects;
@@ -27,8 +30,8 @@ import java.util.Objects;
 public class Card {
     private static final int MONSTER_STARTING_XP = 0;
     private static final int MONSTER_STARTING_LEVEL = 1;
-    private static final double MONSTER_LEVEL_EXPONENTIAL = 2;
-    private static final double BASE_PER_LEVEL = 5;
+    private static final int baseXPForLevel = 10;
+    private static final double levelExponential = 2;
 
     @PrimaryKey(autoGenerate = true)
     private int cardID;
@@ -44,6 +47,22 @@ public class Card {
         monsterXP = MONSTER_STARTING_XP;
         monsterLevel = MONSTER_STARTING_LEVEL;
         cardCustomName = "";
+    }
+
+    public static int getXPToNextLevel(int monsterXP) {
+        double neededXP;
+        neededXP = baseXPForLevel*(Math.pow(levelExponential, getCurrentLevel(monsterXP)-1));
+        return (int) neededXP;
+    }
+
+    //There is 100% a better way to do this, I don't know how.
+    public static int getCurrentLevel(int monsterXP) {
+        int currentLevel =0;
+        while (monsterXP >= baseXPForLevel*(Math.pow(levelExponential, currentLevel))){
+            currentLevel++;
+        }
+        currentLevel++;
+        return currentLevel;
     }
 
     /**
@@ -76,7 +95,6 @@ public class Card {
      */
     public void setMonsterXP(int monsterXP) {
         this.monsterXP = monsterXP;
-        updateLevel();
     }
 
     public int getUserID() {
@@ -118,22 +136,6 @@ public class Card {
     public int hashCode() {
         return Objects.hash(cardID, monsterID, monsterXP, userID, monsterLevel);
     }
-
-    /**
-     * Checks XP amount and adjust monster level as needed
-     */
-    private void updateLevel(){
-        monsterLevel = MONSTER_STARTING_LEVEL + (int) (monsterXP/(Math.pow(MONSTER_LEVEL_EXPONENTIAL, monsterLevel)*BASE_PER_LEVEL));
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-
-        return  "Name: " + monsterID + "\n" +
-                "Level: " + monsterLevel + "\n";
-    }
-
 
     /**
      * checks XP and Level and returns the XP earned towards the next level

@@ -10,6 +10,7 @@ import com.example.weathermon.database.dao.CardDAO;
 import com.example.weathermon.database.dao.LocationDAO;
 import com.example.weathermon.database.dao.UserDAO;
 import com.example.weathermon.database.entities.Card;
+import com.example.weathermon.database.entities.CardWithMonster;
 import com.example.weathermon.database.entities.User;
 
 import java.util.List;
@@ -77,6 +78,15 @@ public class WeathermonRepository {
         return cardDAO.getCardsByUserID(userID);
     }
 
+    public LiveData<List<CardWithMonster>> getCardsWithMonsterByUserID(int userID) {
+        return cardDAO.getCardsWithMonsterByUserID(userID);
+    }
+
+    public void deleteCardByID(int cardID){
+        WeathermonDatabase.databaseWriterExecutor.execute(()->
+                cardDAO.deleteCardByID(cardID));
+    }
+
     public void insertCard(Card card) {
         cardDAO.insert(card);
     }
@@ -87,5 +97,9 @@ public class WeathermonRepository {
 
     public void updateUser(User user) {
         WeathermonDatabase.databaseWriterExecutor.execute(() -> userDAO.update(user));
+
+      public void updateCards(Card... cards) {
+        WeathermonDatabase.databaseWriterExecutor.execute(()->
+                cardDAO.updateCards(cards));;
     }
 }

@@ -5,7 +5,11 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.example.weathermon.R;
 import com.example.weathermon.database.WeathermonDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity(
     tableName = WeathermonDatabase.MONSTER_TABLE,
@@ -23,6 +27,33 @@ import com.example.weathermon.database.WeathermonDatabase;
 public class Monster {
     @PrimaryKey(autoGenerate = true)
     private int monster_id;
+    public static final Double levelModifier = 1.2; //Increase in power per level
+    public static final int weatherNone = 1;
+    public static final int weatherFire = 2;
+    public static final int weatherIce = 3;
+    public static final int weatherLight = 4;
+    public static final int weatherDark = 5;
+    public static final int weatherWind = 6;
+    public static final int weatherWater = 7;
+
+
+    public static final Map<Integer , Integer> convertWeatherTypeToDrawable =
+            Map.of(weatherNone, R.drawable.noweatherlogo,
+                    weatherFire,R.drawable.firelogo,
+                    weatherIce, R.drawable.icelogo,
+                    weatherLight, R.drawable.lightlogo,
+                    weatherDark, R.drawable.darklogo,
+                    weatherWind, R.drawable.windlogo,
+                    weatherWater,R.drawable.waterlogo );
+
+    public static final Map<Integer , String> convertWeatherTypeToString =
+            Map.of(weatherNone, "None",
+                    weatherFire, "Fire",
+                    weatherIce, "Ice",
+                    weatherLight, "Light",
+                    weatherDark, "Shadow",
+                    weatherWind, "Wind",
+                    weatherWater, "Water");
 
     private String monster_name;
     private int ability1;
