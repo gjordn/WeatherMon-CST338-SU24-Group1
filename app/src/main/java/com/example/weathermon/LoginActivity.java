@@ -44,6 +44,37 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Method to validate user credentials.
      */
+    private void validateCredentials(String username, String password) {
+        LiveData<User> userObserver = repository.getUserByUsername(username);
+        userObserver.observe(this, user -> {
+            if (user != null) {
+                int userId = user.getId();
+                Log.d(TAG, "Fetched User ID: " + userId);
+                if (password.equals(user.getPassword())) {
+                    saveUserCredentials(userId);
+
+                    // Changes start here
+                    if (user.isAdmin()) {
+                        Log.d(TAG, "User is an admin, redirecting to AdminActivity");
+                        Intent intent = AdminActivity.adminActivityIntentFactory(getApplicationContext());
+                        startActivity(intent);
+                    } else {
+                        Log.d(TAG, "User is not an admin, redirecting to MainActivity");
+                        Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), userId);
+                        startActivity(intent);
+                    }
+                    // Changes end here
+
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(LoginActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    /*
     private boolean validateCredentials(String username, String password) {
         LiveData<User> userObserver = repository.getUserByUsername(username);
         userObserver.observe(this , user -> {
@@ -58,12 +89,13 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
         return true;
     }
 
+
+     */
 
     /**
      * Method that gets user ID by username.

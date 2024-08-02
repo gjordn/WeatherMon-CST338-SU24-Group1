@@ -10,4 +10,8 @@
     <string name="campaign">Campaign</string>
     <string name="the_weathermon">The Weathermon</string>
     <string name="administration">Administration</string>
+    <string name="change_user_password">Change User Password</string>
+    <string name="make_admin">Make Admin</string>
+    <string name="delete_user">Delete User</string>
+    <string name="create_user">Create User</string>
 </resources>
