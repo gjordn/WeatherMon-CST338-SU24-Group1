@@ -11,10 +11,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -158,13 +160,46 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
 
     @Override
     public void onItemClicked(CardWithMonster cardWithMonster) {
-        Toast.makeText(this, "Hurray: "+ cardWithMonster.getMonster_name(),Toast.LENGTH_SHORT).show();
+
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(UserCardMantenanceActivity.this);
+        final EditText input = new EditText(UserCardMantenanceActivity.this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        alertBuilder.setView(input);
+
+        alertBuilder.setTitle("Your friend needs a new name!");
+
+        if (cardWithMonster.getCardCustomName().isEmpty()) {
+            alertBuilder.setMessage("What would you like to call " + cardWithMonster.getMonster_name());
+        } else {
+            alertBuilder.setMessage("What would you like to call " + cardWithMonster.getCardCustomName());
+        }
+
+        alertBuilder.setPositiveButton("Give freind new name", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                Card card = new Card(cardWithMonster.getMonster_id(), cardWithMonster.getUserID());
+                card.setCardID(cardWithMonster.getCardID());
+                card.setMonsterXP(cardWithMonster.getMonsterXP());
+                card.setCardCustomName(input.getText().toString());
+
+                repository.updateCards(card);
+            }
+        });
+
+        alertBuilder.setNegativeButton("Keep current name", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                dialogInterface.dismiss();
+            }
+        });
+        alertBuilder.create().show();
     }
 
     @Override
     public void onItemLongClicked(CardWithMonster cardWithMonster){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(UserCardMantenanceActivity.this);
-        final AlertDialog alertDialog = alertBuilder.create();
+
+        alertBuilder.setTitle("End Friendship");
 
         if (cardWithMonster.getCardCustomName().isEmpty()) {
             alertBuilder.setMessage("Do your really want to release: " + cardWithMonster.getMonster_name());
@@ -182,7 +217,7 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
         alertBuilder.setNegativeButton("Keep your friend", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
-                alertDialog.dismiss();
+                dialogInterface.dismiss();
             }
         });
         alertBuilder.create().show();
