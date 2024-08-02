@@ -47,6 +47,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        binding.buttonTrainWeathermon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = TrainWeathermon.trainWeathermonMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
+                startActivity(intent);
+
+            }
+        });
+
         int userId = getUserIdFromPrefs();
         Log.d(TAG, "Retrieved User ID from prefs: " + userId);  // Debugging log
         if (userId == -1) {
