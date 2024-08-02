@@ -53,7 +53,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (password.equals(user.getPassword())) {
                     saveUserCredentials(userId);
 
-                    // Changes start here
                     if (user.isAdmin()) {
                         Log.d(TAG, "User is an admin, redirecting to AdminActivity");
                         Intent intent = AdminActivity.adminActivityIntentFactory(getApplicationContext());
@@ -63,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), userId);
                         startActivity(intent);
                     }
-                    // Changes end here
 
                     finish();
                 } else {
