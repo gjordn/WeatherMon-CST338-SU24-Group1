@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -65,6 +66,14 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
 
         cardMaintenanceViewModel.getAllCardsByID(loggedInUserID).observe(this, cardList -> {
             adapter.submitList(cardList);
+        });
+
+        binding.buttonBackToMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), loggedInUserID);
+                startActivity(intent);
+            }
         });
 
     }
