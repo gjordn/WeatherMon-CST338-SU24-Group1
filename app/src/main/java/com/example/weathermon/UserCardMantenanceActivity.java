@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.weathermon.database.WeathermonDatabase;
 import com.example.weathermon.database.WeathermonRepository;
 import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.CardWithMonster;
@@ -174,8 +175,7 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
         alertBuilder.setPositiveButton("Release back into the wild", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
-                Card card = new Card(4,1);
-                cardMaintenanceViewModel.insert(card);
+                repository.deleteCardByID(cardWithMonster.getCardID());
             }
         });
 

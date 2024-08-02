@@ -83,7 +83,10 @@ public class WeathermonRepository {
     }
 
     public void deleteCardByID(int cardID){
-        cardDAO.deleteCardByID(cardID);
+        WeathermonDatabase.databaseWriterExecutor.execute(()->
+        {
+            cardDAO.deleteCardByID(cardID);
+        });
     }
 
     public void insertCard(Card card) {
