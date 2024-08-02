@@ -91,7 +91,14 @@ public class WeathermonRepository {
         cardDAO.insert(card);
     }
 
-    public void updateCards(Card... cards) {
+    public void deleteUser(User user) {
+        WeathermonDatabase.databaseWriterExecutor.execute(() -> userDAO.delete(user));
+    }
+
+    public void updateUser(User user) {
+        WeathermonDatabase.databaseWriterExecutor.execute(() -> userDAO.update(user));
+
+      public void updateCards(Card... cards) {
         WeathermonDatabase.databaseWriterExecutor.execute(()->
                 cardDAO.updateCards(cards));;
     }
