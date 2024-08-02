@@ -21,6 +21,8 @@ import com.example.weathermon.database.WeathermonRepository;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityMainBinding;
 
+import fragments.MainPageAdminButton;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String MAIN_ACTIVITY_USER_ID = "com.example.weathermon.MAIN_ACTIVITY_USER_ID";
@@ -42,14 +44,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = UserCardMantenanceActivity.userCardMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
                 startActivity(intent);
-            }
-        });
-
-        binding.buttonAdministrator.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //todo: add menu item to logoout and replace this code with link to admin section.
-                logout();
             }
         });
 
@@ -78,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
         userObserver.observe(this, user -> {
             if (user != null) {
                 this.user = user;
+                if (user.isAdmin()){
+                    getSupportFragmentManager().beginTransaction()
+                            .setReorderingAllowed(true)
+                            .add(R.id.fragment_admin_button_container, MainPageAdminButton.class, null)
+                            .commit();
+                }
                 Log.d(TAG, "User data loaded: " + user.getUsername());
                 invalidateOptionsMenu();
             }
