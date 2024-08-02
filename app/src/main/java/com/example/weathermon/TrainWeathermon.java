@@ -87,7 +87,9 @@ public class TrainWeathermon extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.logoutMenuItem);
         item.setVisible(true);
-        item.setTitle(user.getUsername());
+        if (user!=null){
+            item.setTitle(user.getUsername());
+        }
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem menuItem) {
