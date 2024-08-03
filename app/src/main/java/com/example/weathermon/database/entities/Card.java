@@ -16,8 +16,8 @@ import java.util.Objects;
                 entity = Monster.class,
                 parentColumns = {"monster_id"},
                 childColumns = {"monsterID"},
-                onDelete = ForeignKey.CASCADE,
-                onUpdate = ForeignKey.CASCADE
+                onDelete = ForeignKey.NO_ACTION,
+                onUpdate = ForeignKey.NO_ACTION
         )
     }, indices = {@Index(value = {"monsterID"})}
 )
