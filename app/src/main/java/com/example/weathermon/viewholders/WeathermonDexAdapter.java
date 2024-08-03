@@ -1,4 +1,4 @@
-package com.example.weathermon;
+package com.example.weathermon.viewholders;
 
 import android.view.LayoutInflater;
 import android.view.View;

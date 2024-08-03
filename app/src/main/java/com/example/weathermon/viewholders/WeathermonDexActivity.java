@@ -1,4 +1,4 @@
-package com.example.weathermon;
+package com.example.weathermon.viewholders;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,4 +33,5 @@ public class WeathermonDexActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 }
+
 

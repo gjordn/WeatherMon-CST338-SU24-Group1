@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -20,6 +20,7 @@ import androidx.lifecycle.LiveData;
 import com.example.weathermon.database.WeathermonRepository;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityMainBinding;
+import com.example.weathermon.viewholders.WeathermonDexActivity;
 
 import fragments.MainPageAdminButton;
 
@@ -66,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
-
         LiveData<User> userObserver = repository.getUserByUserID(loggedInUserId);
         userObserver.observe(this, user -> {
             if (user != null) {
@@ -83,6 +82,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton buttonWeathermonDex = findViewById(R.id.buttonWeathermonDex);
+        buttonWeathermonDex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, WeathermonDexActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
