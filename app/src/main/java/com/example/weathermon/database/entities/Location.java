@@ -24,6 +24,7 @@ public class Location {
     private boolean realLocation;
     private LocalDateTime localTime;
     private boolean isDaytime;
+    private int campaignLocationStopNumber;
 
     // Constructor, getters, and setters
 
