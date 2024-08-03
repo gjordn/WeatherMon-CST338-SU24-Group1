@@ -5,7 +5,6 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.weathermon.database.dao.AbilityDAO;
 import com.example.weathermon.database.dao.CardDAO;
 import com.example.weathermon.database.dao.LocationDAO;
 import com.example.weathermon.database.dao.UserDAO;
@@ -19,7 +18,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class WeathermonRepository {
-    private final AbilityDAO abilityDAO;
     private final UserDAO userDAO;
     private final LocationDAO locationDAO;
     private final CardDAO cardDAO;
@@ -28,7 +26,6 @@ public class WeathermonRepository {
 
     private WeathermonRepository(Application application){
         WeathermonDatabase db = WeathermonDatabase.getDatabase(application);
-        this.abilityDAO = db.abilityDAO();
         this.userDAO = db.userDAO();
         this.locationDAO = db.locationDao();
         this.cardDAO = db.cardDAO();

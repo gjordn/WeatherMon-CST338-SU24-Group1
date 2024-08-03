@@ -1,7 +1,5 @@
 package com.example.weathermon.database.entities;
 
-import android.security.keystore.StrongBoxUnavailableException;
-
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.ColumnInfo;
@@ -24,13 +22,15 @@ public class Location {
     private int temperature;
     private boolean realLocation;
     private LocalDateTime localTime;
+    private boolean dayOrNight;
 
     // Constructor, getters, and setters
 
-    public Location(String location, String arenaName, boolean realLocation) {
+    public Location(String location, String arenaName, boolean realLocation, boolean dayOrNight) {
         this.location = location;
         this.arenaName = arenaName;
         this.realLocation = realLocation;
+        this.dayOrNight =  dayOrNight;
     }
 
     public int getId() {
@@ -104,6 +104,14 @@ public class Location {
 
     public void setLocalTime(LocalDateTime localTime) {
         this.localTime = localTime;
+    }
+
+    public boolean isDayOrNight() {
+        return dayOrNight;
+    }
+
+    public void setDayOrNight(boolean dayOrNight) {
+        this.dayOrNight = dayOrNight;
     }
 }
 

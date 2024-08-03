@@ -1,15 +1,10 @@
 package com.example.weathermon.database.entities;
 
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import com.example.weathermon.database.Util;
 import com.example.weathermon.database.WeathermonDatabase;
 
 import java.util.Objects;
@@ -29,7 +24,6 @@ import java.util.Objects;
 
 public class Card {
     private static final int MONSTER_STARTING_XP = 0;
-    private static final int MONSTER_STARTING_LEVEL = 1;
     private static final int baseXPForLevel = 10;
     private static final double levelExponential = 2;
 
@@ -39,13 +33,11 @@ public class Card {
     private int monsterID;
     private int monsterXP;
     private int userID;
-    private int monsterLevel;
 
     public Card(int monsterID, int userID){
         this.monsterID = monsterID;
         this.userID = userID;
         monsterXP = MONSTER_STARTING_XP;
-        monsterLevel = MONSTER_STARTING_LEVEL;
         cardCustomName = "";
     }
 
@@ -105,14 +97,6 @@ public class Card {
         this.userID = userID;
     }
 
-    public int getMonsterLevel() {
-        return monsterLevel;
-    }
-
-    public void setMonsterLevel(int monsterLevel) {
-        this.monsterLevel = monsterLevel;
-    }
-
     public String getCardCustomName() {
         return cardCustomName;
     }
@@ -129,12 +113,12 @@ public class Card {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return cardID == card.cardID && monsterID == card.monsterID && monsterXP == card.monsterXP && userID == card.userID && monsterLevel == card.monsterLevel;
+        return cardID == card.cardID && monsterID == card.monsterID && monsterXP == card.monsterXP && userID == card.userID;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardID, monsterID, monsterXP, userID, monsterLevel);
+        return Objects.hash(cardID, monsterID, monsterXP, userID);
     }
 
     /**

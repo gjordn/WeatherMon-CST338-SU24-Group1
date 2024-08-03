@@ -42,9 +42,6 @@ public class AddMonsterActivity extends AppCompatActivity {
                 monster.setBaseHP(Integer.parseInt(hpEditText.getText().toString()));
                 monster.setBaseAttack(Integer.parseInt(attackEditText.getText().toString()));
                 monster.setBaseDefense(Integer.parseInt(defenseEditText.getText().toString()));
-                monster.setAbility1(Integer.parseInt(ability1EditText.getText().toString()));
-                monster.setAbility2(Integer.parseInt(ability2EditText.getText().toString()));
-                monster.setAbility3(Integer.parseInt(ability3EditText.getText().toString()));
                 monster.setWeatherInnate(Integer.parseInt(weatherInnateEditText.getText().toString()));
 
                 new Thread(new Runnable() {

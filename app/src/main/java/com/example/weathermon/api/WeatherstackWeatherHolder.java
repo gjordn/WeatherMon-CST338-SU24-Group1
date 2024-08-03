@@ -1,9 +1,28 @@
 package com.example.weathermon.api;
 
+import com.example.weathermon.database.entities.Location;
+
+import java.time.LocalDateTime;
+
 public class WeatherstackWeatherHolder {
     public Request request;
     public Location location;
     public current current;
+
+    public com.example.weathermon.database.entities.Location WeatherstackToLocationDatabaseEntitiy(){
+        com.example.weathermon.database.entities.Location dbLocation;
+
+        int windspeed;
+        int humidity;
+        int temperature;
+        boolean realLocation;
+        LocalDateTime localTime;
+        boolean dayOrNight;
+
+
+        dbLocation = new com.example.weathermon.database.entities.Location("tenp", "temp",false,false);
+        return dbLocation;
+    }
 
     public Request getRequest() {
         return request;
