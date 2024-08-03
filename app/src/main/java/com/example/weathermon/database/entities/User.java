@@ -22,7 +22,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.isAdmin = isAdmin;
-        this.campaignProgress=1;  //Start at the begining;
+        this.campaignProgress=0;  //Start at the begining;
     }
 
     @Override
