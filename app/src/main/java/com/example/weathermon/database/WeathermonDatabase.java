@@ -35,7 +35,7 @@ public abstract class WeathermonDatabase extends RoomDatabase {
     public static final String MONSTER_TABLE = "MonsterTable";
 
     private static final String WEATHERMON_DEFAULT_DATABASE = "database/WeathermonDefaultDatabase.db";
-    private static final int NUMBER_OF_THREADS = 4;
+    private static final int NUMBER_OF_THREADS = 3;
     static final ExecutorService databaseWriterExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
 
@@ -56,7 +56,7 @@ public abstract class WeathermonDatabase extends RoomDatabase {
                                     WEATHERMON_DATABASE_NAME)
                                     .fallbackToDestructiveMigration()
 //                                    .createFromAsset(WEATHERMON_DEFAULT_DATABASE)
-                            .addCallback(addDefaultValues)
+                                    .addCallback(addDefaultValues)
                                     .build();
                 }
             }

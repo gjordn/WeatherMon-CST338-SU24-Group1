@@ -7,6 +7,7 @@ import androidx.room.ColumnInfo;
 import com.example.weathermon.database.WeathermonDatabase;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity(tableName = WeathermonDatabase.LOCATION_TABLE)
 public class Location {
@@ -22,15 +23,15 @@ public class Location {
     private int temperature;
     private boolean realLocation;
     private LocalDateTime localTime;
-    private boolean dayOrNight;
+    private boolean isDaytime;
 
     // Constructor, getters, and setters
 
-    public Location(String location, String arenaName, boolean realLocation, boolean dayOrNight) {
+    public Location(String location, String arenaName, boolean realLocation, boolean isDaytime) {
         this.location = location;
         this.arenaName = arenaName;
         this.realLocation = realLocation;
-        this.dayOrNight =  dayOrNight;
+        this.isDaytime = isDaytime;
     }
 
     public int getId() {
@@ -106,12 +107,25 @@ public class Location {
         this.localTime = localTime;
     }
 
-    public boolean isDayOrNight() {
-        return dayOrNight;
+    public boolean isDaytime() {
+        return isDaytime;
     }
 
-    public void setDayOrNight(boolean dayOrNight) {
-        this.dayOrNight = dayOrNight;
+    public void setIsDaytime(boolean daytime) {
+        this.isDaytime = daytime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Location location1 = (Location) o;
+        return arenaID == location1.arenaID && windspeed == location1.windspeed && humidity == location1.humidity && temperature == location1.temperature && realLocation == location1.realLocation && isDaytime == location1.isDaytime && Objects.equals(location, location1.location) && Objects.equals(arenaName, location1.arenaName) && Objects.equals(localTime, location1.localTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(arenaID, location, arenaName, windspeed, humidity, temperature, realLocation, localTime, isDaytime);
     }
 }
 

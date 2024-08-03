@@ -15,12 +15,14 @@ public class User {
     private String username;
     private String password;
     private boolean isAdmin;
+    private int campaignProgress;
 
     // Constructor, getters, and setters
     public User(String username, String password, boolean isAdmin) {
         this.username = username;
         this.password = password;
         this.isAdmin = isAdmin;
+        this.campaignProgress=1;  //Start at the begining;
     }
 
     @Override
@@ -38,12 +40,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && isAdmin == user.isAdmin && Objects.equals(username, user.username) && Objects.equals(password, user.password);
+        return id == user.id && isAdmin == user.isAdmin && campaignProgress == user.campaignProgress && Objects.equals(username, user.username) && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, isAdmin);
+        return Objects.hash(id, username, password, isAdmin, campaignProgress);
     }
 
     public int getId() {
@@ -77,4 +79,11 @@ public class User {
         isAdmin = admin;
     }
 
+    public int getCampaignProgress() {
+        return campaignProgress;
+    }
+
+    public void setCampaignProgress(int campaignProgress) {
+        this.campaignProgress = campaignProgress;
+    }
 }
