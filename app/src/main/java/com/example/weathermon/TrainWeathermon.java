@@ -1,6 +1,8 @@
 package com.example.weathermon;
 
 import static com.example.weathermon.api.WeatherstackInterface.BASE_URL;
+import static com.example.weathermon.api.WeatherstackInterface.ENGLISH_UNITS;
+import static com.example.weathermon.database.Util.LOGGING_TAG;
 import static com.example.weathermon.database.Util.USER_LOGGED_OUT;
 import static com.example.weathermon.database.Util.WEATHERMON_LOGGED_IN_USER_ID;
 import static com.example.weathermon.database.Util.WEATHERMON_SHARED_PREF_KEY;
@@ -11,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,8 +35,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
 
 public class TrainWeathermon extends AppCompatActivity {
     ActivityTrainWeathermonBinding binding;
@@ -57,10 +58,14 @@ public class TrainWeathermon extends AppCompatActivity {
         loginUser(savedInstanceState);
 
         WeatherstackInterface weatherstackInterface = retrofit.create(WeatherstackInterface.class);
-        weatherstackInterface.getWeartherstackWeather().enqueue(new Callback<WeatherstackWeatherHolder>() {
+        weatherstackInterface.getWeartherstackWeather("Shanghai", ENGLISH_UNITS).enqueue(new Callback<WeatherstackWeatherHolder>() {
             @Override
             public void onResponse(@NonNull Call<WeatherstackWeatherHolder> call, @NonNull Response<WeatherstackWeatherHolder> response) {
-                binding.weatherTextView.setText(response.body().location.name);
+                Log.d(LOGGING_TAG, "icons" +response.body().current.weather_icons[0]);
+                Log.d(LOGGING_TAG, "is_day" +response.body().current.weather_descriptions[0]);
+                Log.d(LOGGING_TAG, "units" +response.body().request.unit);
+                Log.d(LOGGING_TAG, "temp" +response.body().current.temperature);
+
             }
 
             @Override

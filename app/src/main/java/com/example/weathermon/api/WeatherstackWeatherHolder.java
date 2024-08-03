@@ -3,7 +3,7 @@ package com.example.weathermon.api;
 public class WeatherstackWeatherHolder {
     public Request request;
     public Location location;
-    public CurrentWeather currentWeather;
+    public current current;
 
     public Request getRequest() {
         return request;
@@ -21,26 +21,26 @@ public class WeatherstackWeatherHolder {
         this.location = location;
     }
 
-    public CurrentWeather getCurrentWeather() {
-        return currentWeather;
+    public current getCurrentWeather() {
+        return current;
     }
 
-    public void setCurrentWeather(CurrentWeather currentWeather) {
-        this.currentWeather = currentWeather;
+    public void setCurrentWeather(current current) {
+        this.current = current;
     }
 
     public class Request {
-        public String ip;
+        public String type;
         public String query;
         public String language;
         public String unit;
 
-        public String getIp() {
-            return ip;
+        public String getType() {
+            return type;
         }
 
-        public void setIp(String ip) {
-            this.ip = ip;
+        public void setType(String type) {
+            this.type = type;
         }
 
         public String getQuery() {
@@ -75,8 +75,8 @@ public class WeatherstackWeatherHolder {
         public String lat;
         public String lon;
         public String timezone_id;
-        public String localTime;
-        public String LocalTime_Epoch;
+        public String localtime;
+        public String localtime_epoch;
         public String utc_offset;
 
         public String getName() {
@@ -127,20 +127,20 @@ public class WeatherstackWeatherHolder {
             this.timezone_id = timezone_id;
         }
 
-        public String getLocalTime() {
-            return localTime;
+        public String getLocaltime() {
+            return localtime;
         }
 
-        public void setLocalTime(String localTime) {
-            this.localTime = localTime;
+        public void setLocaltime(String localtime) {
+            this.localtime = localtime;
         }
 
-        public String getLocalTime_Epoch() {
-            return LocalTime_Epoch;
+        public String getLocaltime_epoch() {
+            return localtime_epoch;
         }
 
-        public void setLocalTime_Epoch(String localTime_Epoch) {
-            LocalTime_Epoch = localTime_Epoch;
+        public void setLocaltime_epoch(String localtime_epoch) {
+            this.localtime_epoch = localtime_epoch;
         }
 
         public String getUtc_offset() {
@@ -152,30 +152,30 @@ public class WeatherstackWeatherHolder {
         }
     }
 
-    public class CurrentWeather {
-        public String ovservation_time;
+    public class current {
+        public String observation_time;
         public String temperature;
-        public String weather_cone;
+        public String weather_code;
         public String[] weather_icons;
         public String[] weather_descriptions;
         public String wind_speed;
-        public String  wind_degree;
+        public String wind_degree;
         public String wind_dir;
         public String pressure;
-        public String precipitation;
+        public String precip;
         public String humidity;
-        public String cloud_cover;
-        public String feels_like;
+        public String cloudcover;
+        public String feelslike;
         public String uv_index;
         public String visibility;
         public String is_day;
 
-        public String getOvservation_time() {
-            return ovservation_time;
+        public String getObservation_time() {
+            return observation_time;
         }
 
-        public void setOvservation_time(String ovservation_time) {
-            this.ovservation_time = ovservation_time;
+        public void setObservation_time(String observation_time) {
+            this.observation_time = observation_time;
         }
 
         public String getTemperature() {
@@ -186,12 +186,12 @@ public class WeatherstackWeatherHolder {
             this.temperature = temperature;
         }
 
-        public String getWeather_cone() {
-            return weather_cone;
+        public String getWeather_code() {
+            return weather_code;
         }
 
-        public void setWeather_cone(String weather_cone) {
-            this.weather_cone = weather_cone;
+        public void setWeather_code(String weather_code) {
+            this.weather_code = weather_code;
         }
 
         public String[] getWeather_icons() {
@@ -242,12 +242,12 @@ public class WeatherstackWeatherHolder {
             this.pressure = pressure;
         }
 
-        public String getPrecipitation() {
-            return precipitation;
+        public String getPrecip() {
+            return precip;
         }
 
-        public void setPrecipitation(String precipitation) {
-            this.precipitation = precipitation;
+        public void setPrecip(String precip) {
+            this.precip = precip;
         }
 
         public String getHumidity() {
@@ -258,20 +258,20 @@ public class WeatherstackWeatherHolder {
             this.humidity = humidity;
         }
 
-        public String getCloud_cover() {
-            return cloud_cover;
+        public String getCloudcover() {
+            return cloudcover;
         }
 
-        public void setCloud_cover(String cloud_cover) {
-            this.cloud_cover = cloud_cover;
+        public void setCloudcover(String cloudcover) {
+            this.cloudcover = cloudcover;
         }
 
-        public String getFeels_like() {
-            return feels_like;
+        public String getFeelslike() {
+            return feelslike;
         }
 
-        public void setFeels_like(String feels_like) {
-            this.feels_like = feels_like;
+        public void setFeelslike(String feelslike) {
+            this.feelslike = feelslike;
         }
 
         public String getUv_index() {
