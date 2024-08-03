@@ -1,6 +1,7 @@
 package com.example.weathermon;
 
 import static com.example.weathermon.api.WeatherstackInterface.BASE_URL;
+import static com.example.weathermon.api.WeatherstackInterface.CURRENT_LOCATION_BY_IP;
 import static com.example.weathermon.api.WeatherstackInterface.ENGLISH_UNITS;
 import static com.example.weathermon.database.Util.LOGGING_TAG;
 import static com.example.weathermon.database.Util.USER_LOGGED_OUT;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -27,6 +29,7 @@ import androidx.lifecycle.LiveData;
 import com.example.weathermon.api.WeatherstackInterface;
 import com.example.weathermon.api.WeatherstackWeatherHolder;
 import com.example.weathermon.database.WeathermonRepository;
+import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityTrainWeathermonBinding;
 
@@ -39,9 +42,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TrainWeathermon extends AppCompatActivity {
     ActivityTrainWeathermonBinding binding;
     private WeathermonRepository repository;
-
     private int loggedInUserID = 1;
     private User user;
+    private Location trainingLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,19 +61,15 @@ public class TrainWeathermon extends AppCompatActivity {
         loginUser(savedInstanceState);
 
         WeatherstackInterface weatherstackInterface = retrofit.create(WeatherstackInterface.class);
-        weatherstackInterface.getWeartherstackWeather("Shanghai", ENGLISH_UNITS).enqueue(new Callback<WeatherstackWeatherHolder>() {
+        weatherstackInterface.getWeartherstackWeather(CURRENT_LOCATION_BY_IP, ENGLISH_UNITS).enqueue(new Callback<WeatherstackWeatherHolder>() {
             @Override
             public void onResponse(@NonNull Call<WeatherstackWeatherHolder> call, @NonNull Response<WeatherstackWeatherHolder> response) {
-                Log.d(LOGGING_TAG, "icons" +response.body().current.weather_icons[0]);
-                Log.d(LOGGING_TAG, "is_day" +response.body().current.weather_descriptions[0]);
-                Log.d(LOGGING_TAG, "units" +response.body().request.unit);
-                Log.d(LOGGING_TAG, "temp" +response.body().current.temperature);
 
             }
 
             @Override
             public void onFailure(Call<WeatherstackWeatherHolder> call, Throwable throwable) {
-                binding.weatherTextView.setText("throwable: " + throwable.getMessage());
+                Toast.makeText(getApplicationContext(), "That's bad - throwable: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
