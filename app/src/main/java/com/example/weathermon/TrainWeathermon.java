@@ -1,5 +1,6 @@
 package com.example.weathermon;
 
+import static com.example.weathermon.api.WeatherstackInterface.BASE_URL;
 import static com.example.weathermon.database.Util.USER_LOGGED_OUT;
 import static com.example.weathermon.database.Util.WEATHERMON_LOGGED_IN_USER_ID;
 import static com.example.weathermon.database.Util.WEATHERMON_SHARED_PREF_KEY;
@@ -15,20 +16,24 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LiveData;
 
+import com.example.weathermon.api.WeatherstackInterface;
+import com.example.weathermon.api.WeatherstackWeatherHolder;
 import com.example.weathermon.database.WeathermonRepository;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityTrainWeathermonBinding;
-import com.example.weathermon.databinding.ActivityUserCardMantenanceBinding;
-import com.example.weathermon.viewholders.CardMaintenanceViewModel;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public class TrainWeathermon extends AppCompatActivity {
     ActivityTrainWeathermonBinding binding;
@@ -44,7 +49,25 @@ public class TrainWeathermon extends AppCompatActivity {
         setContentView(binding.getRoot());
         repository = WeathermonRepository.getRepository(getApplication());
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
         loginUser(savedInstanceState);
+
+        WeatherstackInterface weatherstackInterface = retrofit.create(WeatherstackInterface.class);
+        weatherstackInterface.getWeartherstackWeather().enqueue(new Callback<WeatherstackWeatherHolder>() {
+            @Override
+            public void onResponse(@NonNull Call<WeatherstackWeatherHolder> call, @NonNull Response<WeatherstackWeatherHolder> response) {
+                binding.weatherTextView.setText(response.body().location.name);
+            }
+
+            @Override
+            public void onFailure(Call<WeatherstackWeatherHolder> call, Throwable throwable) {
+                binding.weatherTextView.setText("throwable: " + throwable.getMessage());
+            }
+        });
 
         binding.buttonBackToMain.setOnClickListener(new View.OnClickListener() {
             @Override
