@@ -113,12 +113,12 @@ public class Card {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return cardID == card.cardID && monsterID == card.monsterID && monsterXP == card.monsterXP && userID == card.userID;
+        return cardID == card.cardID && monsterID == card.monsterID && monsterXP == card.monsterXP && userID == card.userID && Objects.equals(cardCustomName, card.cardCustomName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardID, monsterID, monsterXP, userID);
+        return Objects.hash(cardID, cardCustomName, monsterID, monsterXP, userID);
     }
 
     /**

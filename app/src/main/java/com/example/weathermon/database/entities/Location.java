@@ -116,17 +116,29 @@ public class Location {
         this.isDaytime = daytime;
     }
 
+    public void setDaytime(boolean daytime) {
+        isDaytime = daytime;
+    }
+
+    public int getCampaignLocationStopNumber() {
+        return campaignLocationStopNumber;
+    }
+
+    public void setCampaignLocationStopNumber(int campaignLocationStopNumber) {
+        this.campaignLocationStopNumber = campaignLocationStopNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Location location1 = (Location) o;
-        return arenaID == location1.arenaID && windspeed == location1.windspeed && humidity == location1.humidity && temperature == location1.temperature && realLocation == location1.realLocation && isDaytime == location1.isDaytime && Objects.equals(location, location1.location) && Objects.equals(arenaName, location1.arenaName) && Objects.equals(localTime, location1.localTime);
+        return arenaID == location1.arenaID && windspeed == location1.windspeed && humidity == location1.humidity && temperature == location1.temperature && realLocation == location1.realLocation && isDaytime == location1.isDaytime && campaignLocationStopNumber == location1.campaignLocationStopNumber && Objects.equals(location, location1.location) && Objects.equals(arenaName, location1.arenaName) && Objects.equals(localTime, location1.localTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(arenaID, location, arenaName, windspeed, humidity, temperature, realLocation, localTime, isDaytime);
+        return Objects.hash(arenaID, location, arenaName, windspeed, humidity, temperature, realLocation, localTime, isDaytime, campaignLocationStopNumber);
     }
 }
 
