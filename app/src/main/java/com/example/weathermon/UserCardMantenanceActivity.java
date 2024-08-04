@@ -1,6 +1,5 @@
 package com.example.weathermon;
 
-import static com.example.weathermon.database.Util.LOGGING_TAG;
 import static com.example.weathermon.database.Util.USER_LOGGED_OUT;
 import static com.example.weathermon.database.Util.WEATHERMON_LOGGED_IN_USER_ID;
 import static com.example.weathermon.database.Util.WEATHERMON_SHARED_PREF_KEY;
@@ -12,13 +11,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -28,7 +25,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.weathermon.database.WeathermonDatabase;
 import com.example.weathermon.database.WeathermonRepository;
 import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.CardWithMonster;
@@ -63,7 +59,6 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         cardMaintenanceViewModel.getAllCardsByID(loggedInUserID).observe(this, cardList -> {
             adapter.submitList(cardList);
         });
@@ -75,7 +70,6 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
                 startActivity(intent);
             }
         });
-
     }
 
     private void loginUser(Bundle savedInstanceState) {
@@ -83,31 +77,25 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
                 Context.MODE_PRIVATE);
         loggedInUserID = sharedPreferences.getInt(WEATHERMON_SHARED_PREF_USERID, USER_LOGGED_OUT);
 
-        if (loggedInUserID == USER_LOGGED_OUT){
-            //Check intent for logged in user if not found in sharedPreferences.
+        if (loggedInUserID == USER_LOGGED_OUT) {
+            // Check intent for logged in user if not found in sharedPreferences.
             loggedInUserID = getIntent().getIntExtra(WEATHERMON_LOGGED_IN_USER_ID, USER_LOGGED_OUT);
         }
 
-        if(loggedInUserID == USER_LOGGED_OUT){
-            return;  //No user id, exit out.
+        if (loggedInUserID == USER_LOGGED_OUT) {
+            return;  // No user id, exit out.
         }
 
         LiveData<User> userObserver = repository.getUserByUserID(loggedInUserID);
         userObserver.observe(this, user -> {
-            //Find user, if found, set shared preferences to userID and reset menu options
-            if (user != null){
+            // Find user, if found, set shared preferences to userID and reset menu options
+            if (user != null) {
                 this.user = user;
                 invalidateOptionsMenu();
             }
         });
-
-
     }
 
-
-    /**
-     * Code block prepared by Gerek, copy from Main Activity
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -130,7 +118,7 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
         return true;
     }
 
-    private void showLogoutDialog(){
+    private void showLogoutDialog() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(UserCardMantenanceActivity.this);
         final AlertDialog alertDialog = alertBuilder.create();
 
@@ -157,11 +145,7 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
         startActivity(intent);
     }
 
-    /**
-     * End Gerek code block
-     */
-
-    static Intent userCardMaintenanceIntentFactory(Context context, int userID){
+    static Intent userCardMaintenanceIntentFactory(Context context, int userID) {
         Intent intent = new Intent(context, UserCardMantenanceActivity.class);
         intent.putExtra(WEATHERMON_LOGGED_IN_USER_ID, userID);
         return intent;
@@ -169,7 +153,6 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
 
     @Override
     public void onItemClicked(CardWithMonster cardWithMonster) {
-
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(UserCardMantenanceActivity.this);
         final EditText input = new EditText(UserCardMantenanceActivity.this);
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
@@ -183,7 +166,7 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
             alertBuilder.setMessage("What would you like to call " + cardWithMonster.getCardCustomName());
         }
 
-        alertBuilder.setPositiveButton("Give freind new name", new DialogInterface.OnClickListener() {
+        alertBuilder.setPositiveButton("Give friend new name", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
                 Card card = new Card(cardWithMonster.getMonster_id(), cardWithMonster.getUserID());
@@ -205,15 +188,15 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
     }
 
     @Override
-    public void onItemLongClicked(CardWithMonster cardWithMonster){
+    public void onItemLongClicked(CardWithMonster cardWithMonster) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(UserCardMantenanceActivity.this);
 
         alertBuilder.setTitle("End Friendship");
 
         if (cardWithMonster.getCardCustomName().isEmpty()) {
-            alertBuilder.setMessage("Do your really want to release: " + cardWithMonster.getMonster_name());
+            alertBuilder.setMessage("Do you really want to release: " + cardWithMonster.getMonster_name());
         } else {
-            alertBuilder.setMessage("Do your really want to release: " + cardWithMonster.getCardCustomName());
+            alertBuilder.setMessage("Do you really want to release: " + cardWithMonster.getCardCustomName());
         }
 
         alertBuilder.setPositiveButton("Release back into the wild", new DialogInterface.OnClickListener() {
@@ -231,5 +214,6 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
         });
         alertBuilder.create().show();
     }
-
 }
+
+

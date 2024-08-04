@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="20dp"
-        android:contentDescription="@string/my_pet_weathermon"
+        android:contentDescription="@string/weathermon_dictionary"
         />
 
     <ImageButton
@@ -56,6 +56,17 @@
         android:layout_marginTop="20dp"
         android:contentDescription="@string/the_weathermon"
     />
+
+    <ImageButton
+        android:id="@+id/buttonWeathermonDex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttonmypetweathermon"
+        app:layout_constraintTop_toBottomOf="@id/buttonTheWeathermon"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/weathermon_dictionary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageButton
         android:layout_width="wrap_content"

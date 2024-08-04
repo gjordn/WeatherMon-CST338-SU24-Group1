@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -33,11 +34,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
 
+        binding.buttonMyPetWeathermon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = UserCardMantenanceActivity.userCardMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
+                startActivity(intent);
+            }
+        });
+
         int userId = getUserIdFromPrefs();
-        Log.d(TAG, "Retrieved User ID from prefs: " + userId);
+        Log.d(TAG, "Retrieved User ID from prefs: " + userId);  // Debugging log
         if (userId == -1) {
+            Log.d(TAG, "User ID from prefs: " + userId);  // Additional log for debugging
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
             startActivity(intent);
             finish();
@@ -52,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+
 
         LiveData<User> userObserver = repository.getUserByUserID(loggedInUserId);
         userObserver.observe(this, user -> {
@@ -107,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void showLogoutDialog() {
+    private void showLogoutDialog(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
         final AlertDialog alertDialog = alertBuilder.create();
 
@@ -137,10 +150,11 @@ public class MainActivity extends AppCompatActivity {
     private int getUserIdFromPrefs() {
         SharedPreferences sharedPreferences = getSharedPreferences("WeatherMonPrefs", MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId", -1);
-        Log.d(TAG, "Retrieved User ID from prefs: " + userId);
+        Log.d(TAG, "Retrieved User ID from prefs: " + userId);  // Debugging log
         return userId;
     }
 
+    // Main Activity Factory
     static Intent mainActivityIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(MAIN_ACTIVITY_USER_ID, userId);
