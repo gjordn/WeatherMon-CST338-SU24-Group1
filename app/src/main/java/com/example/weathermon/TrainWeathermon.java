@@ -30,6 +30,8 @@ import com.example.weathermon.database.WeathermonRepository;
 import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityTrainWeathermonBinding;
+import com.example.weathermon.viewholders.CardMaintenanceAdapter;
+import com.example.weathermon.viewholders.CardMaintenanceViewHolder;
 
 import fragments.LocationSelectionFragment;
 import retrofit2.Call;
@@ -79,6 +81,7 @@ public class TrainWeathermon extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 
 

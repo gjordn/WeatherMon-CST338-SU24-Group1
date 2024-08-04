@@ -22,8 +22,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonBackToMain"
-        android:background="@drawable/buttonback"
+        android:background="@drawable/buttonbacktrain"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/back_to_main_page"
+        />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonTravelNewArena"
+        android:background="@drawable/buttontraveltrain"
+        app:layout_constraintStart_toEndOf="@+id/buttonBackToMain"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/back_to_main_page"
+        />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonNextPage"
+        android:background="@drawable/buttonnexttrain"
+        app:layout_constraintStart_toEndOf="@+id/buttonTravelNewArena"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="16dp"
         android:contentDescription="@string/back_to_main_page"

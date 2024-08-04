@@ -32,7 +32,7 @@ public class Location {
                     iceBonus,R.drawable.tempcold,
                     lightBonus, R.drawable.daytimebonus,
                     darkBonus, R.drawable.nightimebonus,
-                    windBonus, R.drawable.windlogo,
+                    windBonus, R.drawable.windybonus,
                     noWindBonus, R.drawable.nowindbonus,
                     humidBonus, R.drawable.humiditybonus,
                     noHumidBonus,R.drawable.drynobonus );
@@ -187,7 +187,7 @@ public class Location {
         if (this.isDaytime){
             return "It is daytime, where are my shades?";
         }
-        return "It is nightime, the Shadows swell!";
+        return "It is nightime, the Shadows shift and creep!";
     }
 
     public String getWindspeedToString() {
@@ -224,7 +224,7 @@ public class Location {
         if (bonusToWind()){
             return bonusToImage.get(windBonus);
         }
-        return bonusToImage.get(windBonus);
+        return bonusToImage.get(noWindBonus);
     }
 
     public int getIsDayBoostImage() {
