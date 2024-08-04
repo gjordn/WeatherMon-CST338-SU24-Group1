@@ -72,6 +72,15 @@ public class WeathermonRepository {
         });
     }
 
+    public void makeAdmin(String username) {
+        WeathermonDatabase.databaseWriterExecutor.execute(() -> {
+            User user = userDAO.getUserByUsernameSync(username);
+            if (user != null && !user.isAdmin()) {
+                userDAO.makeAdmin(username);
+            }
+        });
+    }
+
     public LiveData<User> getUserByUsername(String username) {
         return userDAO.getUserByUsername(username);
     }
