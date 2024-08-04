@@ -31,6 +31,7 @@ import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityTrainWeathermonBinding;
 
+import fragments.LocationSelectionFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,12 +45,15 @@ public class TrainWeathermon extends AppCompatActivity {
     private User user;
     private Location trainingLocation;
     private Retrofit retrofit;
+    private int view;
+    private LocationSelectionFragment locationSelectionFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityTrainWeathermonBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         repository = WeathermonRepository.getRepository(getApplication());
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -58,10 +62,15 @@ public class TrainWeathermon extends AppCompatActivity {
 
 
         loginUser(savedInstanceState);
-
-
-        setLocationHome();
-        updateRealLocation();  //Go to "Home" arena
+        setLocationHome();//Go to "Home" arena
+        if (trainingLocation.isRealLocation()){
+            updateRealLocation();
+        } else {
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.fragment_train_container, LocationSelectionFragment.class, null)
+                    .commit();
+        }
 
         binding.buttonBackToMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +80,7 @@ public class TrainWeathermon extends AppCompatActivity {
             }
         });
     }
+
 
     private void setLocationHome() {
         trainingLocation = new Location(CURRENT_LOCATION_BY_IP, " ",true,true);
@@ -88,6 +98,12 @@ public class TrainWeathermon extends AppCompatActivity {
                 trainingLocation.setWindspeed(response.body().getConvertedWindspeed());
                 trainingLocation.setIsDaytime(response.body().getConvertedIsDaytime());
                 trainingLocation.setLocalTime(response.body().getConvertedDateTime());
+
+                getSupportFragmentManager().beginTransaction()
+                        .setReorderingAllowed(true)
+                        .add(R.id.fragment_train_container, LocationSelectionFragment.class, null)
+                        .commit();
+
             }
 
             @Override
@@ -121,6 +137,11 @@ public class TrainWeathermon extends AppCompatActivity {
             }
         });
     }
+
+    public Location getLocationInfo(){
+        return trainingLocation;
+    }
+
 
     public static Intent trainWeathermonMaintenanceIntentFactory(Context context, int loggedInUserId) {
         Intent intent = new Intent(context, TrainWeathermon.class);
@@ -177,4 +198,5 @@ public class TrainWeathermon extends AppCompatActivity {
         Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
         startActivity(intent);
     }
+
 }

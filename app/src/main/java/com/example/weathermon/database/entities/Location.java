@@ -4,13 +4,40 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.ColumnInfo;
 
+import com.example.weathermon.R;
 import com.example.weathermon.database.WeathermonDatabase;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Objects;
 
 @Entity(tableName = WeathermonDatabase.LOCATION_TABLE)
 public class Location {
+    private static final int BONUS_TEMP_LIMIT = 70;
+    private static final int BONUS_WIND_LIMIT = 10;
+    private static final int HUMIDITY_BONUS_LIMIT = 45;
+
+    public static final int hotBonus = 1;
+    public static final int iceBonus = 2;
+    public static final int lightBonus = 3;
+    public static final int darkBonus = 4;
+    public static final int windBonus = 5;
+    public static final int noWindBonus = 6;
+    public static final int humidBonus = 7;
+    public static final int noHumidBonus = 8;
+
+
+    public static final Map<Integer , Integer> bonusToImage =
+            Map.of(hotBonus, R.drawable.temphot,
+                    iceBonus,R.drawable.tempcold,
+                    lightBonus, R.drawable.daytimebonus,
+                    darkBonus, R.drawable.nightimebonus,
+                    windBonus, R.drawable.windlogo,
+                    noWindBonus, R.drawable.nowindbonus,
+                    humidBonus, R.drawable.humiditybonus,
+                    noHumidBonus,R.drawable.drynobonus );
+
+
     @PrimaryKey(autoGenerate = true)
     private int arenaID;
 
@@ -139,6 +166,79 @@ public class Location {
     @Override
     public int hashCode() {
         return Objects.hash(arenaID, location, arenaName, windspeed, humidity, temperature, realLocation, localTime, isDaytime, campaignLocationStopNumber);
+    }
+
+    public String getArenaNameToString() {
+        return this.arenaName +" Arena!";
+    }
+
+    public String getTemperatureToString() {
+        if (bonusToHot()){
+            return this.temperature + " °F, Smoking! ";
+        }
+        return this.temperature + " °F, need long underwear! ";
+    }
+
+    private boolean bonusToHot() {
+        return (temperature>BONUS_TEMP_LIMIT);
+    }
+
+    public String getDayOrNightToString() {
+        if (this.isDaytime){
+            return "It is daytime, where are my shades?";
+        }
+        return "It is nightime, the Shadows swell!";
+    }
+
+    public String getWindspeedToString() {
+        if (bonusToWind()){
+            return windspeed + " mph, better hold on!";
+        }
+        return windspeed + " mph, still as the dead";
+    }
+
+    private boolean bonusToWind() {
+        return (windspeed > BONUS_WIND_LIMIT);
+    }
+
+    public String getHumidityToString() {
+        if (bonusToHumidity()){
+            return humidity + "%, forget walking, we need a boat";
+        }
+        return humidity + "%, nice and dry";
+    }
+
+    private boolean bonusToHumidity() {
+        return (humidity > HUMIDITY_BONUS_LIMIT);
+    }
+
+
+    public int getHumidityBoostImage() {
+        if (bonusToHumidity()){
+            return bonusToImage.get(humidBonus);
+        }
+        return bonusToImage.get(noHumidBonus);
+    }
+
+    public int getWindBoostImage() {
+        if (bonusToWind()){
+            return bonusToImage.get(windBonus);
+        }
+        return bonusToImage.get(windBonus);
+    }
+
+    public int getIsDayBoostImage() {
+        if (isDaytime()){
+            return bonusToImage.get(lightBonus);
+        }
+        return bonusToImage.get(darkBonus);
+    }
+
+    public int getTempBoostImage() {
+        if (bonusToHot()){
+            return bonusToImage.get(hotBonus);
+        }
+        return bonusToImage.get(iceBonus);
     }
 }
 

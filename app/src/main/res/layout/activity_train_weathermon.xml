@@ -10,9 +10,9 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="660dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonBackToMain"
-        android:id="@+id/fragment_container_view_tag"
+        android:id="@+id/fragment_train_container"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
