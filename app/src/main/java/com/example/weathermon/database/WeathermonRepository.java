@@ -66,6 +66,12 @@ public class WeathermonRepository {
         return userDAO.getUserByUsernameAndPassword(username, password);
     }
 
+    public void updateUserPassword(String username, String newPassword) {
+        WeathermonDatabase.databaseWriterExecutor.execute(() -> {
+            userDAO.updatePassword(username, newPassword);
+        });
+    }
+
     public LiveData<User> getUserByUsername(String username) {
         return userDAO.getUserByUsername(username);
     }

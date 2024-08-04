@@ -24,6 +24,9 @@ public interface UserDAO {
     @Delete
     void delete(User user);
 
+    @Query("UPDATE UserTable SET password = :newPassword WHERE username = :username")
+    void updatePassword(String username, String newPassword);
+
     @Query("DELETE FROM "+ WeathermonDatabase.USER_TABLE)
     void deleteALL();
 
