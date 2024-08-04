@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminActivity">
+    tools:context=".AdminActivity"
+    android:background="@drawable/weathermon">
 
-    <Button
+    <ImageButton
         android:id="@+id/createUserButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/create_user"
-        android:minHeight="48dp"
+        android:src="@drawable/buttoncreateuser"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/create_user"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,12 +21,13 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="32dp" />
 
-    <Button
+    <ImageButton
         android:id="@+id/deleteUserButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/delete_user"
-        android:minHeight="48dp"
+        android:src="@drawable/buttondeleteuser"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/delete_user"
         app:layout_constraintTop_toBottomOf="@id/createUserButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,12 +35,13 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp" />
 
-    <Button
+    <ImageButton
         android:id="@+id/makeAdminButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/make_admin"
-        android:minHeight="48dp"
+        android:src="@drawable/buttonmakeauseranadmin"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/make_admin"
         app:layout_constraintTop_toBottomOf="@id/deleteUserButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,12 +49,13 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp" />
 
-    <Button
+    <ImageButton
         android:id="@+id/changePasswordButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/change_user_password"
-        android:minHeight="48dp"
+        android:src="@drawable/buttonchangeauserpassword"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/change_user_password"
         app:layout_constraintTop_toBottomOf="@id/makeAdminButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
