@@ -67,6 +67,7 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonTheWeathermon"
         android:layout_marginTop="20dp"
         android:contentDescription="@string/administration"
+        android:visibility="gone" />
     />
 
 

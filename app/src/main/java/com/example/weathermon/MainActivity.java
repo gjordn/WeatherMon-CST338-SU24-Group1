@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -34,29 +33,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-
         setContentView(binding.getRoot());
 
-        binding.buttonMyPetWeathermon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = UserCardMantenanceActivity.userCardMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
-                startActivity(intent);
-            }
-        });
-
-        binding.buttonAdministrator.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //todo: add menu item to logoout and replace this code with link to admin section.
-                logout();
-            }
-        });
-
         int userId = getUserIdFromPrefs();
-        Log.d(TAG, "Retrieved User ID from prefs: " + userId);  // Debugging log
+        Log.d(TAG, "Retrieved User ID from prefs: " + userId);
         if (userId == -1) {
-            Log.d(TAG, "User ID from prefs: " + userId);  // Additional log for debugging
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
             startActivity(intent);
             finish();
@@ -72,17 +53,34 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
-
         LiveData<User> userObserver = repository.getUserByUserID(loggedInUserId);
         userObserver.observe(this, user -> {
             if (user != null) {
                 this.user = user;
                 Log.d(TAG, "User data loaded: " + user.getUsername());
-                invalidateOptionsMenu();
+                if (user.isAdmin()) {
+                    binding.buttonAdministrator.setVisibility(View.VISIBLE);
+                } else {
+                    binding.buttonAdministrator.setVisibility(View.GONE);
+                }
             }
         });
 
+        binding.buttonMyPetWeathermon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = UserCardMantenanceActivity.userCardMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
+                startActivity(intent);
+            }
+        });
+
+        binding.buttonAdministrator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = AdminActivity.adminActivityIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -109,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void showLogoutDialog(){
+    private void showLogoutDialog() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
         final AlertDialog alertDialog = alertBuilder.create();
 
@@ -139,11 +137,10 @@ public class MainActivity extends AppCompatActivity {
     private int getUserIdFromPrefs() {
         SharedPreferences sharedPreferences = getSharedPreferences("WeatherMonPrefs", MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId", -1);
-        Log.d(TAG, "Retrieved User ID from prefs: " + userId);  // Debugging log
+        Log.d(TAG, "Retrieved User ID from prefs: " + userId);
         return userId;
     }
 
-    // Main Activity Factory
     static Intent mainActivityIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(MAIN_ACTIVITY_USER_ID, userId);

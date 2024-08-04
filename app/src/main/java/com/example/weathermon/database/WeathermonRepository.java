@@ -26,7 +26,7 @@ public class WeathermonRepository {
 
     private static WeathermonRepository repository;
 
-    private WeathermonRepository(Application application){
+    private WeathermonRepository(Application application) {
         WeathermonDatabase db = WeathermonDatabase.getDatabase(application);
         this.abilityDAO = db.abilityDAO();
         this.userDAO = db.userDAO();
@@ -34,7 +34,7 @@ public class WeathermonRepository {
         this.cardDAO = db.cardDAO();
     }
 
-    public static WeathermonRepository getRepository(Application application){
+    public static WeathermonRepository getRepository(Application application) {
         if (repository != null) {
             return repository;
         }
@@ -56,7 +56,7 @@ public class WeathermonRepository {
         return null;
     }
 
-    public void insertUser (User... user){
+    public void insertUser(User... user) {
         WeathermonDatabase.databaseWriterExecutor.execute(() -> {
             userDAO.insert(user);
         });
@@ -74,7 +74,7 @@ public class WeathermonRepository {
         return userDAO.getUserById(userID);
     }
 
-    public LiveData<List<Card>> getCardsByUserID(int userID){
+    public LiveData<List<Card>> getCardsByUserID(int userID) {
         return cardDAO.getCardsByUserID(userID);
     }
 
@@ -82,8 +82,8 @@ public class WeathermonRepository {
         return cardDAO.getCardsWithMonsterByUserID(userID);
     }
 
-    public void deleteCardByID(int cardID){
-        WeathermonDatabase.databaseWriterExecutor.execute(()->
+    public void deleteCardByID(int cardID) {
+        WeathermonDatabase.databaseWriterExecutor.execute(() ->
                 cardDAO.deleteCardByID(cardID));
     }
 
@@ -97,9 +97,19 @@ public class WeathermonRepository {
 
     public void updateUser(User user) {
         WeathermonDatabase.databaseWriterExecutor.execute(() -> userDAO.update(user));
+    }
 
-      public void updateCards(Card... cards) {
-        WeathermonDatabase.databaseWriterExecutor.execute(()->
-                cardDAO.updateCards(cards));;
+    public void updateCards(Card... cards) {
+        WeathermonDatabase.databaseWriterExecutor.execute(() ->
+                cardDAO.updateCards(cards));
+    }
+
+    public void deleteUserByUsername(String username) {
+        WeathermonDatabase.databaseWriterExecutor.execute(() -> {
+            User user = userDAO.getUserByUsernameSync(username);
+            if (user != null) {
+                userDAO.delete(user);
+            }
+        });
     }
 }

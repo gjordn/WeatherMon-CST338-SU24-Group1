@@ -34,7 +34,7 @@ public abstract class WeathermonDatabase extends RoomDatabase {
     private static final String WEATHERMON_DATABASE_NAME = "WeathermonDatabase";
 
     // Table Names
-    public static final String USER_TABLE = "UserTable";
+    public static final String USER_TABLE = "UsqserTable";
     public static final String LOCATION_TABLE = "LocationTable";
     public static final String CARD_TABLE = "CardTable";
     public static final String ABILITY_TABLE = "AbilityTable";

@@ -41,4 +41,7 @@ public interface UserDAO {
 
     @Query("SELECT * FROM " + WeathermonDatabase.USER_TABLE + " WHERE username = :username")
     LiveData<User> getUserByUsername(String username);
+
+    @Query("SELECT * FROM " + WeathermonDatabase.USER_TABLE + " WHERE username = :username")
+    User getUserByUsernameSync(String username);
 }
