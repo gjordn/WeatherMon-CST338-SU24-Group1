@@ -32,7 +32,7 @@ public class SelectCardFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view,Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         CardMaintenanceViewModel cardMaintenanceViewModel = new ViewModelProvider(this).get(CardMaintenanceViewModel.class);
@@ -42,6 +42,7 @@ public class SelectCardFragment extends Fragment {
             @Override
             public void onItemClicked(CardWithMonster cardWithMonster) {
                 TrainWeathermonActivity trainWeathermonActivity = (TrainWeathermonActivity) getActivity();
+                assert trainWeathermonActivity != null;
                 trainWeathermonActivity.setCardToTrain(cardWithMonster);
 
             }
@@ -56,12 +57,11 @@ public class SelectCardFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         TrainWeathermonActivity trainWeathermonActivity = (TrainWeathermonActivity) getActivity();
+        assert trainWeathermonActivity != null;
         int loggedInUserID = trainWeathermonActivity.getUserID();
 
 
-        cardMaintenanceViewModel.getAllCardsByID(loggedInUserID).observe(getViewLifecycleOwner(), cardList -> {
-            adapter.submitList(cardList);
-        });
+        cardMaintenanceViewModel.getAllCardsByID(loggedInUserID).observe(getViewLifecycleOwner(), adapter::submitList);
 
 
     }
