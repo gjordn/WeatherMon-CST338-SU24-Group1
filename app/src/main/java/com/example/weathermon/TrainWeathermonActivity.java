@@ -27,6 +27,7 @@ import androidx.lifecycle.LiveData;
 import com.example.weathermon.api.WeatherstackInterface;
 import com.example.weathermon.api.WeatherstackWeatherHolder;
 import com.example.weathermon.database.WeathermonRepository;
+import com.example.weathermon.database.entities.CardWithMonster;
 import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityTrainWeathermonBinding;
@@ -45,6 +46,7 @@ public class TrainWeathermonActivity extends AppCompatActivity {
     private int loggedInUserID = 1;
     private User user;
     private Location trainingLocation;
+    private CardWithMonster cardToTrain;
     private Retrofit retrofit;
     private int view;
     private LocationSelectionFragment locationSelectionFragment;
@@ -226,5 +228,11 @@ public class TrainWeathermonActivity extends AppCompatActivity {
 
     public int getUserID() {
         return user.getId();
+    }
+
+    public void setCardToTrain(CardWithMonster cardSelected) {
+        cardToTrain = cardSelected;
+        Toast.makeText(this, "I work selected" + cardToTrain.getMonster_name(), Toast.LENGTH_SHORT).show();
+
     }
 }
