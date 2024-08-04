@@ -224,4 +224,7 @@ public class TrainWeathermonActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public int getUserID() {
+        return user.getId();
+    }
 }

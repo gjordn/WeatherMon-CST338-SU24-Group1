@@ -13,7 +13,7 @@ import com.example.weathermon.R;
 import com.example.weathermon.database.entities.CardWithMonster;
 import com.example.weathermon.database.entities.Monster;
 
-public class CardMaintenanceViewHolder extends RecyclerView.ViewHolder {
+public class SelectCardViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView cardName;
     private final TextView cardStats;
@@ -21,7 +21,7 @@ public class CardMaintenanceViewHolder extends RecyclerView.ViewHolder {
     private final ImageView cardLogo;
     public CardView cardView;
 
-    private CardMaintenanceViewHolder(View cardMaintenenceView){
+    private SelectCardViewHolder(View cardMaintenenceView){
         super(cardMaintenenceView);
         cardName = cardMaintenenceView.findViewById(R.id.cardname);
         cardStats = cardMaintenenceView.findViewById(R.id.cardstats);
@@ -40,7 +40,7 @@ public class CardMaintenanceViewHolder extends RecyclerView.ViewHolder {
         }
         cardName.setText(line);
         line=("XP: " + cardWithMonster.getMonsterXP() + "/" + cardWithMonster.getXPToNextLevel() +
-                            "       Level: " + cardWithMonster.getLevelFromXP() +
+                "       Level: " + cardWithMonster.getLevelFromXP() +
                 "      Weather: " + Monster.convertWeatherTypeToString.get(cardWithMonster.getWeatherInnate())        );
         cardLevel.setText(line);
         int logo;
@@ -59,9 +59,11 @@ public class CardMaintenanceViewHolder extends RecyclerView.ViewHolder {
         cardLogo.setImageResource(logo);
     }
 
-    static CardMaintenanceViewHolder create(ViewGroup parent){
+    static SelectCardViewHolder create(ViewGroup parent){
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_maintenance_recycler_item, parent, false);
-        return new CardMaintenanceViewHolder(view);
+        return new SelectCardViewHolder(view);
     }
+
+
 }
