@@ -56,7 +56,7 @@ public class WeathermonRepository {
         return null;
     }
 
-    public void insertUser (User... user){
+    public void insertUser(User... user){
         WeathermonDatabase.databaseWriterExecutor.execute(() -> {
             userDAO.insert(user);
         });
@@ -83,12 +83,12 @@ public class WeathermonRepository {
     }
 
     public void deleteCardByID(int cardID){
-        WeathermonDatabase.databaseWriterExecutor.execute(()->
+        WeathermonDatabase.databaseWriterExecutor.execute(() ->
                 cardDAO.deleteCardByID(cardID));
     }
 
     public void insertCard(Card card) {
-        cardDAO.insert(card);
+        WeathermonDatabase.databaseWriterExecutor.execute(() -> cardDAO.insert(card));
     }
 
     public void deleteUser(User user) {
@@ -97,9 +97,11 @@ public class WeathermonRepository {
 
     public void updateUser(User user) {
         WeathermonDatabase.databaseWriterExecutor.execute(() -> userDAO.update(user));
+    }
 
-      public void updateCards(Card... cards) {
-        WeathermonDatabase.databaseWriterExecutor.execute(()->
-                cardDAO.updateCards(cards));;
+    public void updateCards(Card... cards) {
+        WeathermonDatabase.databaseWriterExecutor.execute(() ->
+                cardDAO.updateCards(cards));
     }
 }
+

@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -36,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-
         setContentView(binding.getRoot());
 
         binding.buttonMyPetWeathermon.setOnClickListener(new View.OnClickListener() {
@@ -66,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
-
         LiveData<User> userObserver = repository.getUserByUserID(loggedInUserId);
         userObserver.observe(this, user -> {
             if (user != null) {
@@ -82,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                 invalidateOptionsMenu();
             }
         });
-
     }
 
     @Override
@@ -109,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void showLogoutDialog(){
+    private void showLogoutDialog() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
         final AlertDialog alertDialog = alertBuilder.create();
 
