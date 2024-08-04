@@ -1,6 +1,5 @@
 package com.example.weathermon;
 
-import static com.example.weathermon.database.Util.LOGGING_TAG;
 import static com.example.weathermon.database.Util.USER_LOGGED_OUT;
 import static com.example.weathermon.database.Util.WEATHERMON_LOGGED_IN_USER_ID;
 import static com.example.weathermon.database.Util.WEATHERMON_SHARED_PREF_KEY;
@@ -12,13 +11,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -28,7 +25,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.weathermon.database.WeathermonDatabase;
 import com.example.weathermon.database.WeathermonRepository;
 import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.CardWithMonster;
