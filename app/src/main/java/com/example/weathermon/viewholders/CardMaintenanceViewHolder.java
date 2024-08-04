@@ -24,7 +24,7 @@ public class CardMaintenanceViewHolder extends RecyclerView.ViewHolder {
     private final ImageView cardLogo;
     public final CardView cardView;
     private final LinearLayout cardLayout;
-    private final int bonusBackgroundColor = Color.parseColor("#9edba0");
+    public static final int bonusBackgroundColor = Color.parseColor("#9edba0");
 
     private CardMaintenanceViewHolder(View cardMaintenenceView){
         super(cardMaintenenceView);

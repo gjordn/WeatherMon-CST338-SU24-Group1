@@ -1,6 +1,8 @@
 package com.example.weathermon.database.entities;
 
 import java.util.Objects;
+import java.util.Random;
+
 
 public class CardWithMonster {
     private int cardID;
@@ -16,7 +18,9 @@ public class CardWithMonster {
     private int weatherInnate;
 
     public static Location battleLocation;
-    public static final Double innateWeatherBonus = 1.5;
+    public static final Double minOpponentXPPercent = 0.7;
+    public static final Double maxOpponentXPPercent = 1.5;
+
 
     public CardWithMonster(int cardID, String cardCustomName, int monsterID, int monsterXP, int userID, int monster_id, String monster_name, int baseHP, int baseAttack, int baseDefense, int weatherInnate) {
         this.cardID = cardID;
@@ -30,6 +34,31 @@ public class CardWithMonster {
         this.baseAttack = baseAttack;
         this.baseDefense = baseDefense;
         this.weatherInnate = weatherInnate;
+    }
+
+    public CardWithMonster() {
+
+    }
+
+    public static CardWithMonster getTrainingOpponent(int heroXP, Monster baseOpponent) {
+        CardWithMonster nearLevelOpponent = new CardWithMonster();
+
+        nearLevelOpponent.monsterID = baseOpponent.getMonster_id();
+
+        Random random = new Random();
+        double opponentXP;
+        opponentXP = heroXP * (minOpponentXPPercent + (maxOpponentXPPercent-minOpponentXPPercent)*random.nextDouble());
+        nearLevelOpponent.monsterXP = (int) opponentXP;
+
+        nearLevelOpponent.monster_id = baseOpponent.getMonster_id();
+        nearLevelOpponent.monster_name = baseOpponent.getMonster_name();
+        nearLevelOpponent.baseHP = baseOpponent.getBaseHP();
+        nearLevelOpponent.baseAttack = baseOpponent.getBaseAttack();
+        nearLevelOpponent.baseDefense = baseOpponent.getBaseDefense();
+        nearLevelOpponent.weatherInnate = baseOpponent.getWeatherInnate();
+
+
+        return nearLevelOpponent;
     }
 
     public int getCardID() {

@@ -7,9 +7,11 @@ import androidx.lifecycle.LiveData;
 
 import com.example.weathermon.database.dao.CardDAO;
 import com.example.weathermon.database.dao.LocationDAO;
+import com.example.weathermon.database.dao.MonsterDAO;
 import com.example.weathermon.database.dao.UserDAO;
 import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.CardWithMonster;
+import com.example.weathermon.database.entities.Monster;
 import com.example.weathermon.database.entities.User;
 
 import java.util.List;
@@ -21,6 +23,7 @@ public class WeathermonRepository {
     private final UserDAO userDAO;
     private final LocationDAO locationDAO;
     private final CardDAO cardDAO;
+    private final MonsterDAO monsterDAO;
 
     private static WeathermonRepository repository;
 
@@ -29,6 +32,7 @@ public class WeathermonRepository {
         this.userDAO = db.userDAO();
         this.locationDAO = db.locationDao();
         this.cardDAO = db.cardDAO();
+        this.monsterDAO = db.monsterDAO();;
     }
 
     public static WeathermonRepository getRepository(Application application){
@@ -90,6 +94,10 @@ public class WeathermonRepository {
 
     public void updateCards(Card... cards) {
         WeathermonDatabase.databaseWriterExecutor.execute(()->
-                cardDAO.updateCards(cards));;
+                cardDAO.updateCards(cards));
+    }
+
+    public LiveData<Monster> getRandomMonster() {
+        return monsterDAO.getRandomMonster();
     }
 }

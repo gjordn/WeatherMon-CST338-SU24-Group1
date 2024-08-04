@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,6 +36,7 @@ import com.example.weathermon.databinding.ActivityTrainWeathermonBinding;
 
 import fragments.BattleFragment;
 import fragments.LocationSelectionFragment;
+import fragments.MainPageAdminButton;
 import fragments.SelectCardFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +51,8 @@ public class TrainWeathermonActivity extends AppCompatActivity {
     private User user;
     private Location trainingLocation;
     private CardWithMonster cardToTrain;
+    private CardWithMonster cardToBattle;
+
     private Retrofit retrofit;
     private int view;
     private LocationSelectionFragment locationSelectionFragment;
@@ -236,9 +240,27 @@ public class TrainWeathermonActivity extends AppCompatActivity {
 
     public void setCardToTrain(CardWithMonster cardSelected) {
         cardToTrain = cardSelected;
+
+        LiveData<Monster> monsterObserver = repository.getRandomMonster();
+        monsterObserver.observe(this, monster -> {
+            if (monster != null) {
+                cardToBattle = CardWithMonster.getTrainingOpponent(cardToTrain.getMonsterXP(), monster);
+
+            }
+        });
+
+
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.fragment_train_container, BattleFragment.class, null)
                 .commit();
+    }
+
+    public CardWithMonster getHero() {
+        return cardToTrain;
+    }
+
+    public CardWithMonster getVillan() {
+        return cardToBattle;
     }
 }

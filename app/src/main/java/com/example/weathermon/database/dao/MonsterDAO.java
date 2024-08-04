@@ -1,5 +1,6 @@
 package com.example.weathermon.database.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -23,6 +24,9 @@ public interface MonsterDAO {
 
     @Query("SELECT * FROM " + WeathermonDatabase.MONSTER_TABLE)
     List<Monster> getAllMonsters();
+
+    @Query("SELECT * FROM " + WeathermonDatabase.MONSTER_TABLE + " ORDER BY RANDOM() LIMIT 1")
+    LiveData<Monster> getRandomMonster();
 }
 
 
