@@ -13,6 +13,7 @@ import java.util.Map;
 )
 
 public class Monster {
+    public static final Double innateWeatherBonus = 1.5;
     @PrimaryKey(autoGenerate = true)
     private int monster_id;
     public static final Double levelModifier = 1.2; //Increase in power per level

@@ -15,6 +15,9 @@ public class CardWithMonster {
     private int baseDefense;
     private int weatherInnate;
 
+    public static Location battleLocation;
+    public static final Double innateWeatherBonus = 1.5;
+
     public CardWithMonster(int cardID, String cardCustomName, int monsterID, int monsterXP, int userID, int monster_id, String monster_name, int baseHP, int baseAttack, int baseDefense, int weatherInnate) {
         this.cardID = cardID;
         this.cardCustomName = cardCustomName;
@@ -125,6 +128,14 @@ public class CardWithMonster {
         return Card.getCurrentLevel(this.monsterXP);
     }
 
+    public static Location getBattleLocation() {
+        return battleLocation;
+    }
+
+    public static void setBattleLocation(Location battleLocation) {
+        CardWithMonster.battleLocation = battleLocation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -139,10 +150,20 @@ public class CardWithMonster {
     }
 
     public int getTotalDefense(){
-        return adjustedForLevel(baseDefense);
+        return adjustedForWeather(adjustedForLevel(baseDefense));
+
     }
+
+    private int adjustedForWeather(int currentStat) {
+        if (getBattleLocation()!=null && getBattleLocation().hasBonus(getWeatherInnate())) {
+            Double adjustedStat = (currentStat * Monster.innateWeatherBonus);
+            return adjustedStat.intValue();
+        }
+        return currentStat;
+    }
+
     public int getTotalAttack(){
-        return adjustedForLevel(baseAttack);
+        return adjustedForWeather(adjustedForLevel(baseAttack));
     }
     public int getTotalHP(){
         return adjustedForLevel(baseHP);
@@ -151,7 +172,6 @@ public class CardWithMonster {
         Double adjustedStat =(baseStat * (Math.pow(Monster.levelModifier,getLevelFromXP()-1)));
         return adjustedStat.intValue();
     }
-
 
 
 }

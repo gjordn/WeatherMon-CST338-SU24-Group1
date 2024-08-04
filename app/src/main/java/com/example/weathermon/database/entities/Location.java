@@ -1,5 +1,13 @@
 package com.example.weathermon.database.entities;
 
+import static com.example.weathermon.database.entities.Monster.weatherDark;
+import static com.example.weathermon.database.entities.Monster.weatherFire;
+import static com.example.weathermon.database.entities.Monster.weatherIce;
+import static com.example.weathermon.database.entities.Monster.weatherLight;
+import static com.example.weathermon.database.entities.Monster.weatherNone;
+import static com.example.weathermon.database.entities.Monster.weatherWater;
+import static com.example.weathermon.database.entities.Monster.weatherWind;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.ColumnInfo;
@@ -239,6 +247,36 @@ public class Location {
             return bonusToImage.get(hotBonus);
         }
         return bonusToImage.get(iceBonus);
+    }
+
+    public boolean hasBonus(int weatherInnate) {
+
+        switch (weatherInnate) {
+            case weatherNone:
+                return false;
+
+            case weatherFire:
+                return bonusToHot();
+
+            case weatherIce:
+                return !bonusToHot();
+
+            case weatherLight:
+                return isDaytime();
+
+            case weatherDark:
+                return !isDaytime();
+
+            case weatherWind:
+                return bonusToWind();
+
+            case weatherWater:
+                return bonusToHumidity();
+
+            default:
+                return false;
+        }
+
     }
 }
 

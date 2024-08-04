@@ -23,4 +23,5 @@
     <string name="_20_mph">20 mph</string>
     <string name="_100">100 %</string>
     <string name="humidity">Humidity</string>
+    <string name="start_training_combat">Start Training Combat!</string>
 </resources>

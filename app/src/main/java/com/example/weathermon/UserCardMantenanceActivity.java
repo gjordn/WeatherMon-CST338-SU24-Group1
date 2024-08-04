@@ -48,6 +48,8 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
         binding = ActivityUserCardMantenanceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         repository = WeathermonRepository.getRepository(getApplication());
+        CardWithMonster.setBattleLocation(null);//No battle in this location;
+
 
         loginUser(savedInstanceState);
 

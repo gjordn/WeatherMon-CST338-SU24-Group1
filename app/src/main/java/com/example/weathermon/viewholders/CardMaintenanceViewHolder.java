@@ -1,9 +1,12 @@
 package com.example.weathermon.viewholders;
 
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -19,7 +22,9 @@ public class CardMaintenanceViewHolder extends RecyclerView.ViewHolder {
     private final TextView cardStats;
     private final TextView cardLevel;
     private final ImageView cardLogo;
-    public CardView cardView;
+    public final CardView cardView;
+    private final LinearLayout cardLayout;
+    private final int bonusBackgroundColor = Color.parseColor("#9edba0");
 
     private CardMaintenanceViewHolder(View cardMaintenenceView){
         super(cardMaintenenceView);
@@ -28,6 +33,7 @@ public class CardMaintenanceViewHolder extends RecyclerView.ViewHolder {
         cardLogo = cardMaintenenceView.findViewById(R.id.card_image);
         cardLevel = cardMaintenenceView.findViewById(R.id.cardlevel);
         cardView = cardMaintenenceView.findViewById(R.id.maincardcontainer);
+        cardLayout =  cardMaintenenceView.findViewById(R.id.linlayoutcard);
     }
 
     public void bind (CardWithMonster cardWithMonster){
@@ -57,6 +63,11 @@ public class CardMaintenanceViewHolder extends RecyclerView.ViewHolder {
 
         cardStats.setText(line);
         cardLogo.setImageResource(logo);
+
+        if (CardWithMonster.getBattleLocation()!=null &&
+                CardWithMonster.getBattleLocation().hasBonus(cardWithMonster.getWeatherInnate())){
+            cardLayout.setBackgroundColor(bonusBackgroundColor);
+        }
     }
 
     static CardMaintenanceViewHolder create(ViewGroup parent){

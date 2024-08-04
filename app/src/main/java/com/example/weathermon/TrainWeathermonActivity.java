@@ -29,9 +29,11 @@ import com.example.weathermon.api.WeatherstackWeatherHolder;
 import com.example.weathermon.database.WeathermonRepository;
 import com.example.weathermon.database.entities.CardWithMonster;
 import com.example.weathermon.database.entities.Location;
+import com.example.weathermon.database.entities.Monster;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityTrainWeathermonBinding;
 
+import fragments.BattleFragment;
 import fragments.LocationSelectionFragment;
 import fragments.SelectCardFragment;
 import retrofit2.Call;
@@ -68,6 +70,8 @@ public class TrainWeathermonActivity extends AppCompatActivity {
 
         loginUser(savedInstanceState);
         setLocationHome();//Go to "Home" arena
+        CardWithMonster.setBattleLocation(trainingLocation);//Set location of battle.
+
         if (trainingLocation.isRealLocation()){
             updateRealLocation();
         } else {
@@ -232,7 +236,9 @@ public class TrainWeathermonActivity extends AppCompatActivity {
 
     public void setCardToTrain(CardWithMonster cardSelected) {
         cardToTrain = cardSelected;
-        Toast.makeText(this, "I work selected" + cardToTrain.getMonster_name(), Toast.LENGTH_SHORT).show();
-
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragment_train_container, BattleFragment.class, null)
+                .commit();
     }
 }
