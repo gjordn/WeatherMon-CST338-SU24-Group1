@@ -58,7 +58,7 @@ public class AdminActivity extends AppCompatActivity {
         makeAdminButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeAdmin();
+                showMakeAdminDialog();
             }
         });
     }
@@ -153,6 +153,32 @@ public class AdminActivity extends AppCompatActivity {
         builder.show();
     }
 
+    private void showMakeAdminDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Make Admin");
+
+        final EditText inputUsername = new EditText(this);
+        builder.setView(inputUsername);
+
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                String username = inputUsername.getText().toString();
+                Log.d(TAG, "Making admin: " + username);
+                makeAdmin(username);
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
     private void createUser(String username, String password, boolean isAdmin) {
         User user = new User(username, password, isAdmin);
         repository.insertUser(user);
@@ -172,15 +198,27 @@ public class AdminActivity extends AppCompatActivity {
         Toast.makeText(this, "Password changed successfully", Toast.LENGTH_SHORT).show();
     }
 
-    private void makeAdmin() {
-        // Open a dialog or a new activity to get the username and make the user an admin
-        Toast.makeText(this, "Make Admin button clicked", Toast.LENGTH_SHORT).show();
+    private void makeAdmin(String username) {
+        User user = repository.getUserByUsernameSync(username);
+        if (user != null) {
+            if (user.isAdmin()) {
+                Log.d(TAG, "User is already an admin: " + username);
+                Toast.makeText(this, "User is already an admin", Toast.LENGTH_SHORT).show();
+            } else {
+                repository.makeAdmin(username);
+                Log.d(TAG, "User made admin: " + username);
+                Toast.makeText(this, "User made admin successfully", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Log.d(TAG, "User not found: " + username);
+            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void changePassword() {
-        // Open a dialog or a new activity to get the username and change the user's password
         Toast.makeText(this, "Change Password button clicked", Toast.LENGTH_SHORT).show();
     }
+
 
     static Intent adminActivityIntentFactory(Context context) {
         return new Intent(context, AdminActivity.class);

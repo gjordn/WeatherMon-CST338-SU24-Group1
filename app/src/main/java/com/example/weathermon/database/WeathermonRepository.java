@@ -72,6 +72,16 @@ public class WeathermonRepository {
         });
     }
 
+    public User getUserByUsernameSync(String username) {
+        Future<User> future = WeathermonDatabase.databaseWriterExecutor.submit(() -> userDAO.getUserByUsernameSync(username));
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.e("WeathermonRepository", "Error fetching user by username", e);
+            return null;
+        }
+    }
+
     public void makeAdmin(String username) {
         WeathermonDatabase.databaseWriterExecutor.execute(() -> {
             User user = userDAO.getUserByUsernameSync(username);
