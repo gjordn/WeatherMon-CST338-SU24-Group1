@@ -27,6 +27,9 @@ public interface UserDAO {
     @Query("UPDATE UserTable SET password = :newPassword WHERE username = :username")
     void updatePassword(String username, String newPassword);
 
+    @Query("UPDATE UserTable SET isAdmin = 1 WHERE username = :username")
+    void makeAdmin(String username);
+
     @Query("DELETE FROM "+ WeathermonDatabase.USER_TABLE)
     void deleteALL();
 
