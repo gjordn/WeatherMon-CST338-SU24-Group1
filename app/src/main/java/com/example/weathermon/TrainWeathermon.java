@@ -3,7 +3,6 @@ package com.example.weathermon;
 import static com.example.weathermon.api.WeatherstackInterface.BASE_URL;
 import static com.example.weathermon.api.WeatherstackInterface.CURRENT_LOCATION_BY_IP;
 import static com.example.weathermon.api.WeatherstackInterface.ENGLISH_UNITS;
-import static com.example.weathermon.database.Util.LOGGING_TAG;
 import static com.example.weathermon.database.Util.USER_LOGGED_OUT;
 import static com.example.weathermon.database.Util.WEATHERMON_LOGGED_IN_USER_ID;
 import static com.example.weathermon.database.Util.WEATHERMON_SHARED_PREF_KEY;
@@ -14,7 +13,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,6 +43,7 @@ public class TrainWeathermon extends AppCompatActivity {
     private int loggedInUserID = 1;
     private User user;
     private Location trainingLocation;
+    private Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,26 +51,17 @@ public class TrainWeathermon extends AppCompatActivity {
         binding = ActivityTrainWeathermonBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         repository = WeathermonRepository.getRepository(getApplication());
-
-        Retrofit retrofit = new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+
         loginUser(savedInstanceState);
 
-        WeatherstackInterface weatherstackInterface = retrofit.create(WeatherstackInterface.class);
-        weatherstackInterface.getWeartherstackWeather(CURRENT_LOCATION_BY_IP, ENGLISH_UNITS).enqueue(new Callback<WeatherstackWeatherHolder>() {
-            @Override
-            public void onResponse(@NonNull Call<WeatherstackWeatherHolder> call, @NonNull Response<WeatherstackWeatherHolder> response) {
 
-            }
-
-            @Override
-            public void onFailure(Call<WeatherstackWeatherHolder> call, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), "That's bad - throwable: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+        setLocationHome();
+        updateRealLocation();  //Go to "Home" arena
 
         binding.buttonBackToMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +70,32 @@ public class TrainWeathermon extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void setLocationHome() {
+        trainingLocation = new Location(CURRENT_LOCATION_BY_IP, " ",true,true);
+    }
+
+    private void updateRealLocation() {
+        WeatherstackInterface weatherstackInterface = retrofit.create(WeatherstackInterface.class);
+        weatherstackInterface.getWeartherstackWeather(trainingLocation.getLocation(), ENGLISH_UNITS).enqueue(new Callback<WeatherstackWeatherHolder>() {
+            @Override
+            public void onResponse(@NonNull Call<WeatherstackWeatherHolder> call, @NonNull Response<WeatherstackWeatherHolder> response) {
+                assert response.body() != null;
+                trainingLocation.setArenaName(response.body().location.name);
+                trainingLocation.setTemperature(response.body().getConvertedTemperature());
+                trainingLocation.setHumidity(response.body().getConvertedHumidity());
+                trainingLocation.setWindspeed(response.body().getConvertedWindspeed());
+                trainingLocation.setIsDaytime(response.body().getConvertedIsDaytime());
+                trainingLocation.setLocalTime(response.body().getConvertedDateTime());
+            }
+
+            @Override
+            public void onFailure(Call<WeatherstackWeatherHolder> call, Throwable throwable) {
+                Toast.makeText(getApplicationContext(), "That's bad - throwable: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
     private void loginUser(Bundle savedInstanceState) {

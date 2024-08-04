@@ -3,26 +3,14 @@ package com.example.weathermon.api;
 import com.example.weathermon.database.entities.Location;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class WeatherstackWeatherHolder {
     public Request request;
     public Location location;
     public current current;
-
-    public com.example.weathermon.database.entities.Location WeatherstackToLocationDatabaseEntitiy(){
-        com.example.weathermon.database.entities.Location dbLocation;
-
-        int windspeed;
-        int humidity;
-        int temperature;
-        boolean realLocation;
-        LocalDateTime localTime;
-        boolean dayOrNight;
-
-
-        dbLocation = new com.example.weathermon.database.entities.Location("tenp", "temp",false,false);
-        return dbLocation;
-    }
+    private String weatherstackIsDayTrueString = "yes";
+    DateTimeFormatter weatherstackDateTimeformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public Request getRequest() {
         return request;
@@ -316,6 +304,38 @@ public class WeatherstackWeatherHolder {
         public void setIs_day(String is_day) {
             this.is_day = is_day;
         }
+
     }
+
+    public int getConvertedTemperature(){
+        return convertInt(this.current.temperature);
+    }
+
+    public int getConvertedHumidity(){
+        return convertInt(this.current.humidity);
+
+    }
+    public int getConvertedWindspeed(){
+        return convertInt(this.current.wind_speed);
+    }
+
+    public LocalDateTime getConvertedDateTime(){
+        return LocalDateTime.parse(this.location.localtime, weatherstackDateTimeformatter );
+    }
+
+    public boolean getConvertedIsDaytime(){
+        return (this.current.is_day.equals(weatherstackIsDayTrueString)); //Weatherstack uses yes/no for this field
+    }
+
+    //Turn a string into an integer, return an error if there is an issue.
+    public static int convertInt(String conditionToInt) {
+        try {
+            return Integer.parseInt(conditionToInt);
+        } catch (NumberFormatException e) {
+        }
+    int noResult=8000; //If Weatherstack returns this for any of the ints being converted we dead.
+    return 8000;
+}
+
 
 }
