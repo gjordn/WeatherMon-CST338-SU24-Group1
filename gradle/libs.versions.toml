@@ -13,6 +13,9 @@ retrofit = "2.11.0"
 roomCompiler = "2.6.1"
 roomCompilerVersion = "2.2.5"
 roomRuntime = "2.2.5"
+legacySupportV4 = "1.0.0"
+lifecycleLivedataKtx = "2.8.3"
+lifecycleViewmodelKtx = "2.8.3"
 
 [libraries]
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
@@ -31,6 +34,9 @@ room-compiler-v225 = { group = "androidx.room", name = "room-compiler", version.
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomCompiler" }
 room-runtime-v225 = { group = "androidx.room", name = "room-runtime", version.ref = "roomRuntime" }
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "roomCompilerVersion" }
+legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
+lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.weathermon.TrainWeathermon;
+import com.example.weathermon.TrainWeathermonActivity;
 import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.databinding.FragmentLocationSelectionFragmentBinding;
 
@@ -46,8 +46,8 @@ public class LocationSelectionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragmentLocationSelectionFragmentBinding = FragmentLocationSelectionFragmentBinding.inflate(inflater, container, false);
-        TrainWeathermon trainWeathermon = (TrainWeathermon) getActivity();
-        Location trainingLocation = trainWeathermon.getLocationInfo();
+        TrainWeathermonActivity trainWeathermonActivity = (TrainWeathermonActivity) getActivity();
+        Location trainingLocation = trainWeathermonActivity.getLocationInfo();
 
         fragmentLocationSelectionFragmentBinding.arenaNameIDTextView.setText(trainingLocation.getArenaNameToString());
         fragmentLocationSelectionFragmentBinding.tempBoostTextView.setText(trainingLocation.getTemperatureToString());

@@ -30,17 +30,16 @@ import com.example.weathermon.database.WeathermonRepository;
 import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityTrainWeathermonBinding;
-import com.example.weathermon.viewholders.CardMaintenanceAdapter;
-import com.example.weathermon.viewholders.CardMaintenanceViewHolder;
 
 import fragments.LocationSelectionFragment;
+import fragments.SelectCardFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class TrainWeathermon extends AppCompatActivity {
+public class TrainWeathermonActivity extends AppCompatActivity {
     ActivityTrainWeathermonBinding binding;
     private WeathermonRepository repository;
     private int loggedInUserID = 1;
@@ -62,6 +61,8 @@ public class TrainWeathermon extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        locationSelectionFragment =new LocationSelectionFragment();
+
 
         loginUser(savedInstanceState);
         setLocationHome();//Go to "Home" arena
@@ -79,6 +80,27 @@ public class TrainWeathermon extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), loggedInUserID);
                 startActivity(intent);
+            }
+        });
+
+        binding.buttonTravelNewArena.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                trainingLocation.setArenaName("I am a working");
+                getSupportFragmentManager().beginTransaction()
+                        .setReorderingAllowed(true)
+                        .replace(R.id.fragment_train_container, LocationSelectionFragment.class, null)
+                        .commit();
+            }
+        });
+        binding.buttonNextPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().beginTransaction()
+                        .setReorderingAllowed(true)
+                        .replace(R.id.fragment_train_container, SelectCardFragment.class, null)
+                        .commit();
+
             }
         });
 
@@ -147,7 +169,7 @@ public class TrainWeathermon extends AppCompatActivity {
 
 
     public static Intent trainWeathermonMaintenanceIntentFactory(Context context, int loggedInUserId) {
-        Intent intent = new Intent(context, TrainWeathermon.class);
+        Intent intent = new Intent(context, TrainWeathermonActivity.class);
         intent.putExtra(WEATHERMON_LOGGED_IN_USER_ID, loggedInUserId);
         return intent;
     }
@@ -177,7 +199,7 @@ public class TrainWeathermon extends AppCompatActivity {
     }
 
     private void showLogoutDialog() {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(TrainWeathermon.this);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(TrainWeathermonActivity.this);
         final AlertDialog alertDialog = alertBuilder.create();
 
         alertBuilder.setMessage("Confirm Logout");
