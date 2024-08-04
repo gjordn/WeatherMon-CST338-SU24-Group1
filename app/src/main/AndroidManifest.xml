@@ -16,9 +16,6 @@
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".viewholders.SelectCardFragmentAdapter"
-            android:exported="false" />
-        <activity
             android:name=".TrainWeathermonActivity"
             android:exported="false" />
         <activity

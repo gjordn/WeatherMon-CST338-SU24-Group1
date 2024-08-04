@@ -10,20 +10,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.weathermon.R;
 import com.example.weathermon.TrainWeathermonActivity;
-import com.example.weathermon.database.Util;
 import com.example.weathermon.database.entities.CardWithMonster;
-import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.viewholders.CardMaintenanceAdapter;
 import com.example.weathermon.viewholders.CardMaintenanceViewModel;
 import com.example.weathermon.viewholders.CardSelectListener;
-import com.example.weathermon.viewholders.SelectCardFragmentAdapter;
 
 public class SelectCardFragment extends Fragment {
 
@@ -74,7 +70,7 @@ public class SelectCardFragment extends Fragment {
         int loggedInUserID = trainWeathermonActivity.getUserID();
 
 
-        cardMaintenanceViewModel.getAllCardsByID(loggedInUserID).observe(this, cardList -> {
+        cardMaintenanceViewModel.getAllCardsByID(loggedInUserID).observe(getViewLifecycleOwner(), cardList -> {
             adapter.submitList(cardList);
         });
 
