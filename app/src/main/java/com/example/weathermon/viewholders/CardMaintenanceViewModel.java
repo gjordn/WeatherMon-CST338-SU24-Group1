@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.weathermon.database.WeathermonRepository;
-import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.CardWithMonster;
 
 import java.util.List;

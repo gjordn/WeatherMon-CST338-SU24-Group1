@@ -32,7 +32,7 @@ public class WeathermonRepository {
         this.userDAO = db.userDAO();
         this.locationDAO = db.locationDao();
         this.cardDAO = db.cardDAO();
-        this.monsterDAO = db.monsterDAO();;
+        this.monsterDAO = db.monsterDAO();
     }
 
     public static WeathermonRepository getRepository(Application application){

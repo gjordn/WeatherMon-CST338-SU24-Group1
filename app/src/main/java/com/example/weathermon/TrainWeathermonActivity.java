@@ -1,8 +1,8 @@
 package com.example.weathermon;
 
-import static com.example.weathermon.api.WeatherstackInterface.BASE_URL;
-import static com.example.weathermon.api.WeatherstackInterface.CURRENT_LOCATION_BY_IP;
-import static com.example.weathermon.api.WeatherstackInterface.ENGLISH_UNITS;
+import static com.example.weathermon.api.WeatherStackInterface.BASE_URL;
+import static com.example.weathermon.api.WeatherStackInterface.CURRENT_LOCATION_BY_IP;
+import static com.example.weathermon.api.WeatherStackInterface.ENGLISH_UNITS;
 import static com.example.weathermon.database.Util.USER_LOGGED_OUT;
 import static com.example.weathermon.database.Util.WEATHERMON_LOGGED_IN_USER_ID;
 import static com.example.weathermon.database.Util.WEATHERMON_SHARED_PREF_KEY;
@@ -17,7 +17,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,10 +29,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
-import com.example.weathermon.api.WeatherstackInterface;
+import com.example.weathermon.api.WeatherStackInterface;
 import com.example.weathermon.api.WeatherstackWeatherHolder;
 import com.example.weathermon.database.WeathermonRepository;
-import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.CardWithMonster;
 import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.Monster;
@@ -46,7 +44,6 @@ import fragments.BattleFragment;
 import fragments.BattleNextButtonFragment;
 import fragments.BattleTravelButtonFragment;
 import fragments.LocationSelectionFragment;
-import fragments.MainPageAdminButton;
 import fragments.ResultsFragment;
 import fragments.SelectCardFragment;
 import retrofit2.Call;
@@ -65,8 +62,6 @@ public class TrainWeathermonActivity extends AppCompatActivity {
     private CardWithMonster cardToBattle;
 
     private Retrofit retrofit;
-    private int view;
-    private LocationSelectionFragment locationSelectionFragment;
     private BattleFightButtonFragment battleFightButtonFragment;
     private BattleNextButtonFragment battleNextButtonFragment;
     private BattleTravelButtonFragment battleTravelButtonFragment;
@@ -84,7 +79,6 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        locationSelectionFragment =new LocationSelectionFragment();
         battleFightButtonFragment = new BattleFightButtonFragment();
         battleNextButtonFragment = new BattleNextButtonFragment();
         battleTravelButtonFragment = new BattleTravelButtonFragment();
@@ -114,8 +108,8 @@ public class TrainWeathermonActivity extends AppCompatActivity {
     }
 
     private void updateRealLocation(String proposedLocation) {
-        WeatherstackInterface weatherstackInterface = retrofit.create(WeatherstackInterface.class);
-        weatherstackInterface.getWeartherstackWeather(proposedLocation, ENGLISH_UNITS).enqueue(new Callback<WeatherstackWeatherHolder>() {
+        WeatherStackInterface weatherstackInterface = retrofit.create(WeatherStackInterface.class);
+        weatherstackInterface.getWeatherStackWeather(proposedLocation, ENGLISH_UNITS).enqueue(new Callback<WeatherstackWeatherHolder>() {
             @Override
             public void onResponse(@NonNull Call<WeatherstackWeatherHolder> call, @NonNull Response<WeatherstackWeatherHolder> response) {
                 assert response.body() != null;
@@ -150,7 +144,7 @@ public class TrainWeathermonActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<WeatherstackWeatherHolder> call, Throwable throwable) {
+            public void onFailure(@NonNull Call<WeatherstackWeatherHolder> call, @NonNull Throwable throwable) {
                 Toast.makeText(getApplicationContext(), "Sorry, we couldn't find that city", Toast.LENGTH_LONG).show();
             }
         });
@@ -268,7 +262,7 @@ public class TrainWeathermonActivity extends AppCompatActivity {
         return cardToTrain;
     }
 
-    public CardWithMonster getVillan() {
+    public CardWithMonster getVillain() {
         return cardToBattle;
     }
 

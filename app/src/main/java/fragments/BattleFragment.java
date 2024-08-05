@@ -4,6 +4,7 @@ import static com.example.weathermon.viewholders.CardMaintenanceViewHolder.bonus
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -36,7 +37,7 @@ public class BattleFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static BattleFragment newInstance(String param1, String param2) {
+    public static BattleFragment newInstance() {
         BattleFragment fragment = new BattleFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -46,12 +47,10 @@ public class BattleFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         fragmentBattleBinding = FragmentBattleBinding.inflate(inflater, container, false);
 
@@ -59,11 +58,11 @@ public class BattleFragment extends Fragment {
         assert trainWeathermonActivity != null;
         Location trainingLocation = trainWeathermonActivity.getLocationInfo();
         CardWithMonster hero = trainWeathermonActivity.getHero();
-        CardWithMonster villan = trainWeathermonActivity.getVillan();
+        CardWithMonster villain = trainWeathermonActivity.getVillain();
 
         fragmentBattleBinding.arenaNameIDTextView.setText(trainingLocation.getArenaNameToString());
         setCardInformation(hero, fragmentBattleBinding.ourHeroWeathermon);
-        setCardInformation(villan, fragmentBattleBinding.ourVillanWeathermon);
+        setCardInformation(villain, fragmentBattleBinding.ourVillanWeathermon);
 
 
         return fragmentBattleBinding.getRoot();
@@ -77,7 +76,6 @@ public class BattleFragment extends Fragment {
         TextView cardStats = cardWithMonsterDisplayCard.cardstats;
         ImageView cardLogo = cardWithMonsterDisplayCard.cardImage;
         TextView cardLevel = cardWithMonsterDisplayCard.cardlevel;
-        CardView cardView = cardWithMonsterDisplayCard.maincardcontainer;
         LinearLayout cardLayout =  cardWithMonsterDisplayCard.linlayoutcard;
 
         String line;

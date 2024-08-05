@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         binding.buttonMyPetWeathermon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = UserCardMantenanceActivity.userCardMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
+                Intent intent = UserCardMaintenanceActivity.userCardMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
                 startActivity(intent);
             }
         });
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         binding.buttonMyPetWeathermon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = UserCardMantenanceActivity.userCardMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
+                Intent intent = UserCardMaintenanceActivity.userCardMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
                 startActivity(intent);
             }
         });

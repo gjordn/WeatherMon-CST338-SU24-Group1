@@ -188,8 +188,8 @@ public class CardWithMonster {
 
     private int adjustedForWeather(int currentStat) {
         if (getBattleLocation()!=null && getBattleLocation().hasBonus(getWeatherInnate())) {
-            Double adjustedStat = (currentStat * Monster.innateWeatherBonus);
-            return adjustedStat.intValue();
+            double adjustedStat = (currentStat * Monster.innateWeatherBonus);
+            return (int) adjustedStat;
         }
         return currentStat;
     }
@@ -201,8 +201,8 @@ public class CardWithMonster {
         return adjustedForLevel(baseHP);
     }
     private int adjustedForLevel(int baseStat){
-        Double adjustedStat =(baseStat * (Math.pow(Monster.levelModifier,getLevelFromXP()-1)));
-        return adjustedStat.intValue();
+        double adjustedStat =(baseStat * (Math.pow(Monster.levelModifier,getLevelFromXP()-1)));
+        return (int) adjustedStat;
     }
 
 
@@ -239,9 +239,6 @@ public class CardWithMonster {
         }
 
         int damageDone =atkDamage-defBlock;
-        if (damageDone > 0) {
-            return damageDone;
-        }
-        return 0;
+        return Math.max(damageDone, 0);
     }
 }

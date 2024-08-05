@@ -63,6 +63,7 @@ public abstract class WeathermonDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
+    @Deprecated
     private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {

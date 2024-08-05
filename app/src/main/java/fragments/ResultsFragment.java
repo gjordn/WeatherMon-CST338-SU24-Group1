@@ -4,7 +4,7 @@ import static com.example.weathermon.viewholders.CardMaintenanceViewHolder.bonus
 
 import android.os.Bundle;
 
-import androidx.cardview.widget.CardView;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,13 +17,9 @@ import android.widget.TextView;
 import com.example.weathermon.R;
 import com.example.weathermon.TrainWeathermonActivity;
 import com.example.weathermon.database.entities.CardWithMonster;
-import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.Monster;
 import com.example.weathermon.databinding.CardMaintenanceRecyclerItemBinding;
-import com.example.weathermon.databinding.FragmentBattleBinding;
 import com.example.weathermon.databinding.FragmentResultsBinding;
-
-import java.io.StringReader;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,15 +61,14 @@ public class ResultsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         fragmentResultsBinding = FragmentResultsBinding.inflate(inflater, container, false);
 
         TrainWeathermonActivity trainWeathermonActivity = (TrainWeathermonActivity) getActivity();
         assert trainWeathermonActivity != null;
-        Location trainingLocation = trainWeathermonActivity.getLocationInfo();
         CardWithMonster hero = trainWeathermonActivity.getHero();
-        CardWithMonster villan = trainWeathermonActivity.getVillan();
+        CardWithMonster villan = trainWeathermonActivity.getVillain();
 
         if (battleWinner.equals(HERO_WON)){
             setCardInformation(hero, fragmentResultsBinding.ourHeroWeathermon);
@@ -92,7 +87,6 @@ public class ResultsFragment extends Fragment {
         TextView cardStats = cardWithMonsterDisplayCard.cardstats;
         ImageView cardLogo = cardWithMonsterDisplayCard.cardImage;
         TextView cardLevel = cardWithMonsterDisplayCard.cardlevel;
-        CardView cardView = cardWithMonsterDisplayCard.maincardcontainer;
         LinearLayout cardLayout =  cardWithMonsterDisplayCard.linlayoutcard;
 
         String line;

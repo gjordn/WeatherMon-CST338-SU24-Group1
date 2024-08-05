@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.weathermon.R;
-import com.example.weathermon.database.entities.Location;
 
 /**
  * A simple {@link Fragment} subclass.
