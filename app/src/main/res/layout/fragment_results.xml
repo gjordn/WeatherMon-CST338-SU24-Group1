@@ -15,11 +15,12 @@
             android:text="@string/we_have_a_winner"
             android:textAlignment="center"
             android:textSize="50sp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:id="@+id/resultTextView"/>
 
 
         <include
-            android:id="@+id/ourHeroWeathermon"
+            android:id="@+id/winnerWeathermon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             layout="@layout/card_maintenance_recycler_item"
@@ -36,13 +37,12 @@
             />
 
         <include
-            android:id="@+id/ourVillanWeathermon"
+            android:id="@+id/loserWeathermon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             layout="@layout/card_maintenance_recycler_item"
             android:layout_margin="16dp"
             />
-
         />
 
 

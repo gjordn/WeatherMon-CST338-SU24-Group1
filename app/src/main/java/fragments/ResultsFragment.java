@@ -30,6 +30,8 @@ public class ResultsFragment extends Fragment {
     private static final String WINNER_PARAMETER = "WinnerParameter";
     public static final String HERO_WON="hero";
     public static final String VILLAIN_WON="villain";
+    private static final String WINNER_MESSAGE = "VICTORY!";
+    private static final String LOSER_MESSAGE = "Defeat, better luck next time." ;
 
     public FragmentResultsBinding fragmentResultsBinding;
 
@@ -71,11 +73,13 @@ public class ResultsFragment extends Fragment {
         CardWithMonster villan = trainWeathermonActivity.getVillain();
 
         if (battleWinner.equals(HERO_WON)){
-            setCardInformation(hero, fragmentResultsBinding.ourHeroWeathermon);
-            setCardInformation(villan, fragmentResultsBinding.ourVillanWeathermon);
+            setCardInformation(hero, fragmentResultsBinding.winnerWeathermon);
+            setCardInformation(villan, fragmentResultsBinding.loserWeathermon);
+            fragmentResultsBinding.resultTextView.setText(WINNER_MESSAGE);
         } else {
-            setCardInformation(villan, fragmentResultsBinding.ourHeroWeathermon);
-            setCardInformation(hero, fragmentResultsBinding.ourVillanWeathermon);
+            setCardInformation(villan, fragmentResultsBinding.winnerWeathermon);
+            setCardInformation(hero, fragmentResultsBinding.loserWeathermon);
+            fragmentResultsBinding.resultTextView.setText(LOSER_MESSAGE);
         }
 
 

@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class CardWithMonster {
     public static final double HERO_BONUS = 1.2;
+    public static final int VALUE_PER_LEVEL = 5;
     public static Location battleLocation;
     public static final Double MIN_OPPONENT_XP_PERCENT = 0.5;
     public static final Double MAX_OPPONENT_XP_PERCENT = 1.5;
@@ -219,4 +220,7 @@ public class CardWithMonster {
         return (chanceHeroWins > random.nextDouble());
     }
 
+    public int getXPValue() {
+        return VALUE_PER_LEVEL *getLevelFromXP();
+    }
 }

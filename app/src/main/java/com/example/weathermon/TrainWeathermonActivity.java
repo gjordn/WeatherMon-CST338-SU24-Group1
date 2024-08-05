@@ -270,6 +270,10 @@ public class TrainWeathermonActivity extends AppCompatActivity {
         Boolean didWeWin = cardToTrain.fight(cardToBattle);
         String winner;
         if (didWeWin ){
+            int newXP = cardToTrain.getMonsterXP()+cardToBattle.getXPValue();
+            cardToTrain.setMonsterXP(newXP);
+            repository.updateCardXPByCardID(cardToTrain.getCardID(),cardToTrain.getMonsterXP());
+
             winner=HERO_WON;
         } else {
             winner=VILLAIN_WON;

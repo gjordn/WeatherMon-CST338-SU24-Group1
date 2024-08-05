@@ -142,4 +142,10 @@ public class WeathermonRepository {
             }
         });
     }
+
+    public void updateCardXPByCardID(int cardID, int newXP){
+        WeathermonDatabase.databaseWriterExecutor.execute(() -> {
+            cardDAO.updateCardXPByCardID(cardID, newXP);
+        });
+    }
 }
