@@ -8,6 +8,9 @@ import static com.example.weathermon.database.Util.WEATHERMON_LOGGED_IN_USER_ID;
 import static com.example.weathermon.database.Util.WEATHERMON_SHARED_PREF_KEY;
 import static com.example.weathermon.database.Util.WEATHERMON_SHARED_PREF_USERID;
 
+import static fragments.ResultsFragment.HERO_WON;
+import static fragments.ResultsFragment.VILLAIN_WON;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,6 +43,7 @@ import com.example.weathermon.databinding.ActivityTrainWeathermonBinding;
 import fragments.BattleFragment;
 import fragments.LocationSelectionFragment;
 import fragments.MainPageAdminButton;
+import fragments.ResultsFragment;
 import fragments.SelectCardFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -242,8 +246,19 @@ public class TrainWeathermonActivity extends AppCompatActivity {
     }
 
     public void runResultsFragment() {
-        //todo: create fragment and load results.
         Boolean didWeWin = cardToTrain.fight(cardToBattle);
+        String winner;
+        if (didWeWin ){
+            winner=HERO_WON;
+        } else {
+            winner=VILLAIN_WON;
+        }
+        ResultsFragment resultsFragment = ResultsFragment.newInstance(winner);
+
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragment_train_container, resultsFragment, null)
+                .commit();
 
     }
 
