@@ -5,6 +5,11 @@ import java.util.Random;
 
 
 public class CardWithMonster {
+    public static final double HERO_BONUS = 1.2;
+    public static Location battleLocation;
+    public static final Double MIN_OPPONENT_XP_PERCENT = 0.5;
+    public static final Double MAX_OPPONENT_XP_PERCENT = 1.5;
+
     private int cardID;
     private String cardCustomName;
     private int monsterID;
@@ -17,11 +22,6 @@ public class CardWithMonster {
     private int baseDefense;
     private int weatherInnate;
 
-    public static Location battleLocation;
-    public static final Double MIN_OPPONENT_XP_PERCENT = 0.7;
-    public static final Double MAX_OPPONENT_XP_PERCENT = 1.5;
-    public static final int POINTS_PER_DICE = 20;
-    public static final double KNOCKED_OUT_HP = 0.0;
 
 
     public CardWithMonster(int cardID, String cardCustomName, int monsterID, int monsterXP, int userID, int monster_id, String monster_name, int baseHP, int baseAttack, int baseDefense, int weatherInnate) {
@@ -208,37 +208,15 @@ public class CardWithMonster {
 
     public Boolean fight(CardWithMonster cardToBattle) {
 
-        int heroHP = this.getTotalHP();
-        int  villainHP = cardToBattle.getTotalHP();
+        int heroTotalStats = this.getTotalHP()+this.getTotalAttack()+this.getTotalDefense();
+        int villainTotalStats = cardToBattle.getTotalAttack()+
+                cardToBattle.getTotalDefense()+
+                cardToBattle.getTotalHP();
 
-        //Hero boosted by 1 dice because winning just 1/2 the time feels bad.  Make the user feel good.
-        //Then ask for more money to continue that feeling.  Micro TRANSACTION!!!Get more dice for just
-        //3.95 per month, less than a cup of coffee.  Subscription fees = continuing revenue.
-        while (heroHP> KNOCKED_OUT_HP && villainHP > KNOCKED_OUT_HP){
-            heroHP-= rollAttack(this.getTotalAttack()+POINTS_PER_DICE, cardToBattle.getTotalDefense());
-            villainHP-=rollAttack(cardToBattle.getTotalAttack(), this.getTotalDefense()+POINTS_PER_DICE);
-
-        }
-
-        return (heroHP>villainHP);
-    }
-
-    private int rollAttack(int atk, int def){
+        double chanceHeroWins = ((double) heroTotalStats* HERO_BONUS) /(heroTotalStats+villainTotalStats);
         Random random = new Random();
 
-        int atkDice=atk/POINTS_PER_DICE;
-        int defDice=def/POINTS_PER_DICE;
-        int atkDamage=0;
-        int defBlock=0;
-
-        for (int i=0;i<atkDice;i++){
-            atkDamage+= random.nextInt(6)+1;
-        }
-        for (int i=0;i<defDice;i++){
-            defBlock+= random.nextInt(6)+1;
-        }
-
-        int damageDone =atkDamage-defBlock;
-        return Math.max(damageDone, 0);
+        return (chanceHeroWins > random.nextDouble());
     }
+
 }
