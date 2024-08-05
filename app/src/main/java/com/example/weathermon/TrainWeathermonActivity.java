@@ -13,11 +13,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +30,7 @@ import androidx.lifecycle.LiveData;
 import com.example.weathermon.api.WeatherstackInterface;
 import com.example.weathermon.api.WeatherstackWeatherHolder;
 import com.example.weathermon.database.WeathermonRepository;
+import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.CardWithMonster;
 import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.Monster;
@@ -76,14 +79,7 @@ public class TrainWeathermonActivity extends AppCompatActivity {
         setLocationHome();//Go to "Home" arena
         CardWithMonster.setBattleLocation(trainingLocation);//Set location of battle.
 
-        if (trainingLocation.isRealLocation()){
-            updateRealLocation();
-        } else {
-            getSupportFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.fragment_train_container, LocationSelectionFragment.class, null)
-                    .commit();
-        }
+        updateRealLocation(trainingLocation.getLocation());
 
         binding.buttonBackToMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,26 +89,6 @@ public class TrainWeathermonActivity extends AppCompatActivity {
             }
         });
 
-        binding.buttonTravelNewArena.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                trainingLocation.setArenaName("I am a working");
-                getSupportFragmentManager().beginTransaction()
-                        .setReorderingAllowed(true)
-                        .replace(R.id.fragment_train_container, LocationSelectionFragment.class, null)
-                        .commit();
-            }
-        });
-        binding.buttonNextPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction()
-                        .setReorderingAllowed(true)
-                        .replace(R.id.fragment_train_container, SelectCardFragment.class, null)
-                        .commit();
-
-            }
-        });
 
     }
 
@@ -121,29 +97,33 @@ public class TrainWeathermonActivity extends AppCompatActivity {
         trainingLocation = new Location(CURRENT_LOCATION_BY_IP, " ",true,true);
     }
 
-    private void updateRealLocation() {
+    private void updateRealLocation(String proposedLocation) {
         WeatherstackInterface weatherstackInterface = retrofit.create(WeatherstackInterface.class);
-        weatherstackInterface.getWeartherstackWeather(trainingLocation.getLocation(), ENGLISH_UNITS).enqueue(new Callback<WeatherstackWeatherHolder>() {
+        weatherstackInterface.getWeartherstackWeather(proposedLocation, ENGLISH_UNITS).enqueue(new Callback<WeatherstackWeatherHolder>() {
             @Override
             public void onResponse(@NonNull Call<WeatherstackWeatherHolder> call, @NonNull Response<WeatherstackWeatherHolder> response) {
                 assert response.body() != null;
-                trainingLocation.setArenaName(response.body().location.name);
-                trainingLocation.setTemperature(response.body().getConvertedTemperature());
-                trainingLocation.setHumidity(response.body().getConvertedHumidity());
-                trainingLocation.setWindspeed(response.body().getConvertedWindspeed());
-                trainingLocation.setIsDaytime(response.body().getConvertedIsDaytime());
-                trainingLocation.setLocalTime(response.body().getConvertedDateTime());
+                if (response.body().location.localtime!=null) {
+                    trainingLocation.setLocation(proposedLocation);
+                    trainingLocation.setArenaName(response.body().location.name);
+                    trainingLocation.setTemperature(response.body().getConvertedTemperature());
+                    trainingLocation.setHumidity(response.body().getConvertedHumidity());
+                    trainingLocation.setWindspeed(response.body().getConvertedWindspeed());
+                    trainingLocation.setIsDaytime(response.body().getConvertedIsDaytime());
+                    trainingLocation.setLocalTime(response.body().getConvertedDateTime());
 
-                getSupportFragmentManager().beginTransaction()
-                        .setReorderingAllowed(true)
-                        .add(R.id.fragment_train_container, LocationSelectionFragment.class, null)
-                        .commit();
-
+                    getSupportFragmentManager().beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.fragment_train_container, LocationSelectionFragment.class, null)
+                            .commit();
+                }else {
+                    Toast.makeText(getApplicationContext(), "Sorry, we couldn't find that city", Toast.LENGTH_LONG).show();
+               }
             }
 
             @Override
             public void onFailure(Call<WeatherstackWeatherHolder> call, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), "That's bad - throwable: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Sorry, we couldn't find that city", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -245,15 +225,12 @@ public class TrainWeathermonActivity extends AppCompatActivity {
         monsterObserver.observe(this, monster -> {
             if (monster != null) {
                 cardToBattle = CardWithMonster.getTrainingOpponent(cardToTrain.getMonsterXP(), monster);
-
+                getSupportFragmentManager().beginTransaction()
+                        .setReorderingAllowed(true)
+                        .replace(R.id.fragment_train_container, BattleFragment.class, null)
+                        .commit();
             }
         });
-
-
-        getSupportFragmentManager().beginTransaction()
-                .setReorderingAllowed(true)
-                .replace(R.id.fragment_train_container, BattleFragment.class, null)
-                .commit();
     }
 
     public CardWithMonster getHero() {
@@ -262,5 +239,45 @@ public class TrainWeathermonActivity extends AppCompatActivity {
 
     public CardWithMonster getVillan() {
         return cardToBattle;
+    }
+
+    public void runResultsFragment() {
+        //todo: create fragment and load results.
+        Boolean didWeWin = cardToTrain.fight(cardToBattle);
+
+    }
+
+    public void buttonNewLocation() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(TrainWeathermonActivity.this);
+        final EditText input = new EditText(TrainWeathermonActivity.this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_SUBJECT);
+        alertBuilder.setView(input);
+
+        alertBuilder.setTitle("Travel the World!");
+
+
+            alertBuilder.setMessage("Enter the name of the city you would like to travel to");
+
+        alertBuilder.setPositiveButton("Travel to a new arena", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                updateRealLocation(input.getText().toString());
+            }
+        });
+
+        alertBuilder.setNegativeButton("Stay here for now.", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                dialogInterface.dismiss();
+            }
+        });
+        alertBuilder.create().show();
+    }
+
+    public void buttonNextPage() {
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.fragment_train_container, SelectCardFragment.class, null)
+                    .commit();
     }
 }

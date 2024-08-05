@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.example.weathermon.R;
 import com.example.weathermon.TrainWeathermonActivity;
-import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.CardWithMonster;
 import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.Monster;
@@ -62,9 +61,16 @@ public class BattleFragment extends Fragment {
         CardWithMonster hero = trainWeathermonActivity.getHero();
         CardWithMonster villan = trainWeathermonActivity.getVillan();
 
-        fragmentBattleBinding.arenaNameIDTextView.setText(trainingLocation.getArenaName());
+        fragmentBattleBinding.arenaNameIDTextView.setText(trainingLocation.getArenaNameToString());
         setCardInformation(hero, fragmentBattleBinding.ourHeroWeathermon);
         setCardInformation(villan, fragmentBattleBinding.ourVillanWeathermon);
+
+        fragmentBattleBinding.buttonTrainingFight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                trainWeathermonActivity.runResultsFragment();
+            }
+        });
 
 
         return fragmentBattleBinding.getRoot();

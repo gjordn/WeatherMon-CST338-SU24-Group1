@@ -60,6 +60,21 @@ public class LocationSelectionFragment extends Fragment {
         fragmentLocationSelectionFragmentBinding.windBonus.setImageResource(trainingLocation.getWindBoostImage());
         fragmentLocationSelectionFragmentBinding.humidityBonusImage.setImageResource(trainingLocation.getHumidityBoostImage());
 
+        fragmentLocationSelectionFragmentBinding.buttonTravelNewArena.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                trainWeathermonActivity.buttonNewLocation();
+            }
+        });
+
+        fragmentLocationSelectionFragmentBinding.buttonNextPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                trainWeathermonActivity.buttonNextPage();
+            }
+        });
+
+
 
         return fragmentLocationSelectionFragmentBinding.getRoot();
     }

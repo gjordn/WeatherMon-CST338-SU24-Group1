@@ -1,5 +1,7 @@
 package com.example.weathermon.database.entities;
 
+import android.util.Log;
+
 import java.util.Objects;
 import java.util.Random;
 
@@ -20,6 +22,8 @@ public class CardWithMonster {
     public static Location battleLocation;
     public static final Double minOpponentXPPercent = 0.7;
     public static final Double maxOpponentXPPercent = 1.5;
+    public static final int damageSlower = 5;
+    public static final double knockedOutHP = 0.0;
 
 
     public CardWithMonster(int cardID, String cardCustomName, int monsterID, int monsterXP, int userID, int monster_id, String monster_name, int baseHP, int baseAttack, int baseDefense, int weatherInnate) {
@@ -49,6 +53,7 @@ public class CardWithMonster {
         double opponentXP;
         opponentXP = heroXP * (minOpponentXPPercent + (maxOpponentXPPercent-minOpponentXPPercent)*random.nextDouble());
         nearLevelOpponent.monsterXP = (int) opponentXP;
+        nearLevelOpponent.setCardCustomName(""); //Can't be null.
 
         nearLevelOpponent.monster_id = baseOpponent.getMonster_id();
         nearLevelOpponent.monster_name = baseOpponent.getMonster_name();
@@ -203,4 +208,27 @@ public class CardWithMonster {
     }
 
 
+    public Boolean fight(CardWithMonster cardToBattle) {
+
+        int heroHP = this.getTotalHP();
+        int  villainHP = cardToBattle.getTotalHP();
+
+        while (heroHP>knockedOutHP && villainHP > knockedOutHP){
+            heroHP-= rollAttack(this.getTotalAttack(), cardToBattle.getTotalDefense());
+            villainHP-=rollAttack(cardToBattle.getTotalAttack(), this.getTotalDefense());
+
+        }
+
+        return (heroHP>villainHP);
+    }
+
+    private int rollAttack(int atk, int def){
+        Random random = new Random();
+
+        int damageDone =(random.nextInt(atk/damageSlower) - random.nextInt(def/damageSlower));
+        if (damageDone > 0) {
+            return damageDone;
+        }
+        return 0;
+    }
 }
