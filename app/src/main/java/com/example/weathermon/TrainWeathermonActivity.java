@@ -40,6 +40,7 @@ import com.example.weathermon.database.entities.Monster;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityTrainWeathermonBinding;
 
+import fragments.BattleAgainFragment;
 import fragments.BattleFightButtonFragment;
 import fragments.BattleFragment;
 import fragments.BattleNextButtonFragment;
@@ -69,6 +70,7 @@ public class TrainWeathermonActivity extends AppCompatActivity {
     private BattleFightButtonFragment battleFightButtonFragment;
     private BattleNextButtonFragment battleNextButtonFragment;
     private BattleTravelButtonFragment battleTravelButtonFragment;
+    private BattleAgainFragment battleAgainFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +88,7 @@ public class TrainWeathermonActivity extends AppCompatActivity {
         battleFightButtonFragment = new BattleFightButtonFragment();
         battleNextButtonFragment = new BattleNextButtonFragment();
         battleTravelButtonFragment = new BattleTravelButtonFragment();
-
+        battleAgainFragment = new BattleAgainFragment();
 
         loginUser(savedInstanceState);
         setLocationHome();//Go to "Home" arena
@@ -284,6 +286,9 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                 .setReorderingAllowed(true)
                 .replace(R.id.fragment_train_container, resultsFragment, null)
                 .commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.battleRightButton,battleAgainFragment , null)
+                .commit();
 
     }
 
@@ -327,5 +332,10 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                 .remove(battleNextButtonFragment)
                 .commit();
 
+    }
+    public void updateLocation(){
+        if(trainingLocation.isRealLocation()){
+            updateRealLocation(trainingLocation.getLocation());
+        }
     }
 }

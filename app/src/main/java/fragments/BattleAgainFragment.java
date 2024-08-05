@@ -14,13 +14,12 @@ import com.example.weathermon.TrainWeathermonActivity;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link BattleFightButtonFragment#newInstance} factory method to
+ * Use the {@link BattleAgainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BattleFightButtonFragment extends Fragment {
+public class BattleAgainFragment extends Fragment {
 
-
-    public BattleFightButtonFragment() {
+    public BattleAgainFragment() {
         // Required empty public constructor
     }
 
@@ -28,10 +27,10 @@ public class BattleFightButtonFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment BattleFightButtonFragment.
+     * @return A new instance of fragment BattleAgainFragment.
      */
-    public static BattleFightButtonFragment newInstance() {
-        BattleFightButtonFragment fragment = new BattleFightButtonFragment();
+    public static BattleAgainFragment newInstance() {
+        BattleAgainFragment fragment = new BattleAgainFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -40,26 +39,23 @@ public class BattleFightButtonFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         TrainWeathermonActivity trainWeathermonActivity = (TrainWeathermonActivity) getActivity();
-                  ImageButton buttonBattleStart;
-                  View view = inflater.inflate(R.layout.fragment_battle_fight_button, container, false);
+        ImageButton buttonBattleAgain;
+        View view = inflater.inflate(R.layout.fragment_battle_again, container, false);
 
-                  buttonBattleStart=view.findViewById(R.id.buttonBattleStart);
-                  buttonBattleStart.setOnClickListener(new View.OnClickListener() {
-                      @Override
-                      public void onClick(View view) {
-                         trainWeathermonActivity.runResultsFragment();
-                      }
-                  });
+        buttonBattleAgain=view.findViewById(R.id.buttonBattleAgain);
+        buttonBattleAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                trainWeathermonActivity.updateLocation();
+            }
+        });
 
         return view;
     }
-
 }
