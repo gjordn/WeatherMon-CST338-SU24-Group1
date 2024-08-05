@@ -40,7 +40,10 @@ import com.example.weathermon.database.entities.Monster;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityTrainWeathermonBinding;
 
+import fragments.BattleFightButtonFragment;
 import fragments.BattleFragment;
+import fragments.BattleNextButtonFragment;
+import fragments.BattleTravelButtonFragment;
 import fragments.LocationSelectionFragment;
 import fragments.MainPageAdminButton;
 import fragments.ResultsFragment;
@@ -63,6 +66,9 @@ public class TrainWeathermonActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private int view;
     private LocationSelectionFragment locationSelectionFragment;
+    private BattleFightButtonFragment battleFightButtonFragment;
+    private BattleNextButtonFragment battleNextButtonFragment;
+    private BattleTravelButtonFragment battleTravelButtonFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +83,9 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                 .build();
 
         locationSelectionFragment =new LocationSelectionFragment();
+        battleFightButtonFragment = new BattleFightButtonFragment();
+        battleNextButtonFragment = new BattleNextButtonFragment();
+        battleTravelButtonFragment = new BattleTravelButtonFragment();
 
 
         loginUser(savedInstanceState);
@@ -99,6 +108,7 @@ public class TrainWeathermonActivity extends AppCompatActivity {
 
     private void setLocationHome() {
         trainingLocation = new Location(CURRENT_LOCATION_BY_IP, " ",true,true);
+
     }
 
     private void updateRealLocation(String proposedLocation) {
@@ -120,6 +130,18 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                             .setReorderingAllowed(true)
                             .replace(R.id.fragment_train_container, LocationSelectionFragment.class, null)
                             .commit();
+                    //Only add buttons if found location.
+                    getSupportFragmentManager().beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.battleMiddleButton, battleTravelButtonFragment, null)
+                            .commit();
+
+                    getSupportFragmentManager().beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.battleRightButton, battleNextButtonFragment, null)
+                            .commit();
+
+
                 }else {
                     Toast.makeText(getApplicationContext(), "Sorry, we couldn't find that city", Toast.LENGTH_LONG).show();
                }
@@ -233,6 +255,8 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                         .setReorderingAllowed(true)
                         .replace(R.id.fragment_train_container, BattleFragment.class, null)
                         .commit();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.battleRightButton,battleFightButtonFragment, null);
             }
         });
     }
@@ -294,5 +318,13 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                     .setReorderingAllowed(true)
                     .replace(R.id.fragment_train_container, SelectCardFragment.class, null)
                     .commit();
+        getSupportFragmentManager().beginTransaction()
+                .remove(battleTravelButtonFragment)
+                .commit();
+
+        getSupportFragmentManager().beginTransaction()
+                .remove(battleNextButtonFragment)
+                .commit();
+
     }
 }

@@ -65,13 +65,6 @@ public class BattleFragment extends Fragment {
         setCardInformation(hero, fragmentBattleBinding.ourHeroWeathermon);
         setCardInformation(villan, fragmentBattleBinding.ourVillanWeathermon);
 
-        fragmentBattleBinding.buttonTrainingFight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                trainWeathermonActivity.runResultsFragment();
-            }
-        });
-
 
         return fragmentBattleBinding.getRoot();
     }
