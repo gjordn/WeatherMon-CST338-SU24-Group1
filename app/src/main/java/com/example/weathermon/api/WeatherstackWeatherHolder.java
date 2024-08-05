@@ -12,6 +12,16 @@ public class WeatherstackWeatherHolder {
     private String weatherstackIsDayTrueString = "yes";
     DateTimeFormatter weatherstackDateTimeformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+    public String success;
+
+    public String getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(String success) {
+        this.success = success;
+    }
+
     public Request getRequest() {
         return request;
     }

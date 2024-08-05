@@ -103,7 +103,7 @@ public class TrainWeathermonActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<WeatherstackWeatherHolder> call, @NonNull Response<WeatherstackWeatherHolder> response) {
                 assert response.body() != null;
-                if (response.body().location.localtime!=null) {
+                if (response.body().success==null) { //Success if null unless the pull of data fails.
                     trainingLocation.setLocation(proposedLocation);
                     trainingLocation.setArenaName(response.body().location.name);
                     trainingLocation.setTemperature(response.body().getConvertedTemperature());
