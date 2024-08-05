@@ -48,6 +48,8 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
         binding = ActivityUserCardMantenanceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         repository = WeathermonRepository.getRepository(getApplication());
+        CardWithMonster.setBattleLocation(null);//No battle in this location;
+
 
         loginUser(savedInstanceState);
 
@@ -107,7 +109,9 @@ public class UserCardMantenanceActivity extends AppCompatActivity implements Car
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.logoutMenuItem);
         item.setVisible(true);
-        item.setTitle(user.getUsername());
+        if (user!=null){
+            item.setTitle(user.getUsername());
+        }
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem menuItem) {

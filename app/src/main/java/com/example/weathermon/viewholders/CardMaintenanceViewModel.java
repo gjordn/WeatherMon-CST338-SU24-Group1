@@ -23,11 +23,4 @@ public class CardMaintenanceViewModel extends AndroidViewModel {
         return repository.getCardsWithMonsterByUserID(userID);
     }
 
-    public void insert(Card card){
-        repository.insertCard(card);
-    }
-
-    public void deleteCardByID(int cardID) {
-        repository.deleteCardByID(cardID);
-    }
 }

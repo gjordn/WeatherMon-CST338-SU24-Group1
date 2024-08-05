@@ -20,4 +20,15 @@
     <string name="weathermon_dictionary">Weathermon Dictionary</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_to">Welcome To</string>
+    <string name="arena_name"><![CDATA[<---arena name --->]]></string>
+    <string name="arena">Arena!</string>
+    <string name="temperature_boost_image">Temperature Boost Image</string>
+    <string name="light_or_dark_boost_image">Light or Dark boost image</string>
+    <string name="wind_speed">Wind Speed</string>
+    <string name="_20_mph">20 mph</string>
+    <string name="_100">100 %</string>
+    <string name="humidity">Humidity</string>
+    <string name="start_training_combat">Start Training Combat!</string>
+    <string name="choose_new_location">Choose new location</string>
 </resources>
