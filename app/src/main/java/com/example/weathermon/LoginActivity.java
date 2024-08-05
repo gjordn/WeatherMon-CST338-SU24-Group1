@@ -35,8 +35,6 @@ public class LoginActivity extends AppCompatActivity {
                 String username = binding.userNameLoginEditText.getText().toString();
                 String password = binding.passwordLoginEditText.getText().toString();
                 validateCredentials(username, password);
-                // Validate credentials
-
             }
         });
     }
@@ -52,17 +50,8 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, "Fetched User ID: " + userId);
                 if (password.equals(user.getPassword())) {
                     saveUserCredentials(userId);
-
-                    if (user.isAdmin()) {
-                        Log.d(TAG, "User is an admin, redirecting to AdminActivity");
-                        Intent intent = AdminActivity.adminActivityIntentFactory(getApplicationContext());
-                        startActivity(intent);
-                    } else {
-                        Log.d(TAG, "User is not an admin, redirecting to MainActivity");
-                        Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), userId);
-                        startActivity(intent);
-                    }
-
+                    Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), userId);
+                    startActivity(intent);
                     finish();
                 } else {
                     Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
@@ -72,36 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    /*
-    private boolean validateCredentials(String username, String password) {
-        LiveData<User> userObserver = repository.getUserByUsername(username);
-        userObserver.observe(this , user -> {
-            if (user!=null){
-                int userId = user.getId();
-                Log.d(TAG, "Fetched User ID: " + userId);  // Debugging log
-                if (password.equals(user.getPassword())){
-                    saveUserCredentials(userId);
-                    Intent intent = MainActivity.mainActivityIntentFactory(getApplicationContext(), userId);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        return true;
-    }
 
-
-     */
-
-    /**
-     * Method that gets user ID by username.
-     */
-//    private int getUserIdByUsername(String username) {
-//        User user = repository.getUserByUsername(username);
-//        return user != null ? user.getId() : -1;
-//    }
 
     /**
      * Method that saves user credentials in SharedPreferences.

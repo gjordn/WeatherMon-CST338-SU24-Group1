@@ -5,17 +5,19 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:background="@drawable/weathermon">
 
-    <TextView
-        android:id="@+id/titleLoginTextView"
+
+    <ImageView
+        android:id="@+id/titleLoginImageView"
         android:layout_width="match_parent"
-        android:layout_height="150dip"
-        android:layout_margin="16dip"
-        android:gravity="center"
-        android:text="@string/weathermon_please_log_in"
-        android:textSize="42sp"
+        android:layout_height="240dip"
+        android:layout_margin="40dp"
+        android:layout_marginTop="64dp"
+        android:src="@drawable/weathermonlogo"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.866"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,7 +33,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleLoginTextView" />
+        app:layout_constraintTop_toBottomOf="@id/titleLoginImageView" />
 
     <EditText
         android:id="@+id/passwordLoginEditText"

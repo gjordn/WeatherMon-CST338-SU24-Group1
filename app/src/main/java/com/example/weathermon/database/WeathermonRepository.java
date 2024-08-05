@@ -56,7 +56,7 @@ public class WeathermonRepository {
         return null;
     }
 
-    public void insertUser(User... user){
+    public void insertUser (User... user){
         WeathermonDatabase.databaseWriterExecutor.execute(() -> {
             userDAO.insert(user);
         });
@@ -64,6 +64,12 @@ public class WeathermonRepository {
 
     public User getUserByUsernameAndPassword(String username, String password) {
         return userDAO.getUserByUsernameAndPassword(username, password);
+    }
+
+    public void updateUserPassword(String username, String newPassword) {
+        WeathermonDatabase.databaseWriterExecutor.execute(() -> {
+            userDAO.updatePassword(username, newPassword);
+        });
     }
 
     public LiveData<User> getUserByUsername(String username) {
@@ -83,12 +89,12 @@ public class WeathermonRepository {
     }
 
     public void deleteCardByID(int cardID){
-        WeathermonDatabase.databaseWriterExecutor.execute(() ->
+        WeathermonDatabase.databaseWriterExecutor.execute(()->
                 cardDAO.deleteCardByID(cardID));
     }
 
     public void insertCard(Card card) {
-        WeathermonDatabase.databaseWriterExecutor.execute(() -> cardDAO.insert(card));
+        cardDAO.insert(card);
     }
 
     public void deleteUser(User user) {
@@ -99,9 +105,17 @@ public class WeathermonRepository {
         WeathermonDatabase.databaseWriterExecutor.execute(() -> userDAO.update(user));
     }
 
-    public void updateCards(Card... cards) {
-        WeathermonDatabase.databaseWriterExecutor.execute(() ->
-                cardDAO.updateCards(cards));
+      public void updateCards(Card... cards) {
+        WeathermonDatabase.databaseWriterExecutor.execute(()->
+                cardDAO.updateCards(cards));;
+    }
+
+    public void deleteUserByUsername(String username) {
+        WeathermonDatabase.databaseWriterExecutor.execute(() -> {
+            User user = userDAO.getUserByUsernameSync(username);
+            if (user != null) {
+                userDAO.delete(user);
+            }
+        });
     }
 }
-

@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -19,8 +20,6 @@ import androidx.lifecycle.LiveData;
 import com.example.weathermon.database.WeathermonRepository;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityMainBinding;
-
-import fragments.MainPageAdminButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
 
         binding.buttonMyPetWeathermon.setOnClickListener(new View.OnClickListener() {
@@ -64,18 +64,34 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+
+
         LiveData<User> userObserver = repository.getUserByUserID(loggedInUserId);
         userObserver.observe(this, user -> {
             if (user != null) {
                 this.user = user;
-                if (user.isAdmin()){
-                    getSupportFragmentManager().beginTransaction()
-                            .setReorderingAllowed(true)
-                            .add(R.id.fragment_admin_button_container, MainPageAdminButton.class, null)
-                            .commit();
-                }
                 Log.d(TAG, "User data loaded: " + user.getUsername());
-                invalidateOptionsMenu();
+                if (user.isAdmin()) {
+                    binding.buttonAdministrator.setVisibility(View.VISIBLE);
+                } else {
+                    binding.buttonAdministrator.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        binding.buttonMyPetWeathermon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = UserCardMantenanceActivity.userCardMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
+                startActivity(intent);
+            }
+        });
+
+        binding.buttonAdministrator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = AdminActivity.adminActivityIntentFactory(getApplicationContext());
+                startActivity(intent);
             }
         });
     }
@@ -104,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void showLogoutDialog() {
+    private void showLogoutDialog(){
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
         final AlertDialog alertDialog = alertBuilder.create();
 
