@@ -256,7 +256,8 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                         .replace(R.id.fragment_train_container, BattleFragment.class, null)
                         .commit();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.battleRightButton,battleFightButtonFragment, null);
+                        .replace(R.id.battleRightButton,battleFightButtonFragment, null)
+                        .commit();
             }
         });
     }

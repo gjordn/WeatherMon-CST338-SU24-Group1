@@ -29,8 +29,7 @@ public class BattleNextButtonFragment extends Fragment {
      *
      * @return A new instance of fragment BattleNextButtonFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static BattleNextButtonFragment newInstance(String param1, String param2) {
+    public static BattleNextButtonFragment newInstance() {
         BattleNextButtonFragment fragment = new BattleNextButtonFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
