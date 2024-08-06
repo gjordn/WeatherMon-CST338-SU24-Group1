@@ -53,6 +53,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        binding.buttonTheWeathermon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, WeathermonDexActivity.class);
+                startActivity(intent);
+            }
+        });
+
         int userId = getUserIdFromPrefs();
         Log.d(TAG, "Retrieved User ID from prefs: " + userId);  // Debugging log
         if (userId == -1) {
@@ -72,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
-
         LiveData<User> userObserver = repository.getUserByUserID(loggedInUserId);
         userObserver.observe(this, user -> {
             if (user != null) {
@@ -84,14 +90,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     binding.buttonAdministrator.setVisibility(View.GONE);
                 }
-            }
-        });
-
-        binding.buttonMyPetWeathermon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = UserCardMantenanceActivity.userCardMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
-                startActivity(intent);
             }
         });
 
