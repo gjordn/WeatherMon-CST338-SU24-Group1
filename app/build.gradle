@@ -50,6 +50,7 @@ dependencies {
 
     // Room dependencies
     implementation libs.room.runtime.v225
+    androidTestImplementation libs.junit.junit
     annotationProcessor libs.room.compiler.v225
 
     // Optional - Test helpers for Room

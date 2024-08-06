@@ -2,6 +2,7 @@ package com.example.weathermon.database.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -16,13 +17,20 @@ import java.util.List;
 @Dao
 public interface CardDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Card card);
+    void insert(Card... cards);
 
     @Query("SELECT * FROM " + WeathermonDatabase.CARD_TABLE + " ORDER BY monsterXP DESC")
     LiveData<List<Card>> getAllCards();
 
     @Query("SELECT * FROM " + WeathermonDatabase.CARD_TABLE + " WHERE userID == :userID ORDER BY monsterXP DESC")
     LiveData<List<Card>> getCardsByUserID(int userID);
+
+@Query("SELECT * FROM " + WeathermonDatabase.CARD_TABLE + " WHERE userID == :userID ORDER BY monsterXP DESC")
+    List<Card> getCardsByUserIDTest(int userID);
+
+    @Delete
+    void delete(Card...cards);
+
 
     @Query("DELETE FROM " + WeathermonDatabase.CARD_TABLE + " WHERE cardID==:cardID")
     void deleteCardByID(int cardID);
