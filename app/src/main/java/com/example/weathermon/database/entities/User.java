@@ -25,7 +25,6 @@ public class User {
         this.campaignProgress=0;  //Start at the begining;
     }
 
-    @NonNull
     @Override
     public String toString() {
         return "User{" +

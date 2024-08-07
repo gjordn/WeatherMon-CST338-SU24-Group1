@@ -1,15 +1,12 @@
 package com.example.weathermon;
 
-import static com.example.weathermon.api.WeatherStackInterface.BASE_URL;
-import static com.example.weathermon.api.WeatherStackInterface.CURRENT_LOCATION_BY_IP;
-import static com.example.weathermon.api.WeatherStackInterface.ENGLISH_UNITS;
+import static com.example.weathermon.api.WeatherstackInterface.BASE_URL;
+import static com.example.weathermon.api.WeatherstackInterface.CURRENT_LOCATION_BY_IP;
+import static com.example.weathermon.api.WeatherstackInterface.ENGLISH_UNITS;
 import static com.example.weathermon.database.Util.USER_LOGGED_OUT;
 import static com.example.weathermon.database.Util.WEATHERMON_LOGGED_IN_USER_ID;
 import static com.example.weathermon.database.Util.WEATHERMON_SHARED_PREF_KEY;
 import static com.example.weathermon.database.Util.WEATHERMON_SHARED_PREF_USERID;
-
-import static fragments.ResultsFragment.HERO_WON;
-import static fragments.ResultsFragment.VILLAIN_WON;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,6 +14,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,22 +27,19 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
-import com.example.weathermon.api.WeatherStackInterface;
+import com.example.weathermon.api.WeatherstackInterface;
 import com.example.weathermon.api.WeatherstackWeatherHolder;
 import com.example.weathermon.database.WeathermonRepository;
+import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.CardWithMonster;
 import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.Monster;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityTrainWeathermonBinding;
 
-import fragments.BattleAgainFragment;
-import fragments.BattleFightButtonFragment;
 import fragments.BattleFragment;
-import fragments.BattleNextButtonFragment;
-import fragments.BattleTravelButtonFragment;
 import fragments.LocationSelectionFragment;
-import fragments.ResultsFragment;
+import fragments.MainPageAdminButton;
 import fragments.SelectCardFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,10 +57,8 @@ public class TrainWeathermonActivity extends AppCompatActivity {
     private CardWithMonster cardToBattle;
 
     private Retrofit retrofit;
-    private BattleFightButtonFragment battleFightButtonFragment;
-    private BattleNextButtonFragment battleNextButtonFragment;
-    private BattleTravelButtonFragment battleTravelButtonFragment;
-    private BattleAgainFragment battleAgainFragment;
+    private int view;
+    private LocationSelectionFragment locationSelectionFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +72,8 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        battleFightButtonFragment = new BattleFightButtonFragment();
-        battleNextButtonFragment = new BattleNextButtonFragment();
-        battleTravelButtonFragment = new BattleTravelButtonFragment();
-        battleAgainFragment = new BattleAgainFragment();
+        locationSelectionFragment =new LocationSelectionFragment();
+
 
         loginUser(savedInstanceState);
         setLocationHome();//Go to "Home" arena
@@ -104,16 +95,15 @@ public class TrainWeathermonActivity extends AppCompatActivity {
 
     private void setLocationHome() {
         trainingLocation = new Location(CURRENT_LOCATION_BY_IP, " ",true,true);
-
     }
 
     private void updateRealLocation(String proposedLocation) {
-        WeatherStackInterface weatherstackInterface = retrofit.create(WeatherStackInterface.class);
-        weatherstackInterface.getWeatherStackWeather(proposedLocation, ENGLISH_UNITS).enqueue(new Callback<WeatherstackWeatherHolder>() {
+        WeatherstackInterface weatherstackInterface = retrofit.create(WeatherstackInterface.class);
+        weatherstackInterface.getWeartherstackWeather(proposedLocation, ENGLISH_UNITS).enqueue(new Callback<WeatherstackWeatherHolder>() {
             @Override
             public void onResponse(@NonNull Call<WeatherstackWeatherHolder> call, @NonNull Response<WeatherstackWeatherHolder> response) {
                 assert response.body() != null;
-                if (response.body().success==null) { //Success if null unless the pull of data fails.
+                if (response.body().location.localtime!=null) {
                     trainingLocation.setLocation(proposedLocation);
                     trainingLocation.setArenaName(response.body().location.name);
                     trainingLocation.setTemperature(response.body().getConvertedTemperature());
@@ -126,25 +116,13 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                             .setReorderingAllowed(true)
                             .replace(R.id.fragment_train_container, LocationSelectionFragment.class, null)
                             .commit();
-                    //Only add buttons if found location.
-                    getSupportFragmentManager().beginTransaction()
-                            .setReorderingAllowed(true)
-                            .replace(R.id.battleMiddleButton, battleTravelButtonFragment, null)
-                            .commit();
-
-                    getSupportFragmentManager().beginTransaction()
-                            .setReorderingAllowed(true)
-                            .replace(R.id.battleRightButton, battleNextButtonFragment, null)
-                            .commit();
-
-
                 }else {
                     Toast.makeText(getApplicationContext(), "Sorry, we couldn't find that city", Toast.LENGTH_LONG).show();
                }
             }
 
             @Override
-            public void onFailure(@NonNull Call<WeatherstackWeatherHolder> call, @NonNull Throwable throwable) {
+            public void onFailure(Call<WeatherstackWeatherHolder> call, Throwable throwable) {
                 Toast.makeText(getApplicationContext(), "Sorry, we couldn't find that city", Toast.LENGTH_LONG).show();
             }
         });
@@ -251,9 +229,6 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                         .setReorderingAllowed(true)
                         .replace(R.id.fragment_train_container, BattleFragment.class, null)
                         .commit();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.battleRightButton,battleFightButtonFragment, null)
-                        .commit();
             }
         });
     }
@@ -262,31 +237,13 @@ public class TrainWeathermonActivity extends AppCompatActivity {
         return cardToTrain;
     }
 
-    public CardWithMonster getVillain() {
+    public CardWithMonster getVillan() {
         return cardToBattle;
     }
 
     public void runResultsFragment() {
+        //todo: create fragment and load results.
         Boolean didWeWin = cardToTrain.fight(cardToBattle);
-        String winner;
-        if (didWeWin ){
-            int newXP = cardToTrain.getMonsterXP()+cardToBattle.getXPValue();
-            cardToTrain.setMonsterXP(newXP);
-            repository.updateCardXPByCardID(cardToTrain.getCardID(),cardToTrain.getMonsterXP());
-
-            winner=HERO_WON;
-        } else {
-            winner=VILLAIN_WON;
-        }
-        ResultsFragment resultsFragment = ResultsFragment.newInstance(winner);
-
-        getSupportFragmentManager().beginTransaction()
-                .setReorderingAllowed(true)
-                .replace(R.id.fragment_train_container, resultsFragment, null)
-                .commit();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.battleRightButton,battleAgainFragment , null)
-                .commit();
 
     }
 
@@ -322,18 +279,5 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                     .setReorderingAllowed(true)
                     .replace(R.id.fragment_train_container, SelectCardFragment.class, null)
                     .commit();
-        getSupportFragmentManager().beginTransaction()
-                .remove(battleTravelButtonFragment)
-                .commit();
-
-        getSupportFragmentManager().beginTransaction()
-                .remove(battleNextButtonFragment)
-                .commit();
-
-    }
-    public void updateLocation(){
-        if(trainingLocation.isRealLocation()){
-            updateRealLocation(trainingLocation.getLocation());
-        }
     }
 }

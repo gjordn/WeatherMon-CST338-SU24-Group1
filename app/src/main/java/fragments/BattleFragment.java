@@ -4,7 +4,6 @@ import static com.example.weathermon.viewholders.CardMaintenanceViewHolder.bonus
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -37,7 +36,7 @@ public class BattleFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static BattleFragment newInstance() {
+    public static BattleFragment newInstance(String param1, String param2) {
         BattleFragment fragment = new BattleFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -47,10 +46,12 @@ public class BattleFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+        }
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         fragmentBattleBinding = FragmentBattleBinding.inflate(inflater, container, false);
 
@@ -58,11 +59,18 @@ public class BattleFragment extends Fragment {
         assert trainWeathermonActivity != null;
         Location trainingLocation = trainWeathermonActivity.getLocationInfo();
         CardWithMonster hero = trainWeathermonActivity.getHero();
-        CardWithMonster villain = trainWeathermonActivity.getVillain();
+        CardWithMonster villan = trainWeathermonActivity.getVillan();
 
         fragmentBattleBinding.arenaNameIDTextView.setText(trainingLocation.getArenaNameToString());
         setCardInformation(hero, fragmentBattleBinding.ourHeroWeathermon);
-        setCardInformation(villain, fragmentBattleBinding.ourVillanWeathermon);
+        setCardInformation(villan, fragmentBattleBinding.ourVillanWeathermon);
+
+        fragmentBattleBinding.buttonTrainingFight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                trainWeathermonActivity.runResultsFragment();
+            }
+        });
 
 
         return fragmentBattleBinding.getRoot();
@@ -76,6 +84,7 @@ public class BattleFragment extends Fragment {
         TextView cardStats = cardWithMonsterDisplayCard.cardstats;
         ImageView cardLogo = cardWithMonsterDisplayCard.cardImage;
         TextView cardLevel = cardWithMonsterDisplayCard.cardlevel;
+        CardView cardView = cardWithMonsterDisplayCard.maincardcontainer;
         LinearLayout cardLayout =  cardWithMonsterDisplayCard.linlayoutcard;
 
         String line;

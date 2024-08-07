@@ -1,5 +1,10 @@
 package com.example.weathermon.database;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
+import android.widget.Toast;
+
 public class Util {
     public static final String LOGGING_TAG = "WeathermonTAG";
     public static final String WEATHERMON_SHARED_PREF_KEY = "WeatherMonPrefs";

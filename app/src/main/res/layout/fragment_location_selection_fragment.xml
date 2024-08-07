@@ -203,7 +203,31 @@
                 </LinearLayout>
 
             </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonTravelNewArena"
+            android:background="@drawable/buttontraveltrain"
+            app:layout_constraintStart_toEndOf="@+id/buttonBackToMain"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/choose_new_location"
+            />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonNextPage"
+            android:background="@drawable/buttonnexttrain"
+            android:layout_margin="16dp"
+            android:contentDescription="Next page to choose your hero!"
+            />
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

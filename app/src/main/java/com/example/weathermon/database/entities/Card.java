@@ -15,7 +15,9 @@ import java.util.Objects;
         @ForeignKey(
                 entity = Monster.class,
                 parentColumns = {"monster_id"},
-                childColumns = {"monsterID"}
+                childColumns = {"monsterID"},
+                onDelete = ForeignKey.NO_ACTION,
+                onUpdate = ForeignKey.NO_ACTION
         )
     }, indices = {@Index(value = {"monsterID"})}
 )
@@ -81,7 +83,7 @@ public class Card {
 
     /**
      * Update the level of a monster at the same time XP is changed.
-     * @param monsterXP (Card experience)
+     * @param monsterXP
      */
     public void setMonsterXP(int monsterXP) {
         this.monsterXP = monsterXP;

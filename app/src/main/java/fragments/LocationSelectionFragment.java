@@ -2,7 +2,6 @@ package fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -43,7 +42,7 @@ public class LocationSelectionFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragmentLocationSelectionFragmentBinding = FragmentLocationSelectionFragmentBinding.inflate(inflater, container, false);
@@ -60,6 +59,22 @@ public class LocationSelectionFragment extends Fragment {
         fragmentLocationSelectionFragmentBinding.lightDarkBoostImage.setImageResource(trainingLocation.getIsDayBoostImage());
         fragmentLocationSelectionFragmentBinding.windBonus.setImageResource(trainingLocation.getWindBoostImage());
         fragmentLocationSelectionFragmentBinding.humidityBonusImage.setImageResource(trainingLocation.getHumidityBoostImage());
+
+        fragmentLocationSelectionFragmentBinding.buttonTravelNewArena.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                trainWeathermonActivity.buttonNewLocation();
+            }
+        });
+
+        fragmentLocationSelectionFragmentBinding.buttonNextPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                trainWeathermonActivity.buttonNextPage();
+            }
+        });
+
+
 
         return fragmentLocationSelectionFragmentBinding.getRoot();
     }

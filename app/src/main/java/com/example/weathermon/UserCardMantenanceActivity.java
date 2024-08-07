@@ -34,7 +34,7 @@ import com.example.weathermon.viewholders.CardMaintenanceAdapter;
 import com.example.weathermon.viewholders.CardMaintenanceViewModel;
 import com.example.weathermon.viewholders.CardSelectListener;
 
-public class UserCardMaintenanceActivity extends AppCompatActivity implements CardSelectListener {
+public class UserCardMantenanceActivity extends AppCompatActivity implements CardSelectListener {
     ActivityUserCardMantenanceBinding binding;
     private WeathermonRepository repository;
     private CardMaintenanceViewModel cardMaintenanceViewModel;
@@ -123,7 +123,7 @@ public class UserCardMaintenanceActivity extends AppCompatActivity implements Ca
     }
 
     private void showLogoutDialog() {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(UserCardMaintenanceActivity.this);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(UserCardMantenanceActivity.this);
         final AlertDialog alertDialog = alertBuilder.create();
 
         alertBuilder.setMessage("Confirm Logout");
@@ -150,15 +150,15 @@ public class UserCardMaintenanceActivity extends AppCompatActivity implements Ca
     }
 
     static Intent userCardMaintenanceIntentFactory(Context context, int userID) {
-        Intent intent = new Intent(context, UserCardMaintenanceActivity.class);
+        Intent intent = new Intent(context, UserCardMantenanceActivity.class);
         intent.putExtra(WEATHERMON_LOGGED_IN_USER_ID, userID);
         return intent;
     }
 
     @Override
     public void onItemClicked(CardWithMonster cardWithMonster) {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(UserCardMaintenanceActivity.this);
-        final EditText input = new EditText(UserCardMaintenanceActivity.this);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(UserCardMantenanceActivity.this);
+        final EditText input = new EditText(UserCardMantenanceActivity.this);
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         alertBuilder.setView(input);
 
@@ -193,7 +193,7 @@ public class UserCardMaintenanceActivity extends AppCompatActivity implements Ca
 
     @Override
     public void onItemLongClicked(CardWithMonster cardWithMonster) {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(UserCardMaintenanceActivity.this);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(UserCardMantenanceActivity.this);
 
         alertBuilder.setTitle("End Friendship");
 
