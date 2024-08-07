@@ -153,4 +153,9 @@ public class WeathermonRepository {
     public LiveData<Location> getLocationByUserCampaignProgress(int campaignProgress) {
         return locationDAO.getLocationByUserCampaignProgress(campaignProgress);
     }
+
+    public LiveData<List<Monster>> getRandomMonsters() {
+        return monsterDAO.getRandomMonsters();
+
+    }
 }

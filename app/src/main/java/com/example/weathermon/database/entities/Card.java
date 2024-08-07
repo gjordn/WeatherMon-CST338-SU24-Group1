@@ -119,22 +119,8 @@ public class Card {
         return Objects.hash(cardID, cardCustomName, monsterID, monsterXP, userID);
     }
 
-    /**
-     * checks XP and Level and returns the XP earned towards the next level
-     * @return XP past current level
-     */
-    public int getXPToNextLevel(){
-        //TODO: Write code to return XP as an amount to next level.
-        return 0;
-    }
-
-    /**
-     * checks XP and level and returns the amount of XP needed to reach the next level
-     * @return XP from current level to next level.
-     */
-    public int getXPNeedForNextLevel() {
-        //TODO: Write code to return the total number of xp needed for the next level;
-        return 0;
+    public static int getXPCardXPForCampaignStop(int stopNumber) {
+        return (int) (baseXPForLevel*(Math.pow(levelExponential, stopNumber)));
     }
 }
 

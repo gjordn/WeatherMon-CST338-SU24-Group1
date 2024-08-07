@@ -32,11 +32,14 @@ import androidx.lifecycle.LiveData;
 import com.example.weathermon.api.WeatherStackInterface;
 import com.example.weathermon.api.WeatherstackWeatherHolder;
 import com.example.weathermon.database.WeathermonRepository;
+import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.CardWithMonster;
 import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.Monster;
 import com.example.weathermon.database.entities.User;
 import com.example.weathermon.databinding.ActivityTrainWeathermonBinding;
+
+import java.util.List;
 
 import fragments.BattleAgainFragment;
 import fragments.BattleFightButtonFragment;
@@ -286,19 +289,41 @@ public class TrainWeathermonActivity extends AppCompatActivity {
     public void setCardToTrain(CardWithMonster cardSelected) {
         cardToTrain = cardSelected;
 
-        LiveData<Monster> monsterObserver = repository.getRandomMonster();
-        monsterObserver.observe(this, monster -> {
-            if (monster != null) {
-                cardToBattle = CardWithMonster.getTrainingOpponent(cardToTrain.getMonsterXP(), monster);
-                getSupportFragmentManager().beginTransaction()
-                        .setReorderingAllowed(true)
-                        .replace(R.id.fragment_train_container, BattleFragment.class, null)
-                        .commit();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.battleRightButton,battleFightButtonFragment, null)
-                        .commit();
-            }
-        });
+        if (battleType==BATTLE_TYPE_TRAINING) {
+            LiveData<Monster> monsterObserver = repository.getRandomMonster();
+            monsterObserver.observe(this, monster -> {
+                if (monster != null) {
+                    cardToBattle = CardWithMonster.getTrainingOpponent(cardToTrain.getMonsterXP(), monster);
+                    getSupportFragmentManager().beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.fragment_train_container, BattleFragment.class, null)
+                            .commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.battleRightButton, battleFightButtonFragment, null)
+                            .commit();
+                }
+            });
+        } else{
+            LiveData<List<Monster>> monsterObserver = repository.getRandomMonsters();
+            monsterObserver.observe(this, monsters -> {
+                if (monsters != null) {
+
+                    int firstBoosted = 0;
+                    while (battleLocation.hasBonus(monsters.get(firstBoosted).getWeatherInnate())) {
+                        firstBoosted++;
+                    }
+                    cardToBattle = CardWithMonster.getTrainingOpponent(cardToTrain.getMonsterXP(), monsters.get(firstBoosted));
+                    cardToBattle.setMonsterXP(Card.getXPCardXPForCampaignStop(campaignStopNumber));
+                    getSupportFragmentManager().beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.fragment_train_container, BattleFragment.class, null)
+                            .commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.battleRightButton, battleFightButtonFragment, null)
+                            .commit();
+                }
+            });
+        }
     }
 
     public CardWithMonster getHero() {

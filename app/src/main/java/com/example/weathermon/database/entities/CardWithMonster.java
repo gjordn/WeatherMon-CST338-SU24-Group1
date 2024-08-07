@@ -223,4 +223,7 @@ public class CardWithMonster {
     public int getXPValue() {
         return VALUE_PER_LEVEL *getLevelFromXP();
     }
+
+
 }
+

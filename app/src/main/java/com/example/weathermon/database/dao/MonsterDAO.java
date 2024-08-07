@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.weathermon.database.WeathermonDatabase;
+import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.Monster;
 
 import java.util.List;
@@ -27,6 +28,9 @@ public interface MonsterDAO {
 
     @Query("SELECT * FROM " + WeathermonDatabase.MONSTER_TABLE + " ORDER BY RANDOM() LIMIT 1")
     LiveData<Monster> getRandomMonster();
+
+    @Query("SELECT * FROM " + WeathermonDatabase.MONSTER_TABLE + " ORDER BY RANDOM()")
+    LiveData<List<Monster>> getRandomMonsters();
 }
 
 
