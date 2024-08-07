@@ -2,6 +2,7 @@ package fragments;
 
 import static com.example.weathermon.viewholders.CardMaintenanceViewHolder.bonusBackgroundColor;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,8 +31,9 @@ public class ResultsFragment extends Fragment {
     private static final String WINNER_PARAMETER = "WinnerParameter";
     public static final String HERO_WON="hero";
     public static final String VILLAIN_WON="villain";
-    private static final String WINNER_MESSAGE = "VICTORY!";
-    private static final String LOSER_MESSAGE = "Defeat, better luck next time." ;
+    private static final int VICTORY_DRAWABLE = R.drawable.battle_victory;
+    private static final int DEFEAT_DRAWABLE = R.drawable.battle_defeat;
+
 
     public FragmentResultsBinding fragmentResultsBinding;
 
@@ -75,11 +77,11 @@ public class ResultsFragment extends Fragment {
         if (battleWinner.equals(HERO_WON)){
             setCardInformation(hero, fragmentResultsBinding.winnerWeathermon);
             setCardInformation(villan, fragmentResultsBinding.loserWeathermon);
-            fragmentResultsBinding.resultTextView.setText(WINNER_MESSAGE);
+            fragmentResultsBinding.batleResultImage.setImageResource(VICTORY_DRAWABLE);
         } else {
             setCardInformation(villan, fragmentResultsBinding.winnerWeathermon);
             setCardInformation(hero, fragmentResultsBinding.loserWeathermon);
-            fragmentResultsBinding.resultTextView.setText(LOSER_MESSAGE);
+            fragmentResultsBinding.batleResultImage.setImageResource(DEFEAT_DRAWABLE);
         }
 
 
