@@ -52,7 +52,7 @@ public class BattleAgainFragment extends Fragment {
         buttonBattleAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                trainWeathermonActivity.updateLocation();
+                trainWeathermonActivity.setUpBattleLocation();
             }
         });
 

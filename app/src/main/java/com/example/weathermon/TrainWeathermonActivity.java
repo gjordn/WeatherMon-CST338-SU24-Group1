@@ -94,11 +94,8 @@ public class TrainWeathermonActivity extends AppCompatActivity {
         battleAgainFragment = new BattleAgainFragment();
 
         loginUser(savedInstanceState);
-        if (battleType==BATTLE_TYPE_TRAINING) {
-            setLocationHome();//Go to "Home" arena
-        } else {
-            setCampaignLocation();
-        }
+
+        setUpBattleLocation();
 
         binding.buttonBackToMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +106,14 @@ public class TrainWeathermonActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public void setUpBattleLocation() {
+        if (battleType==BATTLE_TYPE_TRAINING) {
+            setLocationHome();//Go to "Home" arena
+        } else {
+            setCampaignLocation();
+        }
     }
 
     private void setCampaignLocation() {
@@ -311,6 +316,9 @@ public class TrainWeathermonActivity extends AppCompatActivity {
             int newXP = cardToTrain.getMonsterXP()+cardToBattle.getXPValue();
             cardToTrain.setMonsterXP(newXP);
             repository.updateCardXPByCardID(cardToTrain.getCardID(),cardToTrain.getMonsterXP());
+            campaignStopNumber++;
+            user.setCampaignProgress(campaignStopNumber);
+            repository.updateUser(user);
 
             winner=HERO_WON;
         } else {
