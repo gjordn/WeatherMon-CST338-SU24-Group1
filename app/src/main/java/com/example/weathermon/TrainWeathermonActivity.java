@@ -309,7 +309,7 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                 if (monsters != null) {
 
                     int firstBoosted = 0;
-                    while (battleLocation.hasBonus(monsters.get(firstBoosted).getWeatherInnate())) {
+                    while (!battleLocation.hasBonus(monsters.get(firstBoosted).getWeatherInnate())) {
                         firstBoosted++;
                     }
                     cardToBattle = CardWithMonster.getTrainingOpponent(cardToTrain.getMonsterXP(), monsters.get(firstBoosted));
