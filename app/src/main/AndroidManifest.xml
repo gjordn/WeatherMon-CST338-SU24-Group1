@@ -29,6 +29,8 @@
         <activity
             android:name=".AdminActivity"
             android:exported="false" />
+        <activity android:name=".WeathermonDexActivity" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

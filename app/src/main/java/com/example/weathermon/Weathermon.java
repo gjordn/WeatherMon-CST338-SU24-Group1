@@ -4,13 +4,13 @@ public class Weathermon {
     private String name;
     private String type;
     private int imageResource;
-    private boolean obtained;
+    private boolean isCaught;
 
-    public Weathermon(String name, String type, int imageResource, boolean obtained) {
+    public Weathermon(String name, String type, int imageResource, boolean isCaught) {
         this.name = name;
         this.type = type;
         this.imageResource = imageResource;
-        this.obtained = obtained;
+        this.isCaught = isCaught;
     }
 
     public String getName() {
@@ -25,7 +25,9 @@ public class Weathermon {
         return imageResource;
     }
 
-    public boolean isObtained() {
-        return obtained;
+    public boolean isCaught() {
+        return isCaught;
     }
 }
+
+

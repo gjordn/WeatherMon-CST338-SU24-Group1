@@ -15,6 +15,7 @@ import com.example.weathermon.Weathermon;
 import java.util.List;
 
 public class WeathermonDexAdapter extends RecyclerView.Adapter<WeathermonDexAdapter.WeathermonViewHolder> {
+
     private List<Weathermon> weathermonList;
 
     public static class WeathermonViewHolder extends RecyclerView.ViewHolder {
@@ -54,4 +55,7 @@ public class WeathermonDexAdapter extends RecyclerView.Adapter<WeathermonDexAdap
         return weathermonList.size();
     }
 }
+
+
+
 

@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WeathermonDexActivity">
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/weathermon_dex_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Weathermon Dex"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="center"
+        android:paddingBottom="16dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_weathermon_dex"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/weathermon_item" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-
         setContentView(binding.getRoot());
 
         binding.buttonMyPetWeathermon.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +48,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = TrainWeathermonActivity.trainWeathermonMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
                 startActivity(intent);
+            }
+        });
 
+        // Ensure this is correctly set to launch WeathermonDexActivity
+        binding.buttonTheWeathermon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, WeathermonDexActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -72,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
-
         LiveData<User> userObserver = repository.getUserByUserID(loggedInUserId);
         userObserver.observe(this, user -> {
             if (user != null) {
@@ -84,14 +89,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     binding.buttonAdministrator.setVisibility(View.GONE);
                 }
-            }
-        });
-
-        binding.buttonMyPetWeathermon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = UserCardMaintenanceActivity.userCardMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
-                startActivity(intent);
             }
         });
 
@@ -118,54 +115,8 @@ public class MainActivity extends AppCompatActivity {
         if (user != null) {
             item.setTitle(user.getUsername());
         }
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(@NonNull MenuItem menuItem) {
-                showLogoutDialog();
-                return false;
-            }
-        });
-        return true;
-    }
+        item.setOnMenuItem
 
-    private void showLogoutDialog(){
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
-        final AlertDialog alertDialog = alertBuilder.create();
 
-        alertBuilder.setMessage("Confirm Logout");
 
-        alertBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int which) {
-                logout();
-            }
-        });
 
-        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int which) {
-                alertDialog.dismiss();
-            }
-        });
-        alertBuilder.create().show();
-    }
-
-    private void logout() {
-        Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
-        startActivity(intent);
-    }
-
-    private int getUserIdFromPrefs() {
-        SharedPreferences sharedPreferences = getSharedPreferences("WeatherMonPrefs", MODE_PRIVATE);
-        int userId = sharedPreferences.getInt("userId", -1);
-        Log.d(TAG, "Retrieved User ID from prefs: " + userId);  // Debugging log
-        return userId;
-    }
-
-    // Main Activity Factory
-    static Intent mainActivityIntentFactory(Context context, int userId) {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(MAIN_ACTIVITY_USER_ID, userId);
-        return intent;
-    }
-}
