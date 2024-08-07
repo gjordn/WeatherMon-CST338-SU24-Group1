@@ -8,16 +8,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center">
-        <TextView
+        android:layout_gravity="">
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/we_have_a_winner"
-            android:textAlignment="center"
-            android:textSize="50sp"
-            android:layout_marginTop="20dp"
-            android:id="@+id/resultTextView"/>
-
+            android:layout_gravity="center"
+            android:id="@+id/batle_result_image"
+            android:src="@drawable/battle_victory"
+            android:layout_margin="25dp"
+            />
 
         <include
             android:id="@+id/winnerWeathermon"
