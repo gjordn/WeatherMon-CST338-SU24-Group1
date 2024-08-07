@@ -85,7 +85,8 @@ public class UserCardMaintenanceActivity extends AppCompatActivity implements Ca
         }
 
         if (loggedInUserID == USER_LOGGED_OUT) {
-            return;  // No user id, exit out.
+            logout();
+            return;  //No user id, exit out.
         }
 
         LiveData<User> userObserver = repository.getUserByUserID(loggedInUserID);
