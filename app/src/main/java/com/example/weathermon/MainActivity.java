@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-
         setContentView(binding.getRoot());
 
         binding.buttonMyPetWeathermon.setOnClickListener(new View.OnClickListener() {
@@ -49,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = TrainWeathermonActivity.trainWeathermonMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
                 startActivity(intent);
-
             }
         });
 
+        // Ensure this is correctly set to launch WeathermonDexActivity
         binding.buttonTheWeathermon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,4 +166,6 @@ public class MainActivity extends AppCompatActivity {
         return intent;
     }
 }
+
+
 
