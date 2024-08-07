@@ -5,7 +5,6 @@ import static com.example.weathermon.viewholders.CardMaintenanceViewHolder.bonus
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -18,28 +17,39 @@ import android.widget.TextView;
 import com.example.weathermon.R;
 import com.example.weathermon.TrainWeathermonActivity;
 import com.example.weathermon.database.entities.CardWithMonster;
-import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.Monster;
 import com.example.weathermon.databinding.CardMaintenanceRecyclerItemBinding;
-import com.example.weathermon.databinding.FragmentBattleBinding;
+import com.example.weathermon.databinding.FragmentResultsBinding;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link BattleFragment#newInstance} factory method to
+ * Use the {@link ResultsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BattleFragment extends Fragment {
-    public FragmentBattleBinding fragmentBattleBinding;
+public class ResultsFragment extends Fragment {
+    private static final String WINNER_PARAMETER = "WinnerParameter";
+    public static final String HERO_WON="hero";
+    public static final String VILLAIN_WON="villain";
+    private static final String WINNER_MESSAGE = "VICTORY!";
+    private static final String LOSER_MESSAGE = "Defeat, better luck next time." ;
+
+    public FragmentResultsBinding fragmentResultsBinding;
 
 
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private String battleWinner;
 
-    public BattleFragment() {
-        // Required empty public constructor
-    }
-
-    public static BattleFragment newInstance() {
-        BattleFragment fragment = new BattleFragment();
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param winner Parameter 1.
+     * @return A new instance of fragment ResultsFragment.
+     */
+    public static ResultsFragment newInstance(String winner) {
+        ResultsFragment fragment = new ResultsFragment();
         Bundle args = new Bundle();
+        args.putString(WINNER_PARAMETER, winner);
         fragment.setArguments(args);
         return fragment;
     }
@@ -47,29 +57,34 @@ public class BattleFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            battleWinner = getArguments().getString(WINNER_PARAMETER);
+        }
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        fragmentBattleBinding = FragmentBattleBinding.inflate(inflater, container, false);
+        fragmentResultsBinding = FragmentResultsBinding.inflate(inflater, container, false);
 
         TrainWeathermonActivity trainWeathermonActivity = (TrainWeathermonActivity) getActivity();
         assert trainWeathermonActivity != null;
-        Location trainingLocation = trainWeathermonActivity.getLocationInfo();
         CardWithMonster hero = trainWeathermonActivity.getHero();
-        CardWithMonster villain = trainWeathermonActivity.getVillain();
+        CardWithMonster villan = trainWeathermonActivity.getVillain();
 
-        fragmentBattleBinding.arenaNameIDTextView.setText(trainingLocation.getArenaNameToString());
-        setCardInformation(hero, fragmentBattleBinding.ourHeroWeathermon);
-        setCardInformation(villain, fragmentBattleBinding.ourVillanWeathermon);
+        if (battleWinner.equals(HERO_WON)){
+            setCardInformation(hero, fragmentResultsBinding.winnerWeathermon);
+            setCardInformation(villan, fragmentResultsBinding.loserWeathermon);
+            fragmentResultsBinding.resultTextView.setText(WINNER_MESSAGE);
+        } else {
+            setCardInformation(villan, fragmentResultsBinding.winnerWeathermon);
+            setCardInformation(hero, fragmentResultsBinding.loserWeathermon);
+            fragmentResultsBinding.resultTextView.setText(LOSER_MESSAGE);
+        }
 
 
-        return fragmentBattleBinding.getRoot();
+        return fragmentResultsBinding.getRoot();
     }
-
-
-
 
     private void setCardInformation(CardWithMonster cardWithMonster, CardMaintenanceRecyclerItemBinding cardWithMonsterDisplayCard) {
         TextView cardName = cardWithMonsterDisplayCard.cardname;
@@ -111,5 +126,6 @@ public class BattleFragment extends Fragment {
         }
 
     }
+
 
 }

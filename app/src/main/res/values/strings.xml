@@ -31,4 +31,8 @@
     <string name="humidity">Humidity</string>
     <string name="start_training_combat">Start Training Combat!</string>
     <string name="choose_new_location">Choose new location</string>
+    <string name="we_have_a_winner">We have a winner!</string>
+    <string name="next">Next</string>
+    <string name="travel_to_a_new_location">Travel to a New Location</string>
+    <string name="start_the_battle">Start the Battle!</string>
 </resources>

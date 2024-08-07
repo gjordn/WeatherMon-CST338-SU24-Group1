@@ -37,4 +37,6 @@ public interface CardDAO {
             ".monster_id WHERE userID == :userID ORDER BY monsterXP DESC")
     LiveData<List<CardWithMonster>> getCardsWithMonsterByUserID(int userID);
 
+    @Query("UPDATE " + WeathermonDatabase.CARD_TABLE + " SET monsterXP = :newXP WHERE cardID==:cardID")
+    void updateCardXPByCardID(int cardID, int newXP);
 }

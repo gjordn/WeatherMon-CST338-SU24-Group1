@@ -7,12 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import com.example.weathermon.R;
-import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.CardWithMonster;
 
 public class CardMaintenanceAdapter extends ListAdapter<CardWithMonster, CardMaintenanceViewHolder> {
-    private CardSelectListener cardSelectListener;
+    private final CardSelectListener cardSelectListener;
 
     public CardMaintenanceAdapter(@NonNull DiffUtil.ItemCallback<CardWithMonster> diffCallBack, CardSelectListener listener){
         super(diffCallBack);

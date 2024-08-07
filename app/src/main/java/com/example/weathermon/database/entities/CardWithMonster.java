@@ -1,12 +1,16 @@
 package com.example.weathermon.database.entities;
 
-import android.util.Log;
-
 import java.util.Objects;
 import java.util.Random;
 
 
 public class CardWithMonster {
+    public static final double HERO_BONUS = 1.2;
+    public static final int VALUE_PER_LEVEL = 5;
+    public static Location battleLocation;
+    public static final Double MIN_OPPONENT_XP_PERCENT = 0.5;
+    public static final Double MAX_OPPONENT_XP_PERCENT = 1.5;
+
     private int cardID;
     private String cardCustomName;
     private int monsterID;
@@ -19,11 +23,6 @@ public class CardWithMonster {
     private int baseDefense;
     private int weatherInnate;
 
-    public static Location battleLocation;
-    public static final Double minOpponentXPPercent = 0.7;
-    public static final Double maxOpponentXPPercent = 1.5;
-    public static final int damageSlower = 5;
-    public static final double knockedOutHP = 0.0;
 
 
     public CardWithMonster(int cardID, String cardCustomName, int monsterID, int monsterXP, int userID, int monster_id, String monster_name, int baseHP, int baseAttack, int baseDefense, int weatherInnate) {
@@ -51,7 +50,7 @@ public class CardWithMonster {
 
         Random random = new Random();
         double opponentXP;
-        opponentXP = heroXP * (minOpponentXPPercent + (maxOpponentXPPercent-minOpponentXPPercent)*random.nextDouble());
+        opponentXP = heroXP * (MIN_OPPONENT_XP_PERCENT + (MAX_OPPONENT_XP_PERCENT - MIN_OPPONENT_XP_PERCENT)*random.nextDouble());
         nearLevelOpponent.monsterXP = (int) opponentXP;
         nearLevelOpponent.setCardCustomName(""); //Can't be null.
 
@@ -190,8 +189,8 @@ public class CardWithMonster {
 
     private int adjustedForWeather(int currentStat) {
         if (getBattleLocation()!=null && getBattleLocation().hasBonus(getWeatherInnate())) {
-            Double adjustedStat = (currentStat * Monster.innateWeatherBonus);
-            return adjustedStat.intValue();
+            double adjustedStat = (currentStat * Monster.innateWeatherBonus);
+            return (int) adjustedStat;
         }
         return currentStat;
     }
@@ -203,32 +202,25 @@ public class CardWithMonster {
         return adjustedForLevel(baseHP);
     }
     private int adjustedForLevel(int baseStat){
-        Double adjustedStat =(baseStat * (Math.pow(Monster.levelModifier,getLevelFromXP()-1)));
-        return adjustedStat.intValue();
+        double adjustedStat =(baseStat * (Math.pow(Monster.levelModifier,getLevelFromXP()-1)));
+        return (int) adjustedStat;
     }
 
 
     public Boolean fight(CardWithMonster cardToBattle) {
 
-        int heroHP = this.getTotalHP();
-        int  villainHP = cardToBattle.getTotalHP();
+        int heroTotalStats = this.getTotalHP()+this.getTotalAttack()+this.getTotalDefense();
+        int villainTotalStats = cardToBattle.getTotalAttack()+
+                cardToBattle.getTotalDefense()+
+                cardToBattle.getTotalHP();
 
-        while (heroHP>knockedOutHP && villainHP > knockedOutHP){
-            heroHP-= rollAttack(this.getTotalAttack(), cardToBattle.getTotalDefense());
-            villainHP-=rollAttack(cardToBattle.getTotalAttack(), this.getTotalDefense());
-
-        }
-
-        return (heroHP>villainHP);
-    }
-
-    private int rollAttack(int atk, int def){
+        double chanceHeroWins = ((double) heroTotalStats* HERO_BONUS) /(heroTotalStats+villainTotalStats);
         Random random = new Random();
 
-        int damageDone =(random.nextInt(atk/damageSlower) - random.nextInt(def/damageSlower));
-        if (damageDone > 0) {
-            return damageDone;
-        }
-        return 0;
+        return (chanceHeroWins > random.nextDouble());
+    }
+
+    public int getXPValue() {
+        return VALUE_PER_LEVEL *getLevelFromXP();
     }
 }

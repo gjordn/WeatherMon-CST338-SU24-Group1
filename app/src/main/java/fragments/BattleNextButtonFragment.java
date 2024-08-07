@@ -8,19 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.example.weathermon.R;
+import com.example.weathermon.TrainWeathermonActivity;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MainPageAdminButton#newInstance} factory method to
+ * Use the {@link BattleNextButtonFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainPageAdminButton extends Fragment {
-    ImageButton buttonAdministrator;
+public class BattleNextButtonFragment extends Fragment {
 
-    public MainPageAdminButton() {
+    public BattleNextButtonFragment() {
         // Required empty public constructor
     }
 
@@ -28,10 +27,10 @@ public class MainPageAdminButton extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment MainPageAdminButton.
+     * @return A new instance of fragment BattleNextButtonFragment.
      */
-    public static MainPageAdminButton newInstance() {
-        MainPageAdminButton fragment = new MainPageAdminButton();
+    public static BattleNextButtonFragment newInstance() {
+        BattleNextButtonFragment fragment = new BattleNextButtonFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -45,17 +44,19 @@ public class MainPageAdminButton extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_page_admin_button, container, false);
+        TrainWeathermonActivity trainWeathermonActivity = (TrainWeathermonActivity) getActivity();
 
-        buttonAdministrator=view.findViewById(R.id.buttonAdministrator);
-        buttonAdministrator.setOnClickListener(new View.OnClickListener() {
+        ImageButton buttonNext;
+        View view = inflater.inflate(R.layout.fragment_battle_next_button, container, false);
+
+        buttonNext=view.findViewById(R.id.buttonBattleNextPage);
+        buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "I work", Toast.LENGTH_SHORT).show();
+               trainWeathermonActivity.buttonNextPage();
             }
         });
-        return view;
+
+    return view;
     }
-
-
 }

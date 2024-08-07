@@ -8,9 +8,19 @@ import java.time.format.DateTimeFormatter;
 public class WeatherstackWeatherHolder {
     public Request request;
     public Location location;
-    public current current;
+    public Current current;
     private String weatherstackIsDayTrueString = "yes";
     DateTimeFormatter weatherstackDateTimeformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+    public String success;
+
+    public String getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(String success) {
+        this.success = success;
+    }
 
     public Request getRequest() {
         return request;
@@ -28,11 +38,11 @@ public class WeatherstackWeatherHolder {
         this.location = location;
     }
 
-    public current getCurrentWeather() {
+    public Current getCurrentWeather() {
         return current;
     }
 
-    public void setCurrentWeather(current current) {
+    public void setCurrentWeather(Current current) {
         this.current = current;
     }
 
@@ -159,7 +169,7 @@ public class WeatherstackWeatherHolder {
         }
     }
 
-    public class current {
+    public class Current {
         public String observation_time;
         public String temperature;
         public String weather_code;
