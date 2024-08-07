@@ -46,7 +46,15 @@ public class MainActivity extends AppCompatActivity {
         binding.buttonTrainWeathermon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = TrainWeathermonActivity.trainWeathermonMaintenanceIntentFactory(getApplicationContext(), loggedInUserId);
+                Intent intent = TrainWeathermonActivity.trainWeathermonMaintenanceIntentFactory(getApplicationContext(), loggedInUserId, TrainWeathermonActivity.BATTLE_TYPE_TRAINING);
+                startActivity(intent);
+            }
+        });
+
+        binding.buttonCampaign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = TrainWeathermonActivity.campaignWeathermonMaintenanceIntentFactory(getApplicationContext(), loggedInUserId, TrainWeathermonActivity.BATTLE_TYPE_CAMPAIGN, user.getCampaignProgress());
                 startActivity(intent);
             }
         });

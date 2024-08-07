@@ -23,6 +23,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.util.Log;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -53,13 +55,22 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TrainWeathermonActivity extends AppCompatActivity {
+    public static final String BATTLE_TYPE = "com.example.weathermon.battle_TYPE";
+    public static final String CAMPAIGN_STOP_NUMBER = "com.example.weathermon.STOPNUMBER";
+    public static final int BATTLE_TYPE_CAMPAIGN = 0;
+    public static final int BATTLE_TYPE_TRAINING = 1;
+    public static final int NOT_CAMPAIGN_MODE = -1;
+
     ActivityTrainWeathermonBinding binding;
     private WeathermonRepository repository;
     private int loggedInUserID = 1;
+    private int battleType = 1;
+    private int campaignStopNumber;
     private User user;
-    private Location trainingLocation;
+    private Location battleLocation;
     private CardWithMonster cardToTrain;
     private CardWithMonster cardToBattle;
+
 
     private Retrofit retrofit;
     private BattleFightButtonFragment battleFightButtonFragment;
@@ -85,10 +96,11 @@ public class TrainWeathermonActivity extends AppCompatActivity {
         battleAgainFragment = new BattleAgainFragment();
 
         loginUser(savedInstanceState);
-        setLocationHome();//Go to "Home" arena
-        CardWithMonster.setBattleLocation(trainingLocation);//Set location of battle.
-
-        updateRealLocation(trainingLocation.getLocation());
+        if (battleType==BATTLE_TYPE_TRAINING) {
+            setLocationHome();//Go to "Home" arena
+        } else {
+            setCampaignLocation();
+        }
 
         binding.buttonBackToMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,10 +113,22 @@ public class TrainWeathermonActivity extends AppCompatActivity {
 
     }
 
+    private void setCampaignLocation() {
+        LiveData<Location> locationObserver = repository.getLocationByUserCampaignProgress(campaignStopNumber);
+        locationObserver.observe(this, location -> {
+            //Find user, if found, set shared preferences to userID and reset menu options
+            if (location != null) {
+                this.battleLocation = location;
+                CardWithMonster.setBattleLocation(battleLocation);//Set location of battle.
+                updateLocation();
+            }
+        });
+    }
+
 
     private void setLocationHome() {
-        trainingLocation = new Location(CURRENT_LOCATION_BY_IP, " ",true,true);
-
+        battleLocation = new Location(CURRENT_LOCATION_BY_IP, " ",true,true);
+        updateLocation();
     }
 
     private void updateRealLocation(String proposedLocation) {
@@ -114,13 +138,13 @@ public class TrainWeathermonActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<WeatherstackWeatherHolder> call, @NonNull Response<WeatherstackWeatherHolder> response) {
                 assert response.body() != null;
                 if (response.body().success==null) { //Success if null unless the pull of data fails.
-                    trainingLocation.setLocation(proposedLocation);
-                    trainingLocation.setArenaName(response.body().location.name);
-                    trainingLocation.setTemperature(response.body().getConvertedTemperature());
-                    trainingLocation.setHumidity(response.body().getConvertedHumidity());
-                    trainingLocation.setWindspeed(response.body().getConvertedWindspeed());
-                    trainingLocation.setIsDaytime(response.body().getConvertedIsDaytime());
-                    trainingLocation.setLocalTime(response.body().getConvertedDateTime());
+                    battleLocation.setLocation(proposedLocation);
+                    battleLocation.setArenaName(response.body().location.name);
+                    battleLocation.setTemperature(response.body().getConvertedTemperature());
+                    battleLocation.setHumidity(response.body().getConvertedHumidity());
+                    battleLocation.setWindspeed(response.body().getConvertedWindspeed());
+                    battleLocation.setIsDaytime(response.body().getConvertedIsDaytime());
+                    battleLocation.setLocalTime(response.body().getConvertedDateTime());
 
                     getSupportFragmentManager().beginTransaction()
                             .setReorderingAllowed(true)
@@ -137,6 +161,7 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                             .replace(R.id.battleRightButton, battleNextButtonFragment, null)
                             .commit();
 
+                CardWithMonster.setBattleLocation(battleLocation);//Set location of battle.
 
                 }else {
                     Toast.makeText(getApplicationContext(), "Sorry, we couldn't find that city", Toast.LENGTH_LONG).show();
@@ -161,6 +186,9 @@ public class TrainWeathermonActivity extends AppCompatActivity {
             loggedInUserID = getIntent().getIntExtra(WEATHERMON_LOGGED_IN_USER_ID, USER_LOGGED_OUT);
         }
 
+        battleType = getIntent().getIntExtra(BATTLE_TYPE, BATTLE_TYPE_TRAINING);
+        campaignStopNumber = getIntent().getIntExtra(CAMPAIGN_STOP_NUMBER, NOT_CAMPAIGN_MODE);
+
         if (loggedInUserID == USER_LOGGED_OUT) {
             logout();
             return;  //No user id, exit out.
@@ -177,15 +205,25 @@ public class TrainWeathermonActivity extends AppCompatActivity {
     }
 
     public Location getLocationInfo(){
-        return trainingLocation;
+        return battleLocation;
     }
 
 
-    public static Intent trainWeathermonMaintenanceIntentFactory(Context context, int loggedInUserId) {
+    public static Intent trainWeathermonMaintenanceIntentFactory(Context context, int loggedInUserId, int battleType) {
         Intent intent = new Intent(context, TrainWeathermonActivity.class);
         intent.putExtra(WEATHERMON_LOGGED_IN_USER_ID, loggedInUserId);
+        intent.putExtra(BATTLE_TYPE, battleType);
         return intent;
     }
+
+    public static Intent campaignWeathermonMaintenanceIntentFactory(Context context, int loggedInUserId, int battleType, int stopNumber) {
+        Intent intent = new Intent(context, TrainWeathermonActivity.class);
+        intent.putExtra(WEATHERMON_LOGGED_IN_USER_ID, loggedInUserId);
+        intent.putExtra(BATTLE_TYPE, battleType);
+        intent.putExtra(CAMPAIGN_STOP_NUMBER, stopNumber);
+        return intent;
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -333,8 +371,30 @@ public class TrainWeathermonActivity extends AppCompatActivity {
 
     }
     public void updateLocation(){
-        if(trainingLocation.isRealLocation()){
-            updateRealLocation(trainingLocation.getLocation());
+        if(battleLocation.isRealLocation()){
+            updateRealLocation(battleLocation.getLocation());
+        } else {
+            updateFakeLocation();
         }
+    }
+
+    private void updateFakeLocation() {
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragment_train_container, LocationSelectionFragment.class, null)
+                .commit();
+        //Only add buttons if found location.
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.battleMiddleButton, battleTravelButtonFragment, null)
+                .commit();
+
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.battleRightButton, battleNextButtonFragment, null)
+                .commit();
+
+        CardWithMonster.setBattleLocation(battleLocation);//Set location of battle.
+
     }
 }

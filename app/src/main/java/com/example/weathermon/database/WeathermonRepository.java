@@ -11,6 +11,7 @@ import com.example.weathermon.database.dao.MonsterDAO;
 import com.example.weathermon.database.dao.UserDAO;
 import com.example.weathermon.database.entities.Card;
 import com.example.weathermon.database.entities.CardWithMonster;
+import com.example.weathermon.database.entities.Location;
 import com.example.weathermon.database.entities.Monster;
 import com.example.weathermon.database.entities.User;
 
@@ -147,5 +148,9 @@ public class WeathermonRepository {
         WeathermonDatabase.databaseWriterExecutor.execute(() -> {
             cardDAO.updateCardXPByCardID(cardID, newXP);
         });
+    }
+
+    public LiveData<Location> getLocationByUserCampaignProgress(int campaignProgress) {
+        return locationDAO.getLocationByUserCampaignProgress(campaignProgress);
     }
 }
