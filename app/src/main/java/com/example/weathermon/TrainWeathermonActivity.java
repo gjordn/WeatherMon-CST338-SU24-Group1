@@ -162,6 +162,7 @@ public class TrainWeathermonActivity extends AppCompatActivity {
         }
 
         if (loggedInUserID == USER_LOGGED_OUT) {
+            logout();
             return;  //No user id, exit out.
         }
 
