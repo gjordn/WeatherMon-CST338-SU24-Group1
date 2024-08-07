@@ -125,7 +125,6 @@ public class TrainWeathermonActivity extends AppCompatActivity {
             //Find user, if found, set shared preferences to userID and reset menu options
             if (location != null) {
                 this.battleLocation = location;
-                CardWithMonster.setBattleLocation(battleLocation);//Set location of battle.
                 updateLocation();
             }
         });
