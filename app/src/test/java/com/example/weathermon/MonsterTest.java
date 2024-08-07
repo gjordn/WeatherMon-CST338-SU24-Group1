@@ -9,15 +9,15 @@ import static org.junit.Assert.*;
 
 public class MonsterTest {
 
-    private Monster monster;
+    private Weathermon monster;
 
     @Before
     public void setUp() {
         // Initialize a Monster object before each test
-        monster = new Monster();
+        monster = new Weathermon();
         monster.setMonster_id(1);
         monster.setName("TestMonster");
-        monster.setWeatherType(Monster.weatherFire);
+        monster.setWeatherTypeInt(Monster.weatherFire);
     }
 
     @Test
@@ -44,13 +44,13 @@ public class MonsterTest {
 
     @Test
     public void testGetWeatherType() {
-        assertEquals(Monster.weatherFire, monster.getWeatherType());
+        assertEquals(Monster.weatherFire, monster.getWeatherTypeInt());
     }
 
     @Test
     public void testSetWeatherType() {
-        monster.setWeatherType(Monster.weatherIce);
-        assertEquals(Monster.weatherIce, monster.getWeatherType());
+        monster.setWeatherTypeInt(Monster.weatherIce);
+        assertEquals(Monster.weatherIce, monster.getWeatherTypeInt());
     }
 
     @Test
