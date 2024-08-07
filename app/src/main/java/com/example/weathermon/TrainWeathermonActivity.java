@@ -23,8 +23,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.util.Log;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -150,12 +148,13 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                             .setReorderingAllowed(true)
                             .replace(R.id.fragment_train_container, LocationSelectionFragment.class, null)
                             .commit();
-                    //Only add buttons if found location.
-                    getSupportFragmentManager().beginTransaction()
-                            .setReorderingAllowed(true)
-                            .replace(R.id.battleMiddleButton, battleTravelButtonFragment, null)
-                            .commit();
-
+                    //Only add buttons if found location.  Only add button if training
+                    if (battleType==BATTLE_TYPE_TRAINING) {
+                        getSupportFragmentManager().beginTransaction()
+                                .setReorderingAllowed(true)
+                                .replace(R.id.battleMiddleButton, battleTravelButtonFragment, null)
+                                .commit();
+                    }
                     getSupportFragmentManager().beginTransaction()
                             .setReorderingAllowed(true)
                             .replace(R.id.battleRightButton, battleNextButtonFragment, null)
@@ -383,11 +382,13 @@ public class TrainWeathermonActivity extends AppCompatActivity {
                 .setReorderingAllowed(true)
                 .replace(R.id.fragment_train_container, LocationSelectionFragment.class, null)
                 .commit();
-        //Only add buttons if found location.
-        getSupportFragmentManager().beginTransaction()
-                .setReorderingAllowed(true)
-                .replace(R.id.battleMiddleButton, battleTravelButtonFragment, null)
-                .commit();
+        //Only add buttons if found location.  Only add button if training, not travel for campaign mode
+        if (battleType==BATTLE_TYPE_TRAINING) {
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.battleMiddleButton, battleTravelButtonFragment, null)
+                    .commit();
+        }
 
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
