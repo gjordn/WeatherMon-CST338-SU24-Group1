@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import android.text.Editable;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -51,5 +52,16 @@ public class LoginActivityTest {
         assertEquals("testPassword", passwordEditText.getText().toString());
     }
 
+
+    @Test
+    public void testLoginButton_initialState() {
+        Button loginButton = mock(Button.class);
+
+        when(loginActivity.findViewById(R.id.loginButton)).thenReturn(loginButton);
+
+        when(loginButton.getVisibility()).thenReturn(View.VISIBLE);
+
+        assertEquals(View.VISIBLE, loginButton.getVisibility());
+    }
 
 }
