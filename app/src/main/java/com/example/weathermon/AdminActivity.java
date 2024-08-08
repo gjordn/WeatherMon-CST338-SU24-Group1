@@ -1,3 +1,8 @@
+/**
+ * Gerek G. Jordan
+ * CST338 Software Design Summer 24
+ * https://github.com/gjordn/WeatherMon-CST338-SU24-Group1.git
+ */
 package com.example.weathermon;
 
 import android.content.Context;

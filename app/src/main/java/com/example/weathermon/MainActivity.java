@@ -1,3 +1,8 @@
+/**
+ * Group 1 Summer 24
+ * CST338 Software Design
+ * https://github.com/gjordn/WeatherMon-CST338-SU24-Group1.git
+ */
 package com.example.weathermon;
 
 import android.content.Context;
