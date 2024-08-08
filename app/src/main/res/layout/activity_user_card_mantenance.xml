@@ -36,6 +36,7 @@
         android:contentDescription="@string/back_to_main_page"
         />
 
+    <!--Made invisible as Weatherdex not implemented using database!-->
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,6 +47,7 @@
         app:layout_constraintStart_toEndOf="@id/buttonBackToMain"
         android:layout_margin="16dp"
         android:contentDescription="@string/get_weathermon"
+        android:visibility="invisible"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

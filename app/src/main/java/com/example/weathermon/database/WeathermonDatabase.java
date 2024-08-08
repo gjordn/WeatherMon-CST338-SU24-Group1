@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTimeTypeConverter.class)
-@Database(entities = {User.class, Card.class, Location.class, Monster.class}, version = 3, exportSchema = false)
+@Database(entities = {User.class, Card.class, Location.class, Monster.class}, version = 4, exportSchema = false)
 public abstract class WeathermonDatabase extends RoomDatabase {
     private static final String WEATHERMON_DATABASE_NAME = "WeathermonDatabase";
 

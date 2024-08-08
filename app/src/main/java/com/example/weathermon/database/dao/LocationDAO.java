@@ -1,5 +1,6 @@
 package com.example.weathermon.database.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -28,4 +29,7 @@ public interface LocationDAO {
 
     @Query("SELECT * FROM " + WeathermonDatabase.LOCATION_TABLE)
     List<Location> getAllLocations();
+
+    @Query("SELECT * FROM " + WeathermonDatabase.LOCATION_TABLE + " WHERE campaignLocationStopNumber = :campaignProgress")
+    LiveData<Location> getLocationByUserCampaignProgress(int campaignProgress);
 }
