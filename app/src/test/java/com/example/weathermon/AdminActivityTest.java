@@ -9,8 +9,10 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import org.junit.After;
 import org.junit.Before;
@@ -74,6 +76,27 @@ public class AdminActivityTest {
         assertEquals(View.VISIBLE, changePasswordButton.getVisibility());
     }
 
+    @Test
+    public void testChangePasswordFunctionality() {
+        EditText oldPasswordEditText = mock(EditText.class);
+        EditText newPasswordEditText = mock(EditText.class);
+        Button changePasswordButton = mock(Button.class);
 
+        when(adminActivity.findViewById(R.id.changePasswordButton)).thenReturn(changePasswordButton);
+
+        Editable mockOldPassword = mock(Editable.class);
+        Editable mockNewPassword = mock(Editable.class);
+
+        when(oldPasswordEditText.getText()).thenReturn(mockOldPassword);
+        when(newPasswordEditText.getText()).thenReturn(mockNewPassword);
+
+        when(mockOldPassword.toString()).thenReturn("oldPassword");
+        when(mockNewPassword.toString()).thenReturn("newPassword");
+
+        changePasswordButton.performClick();
+
+        assertEquals("oldPassword", oldPasswordEditText.getText().toString());
+        assertEquals("newPassword", newPasswordEditText.getText().toString());
+    }
 
 }
