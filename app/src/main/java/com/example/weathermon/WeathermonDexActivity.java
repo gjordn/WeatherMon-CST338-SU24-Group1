@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weathermon.database.WeathermonRepository;
+import com.example.weathermon.database.entities.Monster;
 import com.example.weathermon.viewholders.WeathermonDexAdapter;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class WeathermonDexActivity extends AppCompatActivity {
     private WeathermonDexAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private WeathermonRepository repository;
+    private List<Weathermon> weathermonList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +34,24 @@ public class WeathermonDexActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        List<Weathermon> weathermonList = getWeathermonList();
+        weathermonList = getWeathermonList();
         adapter = new WeathermonDexAdapter(weathermonList);
         recyclerView.setAdapter(adapter);
     }
 
-    private List<Weathermon> getWeathermonList() {
+    public List<Weathermon> getWeathermonList() {
         List<Weathermon> weathermonList = new ArrayList<>();
-        weathermonList.add(new Weathermon("Normal Type", "Found in normal weather", R.drawable.noweatherlogo, true));
-        weathermonList.add(new Weathermon("Fire Type", "Found in hot weather conditions", R.drawable.firelogo, true));
-        weathermonList.add(new Weathermon("Ice Type", "Found in extremely cold weather", R.drawable.icelogo, true));
-        weathermonList.add(new Weathermon("Light Type", "Found in sunny conditions", R.drawable.lightlogo, true));
-        weathermonList.add(new Weathermon("Shadow Type", "Found in night and dark conditions", R.drawable.darklogo, true));
-        weathermonList.add(new Weathermon("Wind Type", "Found in windy conditions", R.drawable.windlogo, true));
-        weathermonList.add(new Weathermon("Water Type", "Found in rainy and wet conditions", R.drawable.waterlogo, true));
+        weathermonList.add(new Weathermon("No Weather", "None", R.drawable.noweatherlogo, true));
+        weathermonList.add(new Weathermon("Fire", "Fire", R.drawable.firelogo, true));
+        weathermonList.add(new Weathermon("Ice", "Ice", R.drawable.icelogo, true));
+        weathermonList.add(new Weathermon("Light", "Light", R.drawable.lightlogo, true));
+        weathermonList.add(new Weathermon("Shadow", "Shadow", R.drawable.darklogo, true));
+        weathermonList.add(new Weathermon("Wind", "Wind", R.drawable.windlogo, true));
+        weathermonList.add(new Weathermon("Water", "Water", R.drawable.waterlogo, true));
         return weathermonList;
     }
 }
+
 
 
 

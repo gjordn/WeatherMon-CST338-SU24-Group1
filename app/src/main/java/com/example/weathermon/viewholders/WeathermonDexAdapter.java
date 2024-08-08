@@ -47,7 +47,7 @@ public class WeathermonDexAdapter extends RecyclerView.Adapter<WeathermonDexAdap
         Weathermon weathermon = weathermonList.get(position);
         holder.monsterImage.setImageResource(weathermon.getImageResource());
         holder.monsterName.setText(weathermon.getName());
-        holder.monsterStats.setText(weathermon.getType());
+        holder.monsterStats.setText(weathermon.getWeatherType());
     }
 
     @Override

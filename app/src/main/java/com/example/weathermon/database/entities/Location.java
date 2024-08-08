@@ -70,14 +70,6 @@ public class Location {
         this.isDaytime = isDaytime;
     }
 
-    public int getId() {
-        return arenaID;
-    }
-
-    public void setId(int id) {
-        this.arenaID = id;
-    }
-
     public String getLocation() {
         return location;
     }
