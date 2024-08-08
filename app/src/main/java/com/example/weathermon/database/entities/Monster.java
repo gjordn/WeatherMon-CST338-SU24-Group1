@@ -9,7 +9,7 @@ import com.example.weathermon.database.WeathermonDatabase;
 import java.util.Map;
 
 @Entity(
-    tableName = WeathermonDatabase.MONSTER_TABLE
+        tableName = WeathermonDatabase.MONSTER_TABLE
 )
 
 public class Monster {
@@ -112,5 +112,3 @@ public class Monster {
         this.weatherInnate = weatherInnate;
     }
 }
-
-

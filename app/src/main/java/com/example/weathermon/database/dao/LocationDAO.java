@@ -16,19 +16,19 @@ import java.util.List;
 public interface LocationDAO {
 
     @Insert
-    void insert(Location location);
+    void insert(Location... locations);
 
     @Update
-    void update(Location location);
+    void update(Location... locations);
 
     @Delete
-    void delete(Location location);
+    void delete(Location... locations);
 
     @Query("SELECT * FROM " + WeathermonDatabase.LOCATION_TABLE + " WHERE arenaID = :id")
-    Location getWeatherMonById(int id);
+    Location getLocationByID(int id);
 
     @Query("SELECT * FROM " + WeathermonDatabase.LOCATION_TABLE)
-    List<Location> getAllWeatherMons();
+    List<Location> getAllLocations();
 
     @Query("SELECT * FROM " + WeathermonDatabase.LOCATION_TABLE + " WHERE campaignLocationStopNumber = :campaignProgress")
     LiveData<Location> getLocationByUserCampaignProgress(int campaignProgress);
