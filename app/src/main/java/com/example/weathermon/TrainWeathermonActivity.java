@@ -47,6 +47,7 @@ import fragments.BattleFragment;
 import fragments.BattleNextButtonFragment;
 import fragments.BattleTravelButtonFragment;
 import fragments.LocationSelectionFragment;
+import fragments.MoreToComeFragment;
 import fragments.ResultsFragment;
 import fragments.SelectCardFragment;
 import retrofit2.Call;
@@ -126,6 +127,15 @@ public class TrainWeathermonActivity extends AppCompatActivity {
             if (location != null) {
                 this.battleLocation = location;
                 updateLocation();
+            } else {
+                getSupportFragmentManager().beginTransaction()
+                        .setReorderingAllowed(true)
+                        .replace(R.id.fragment_train_container, MoreToComeFragment.class, null)
+                        .commit();
+                getSupportFragmentManager().beginTransaction()
+                        .remove(battleAgainFragment)
+                        .commit();
+
             }
         });
     }
